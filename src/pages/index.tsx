@@ -48,7 +48,11 @@ export default function Home() {
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}!!
             </p>
             {posts.data?.map((post) => {
-              return <p className="text-white">{post.title}!</p>;
+              return (
+                <p key={post.id} className="text-white">
+                  {post.title}!
+                </p>
+              );
             })}
             <AuthShowcase />
           </div>
