@@ -8,10 +8,11 @@ datasource db {
     relationMode = "prisma"
 }
 
-model Post {
+model Trivia {
     id        String   @id @default(uuid())
     title     String
-    content   String?
+    content   String
+    detail    String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt @map("updated_at")
 
