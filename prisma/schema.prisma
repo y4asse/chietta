@@ -10,13 +10,11 @@ datasource db {
 
 model Trivia {
     id        String   @id @default(uuid())
-    title     String
+    title     String   @unique
     content   String
     detail    String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt @map("updated_at")
-
-    // @@index([name])
 }
 
 // Necessary for Next auth
