@@ -1,4 +1,4 @@
-import React, { Touch, useEffect, useRef, useState } from "react";
+import React, { Touch, useCallback, useEffect, useRef, useState } from "react";
 import WrapContainer from "~/components/layout/WrapContainer";
 import Layout from "~/components/layout/layout";
 import { useRouter } from "next/router";
@@ -8,14 +8,59 @@ import { AnimatePresence } from "framer-motion";
 import SlideAnimation from "~/components/animation/SlideAnimation";
 import { api } from "~/utils/api";
 import NotFound from "../404";
+import { createServerSideHelpers } from "@trpc/react-query/server";
+import superjson from "superjson";
+import next, {
+  InferGetStaticPropsType,
+  GetStaticPaths,
+  GetStaticPropsContext,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from "next";
+import { db } from "~/server/db";
+import { appRouter } from "~/server/api/root";
+import { kv } from "@vercel/kv";
+import Trpc from "../api/trpc/[trpc]";
+import { DehydratedState } from "@tanstack/react-query";
+
 // TODO: LottieFilesをダイナミックインポート
 
-const Trivia = () => {
+export const getServerSideProps = async ({
+  params,
+}: GetServerSidePropsContext) => {
+  const id = params!.id as string;
+  const helpers = createServerSideHelpers({
+    router: appRouter,
+    ctx: {
+      db: db,
+      session: null,
+    },
+    transformer: superjson,
+  });
+  //prefetchをすることによって、クライアント側でのクエリをキャッシュする
+  await helpers.trivia.getById.prefetch(id);
+  await helpers.trivia.getNextId.prefetch();
+  const nextId = await helpers.trivia.getNextId.fetch();
+  const trivia = await helpers.trivia.getById.fetch(id);
+  return {
+    props: {
+      trpcState: helpers.dehydrate(),
+      id,
+      trivia,
+      nextId,
+    },
+  };
+};
+
+const Trivia = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
+) => {
+  const { id, trivia, nextId } = props;
   const router = useRouter();
-  const id = router.query.id as string;
+  const divRef = useRef<HTMLDivElement>(null);
   const [direction, setDirection] = useAtom(directionAtom);
-  useEffect(() => {
-    const clickHandler = (e: MouseEvent) => {
+  const clickHandler = useCallback(
+    (e: MouseEvent) => {
       if (!divRef.current) return;
       // 高さ
       if (
@@ -26,22 +71,24 @@ const Trivia = () => {
           setDirection("backward");
           router.back();
         } else if (e.clientX > (window.innerWidth * 3) / 4) {
+          if (!nextId) return;
           setDirection("forward");
-          void router.push(`/trivia/${Math.random()}`);
+          void router.push(`/trivia/${nextId}`);
         }
       }
-    };
+    },
+    [nextId],
+  );
+  useEffect(() => {
     document.addEventListener("click", clickHandler);
     return () => {
       document.removeEventListener("click", clickHandler);
     };
-  }, []);
+  }, [clickHandler]);
 
-  const divRef = useRef<HTMLDivElement>(null);
-  const { data: trivia } = api.trivia.getById.useQuery(id);
-  if (!trivia) {
-    return <NotFound />;
-  }
+  useEffect(() => {
+    void router.prefetch(`/trivia/${nextId}`);
+  }, [nextId]);
 
   return (
     <Layout>
@@ -60,7 +107,7 @@ const Trivia = () => {
                   <p className="text-center text-gray">雑学の本</p>
                 </div>
                 <h1 className="mt-3 text-center text-2xl font-bold">
-                  {trivia.title}
+                  {trivia?.title}
                 </h1>
               </WrapContainer>
             </SlideAnimation>
@@ -75,7 +122,7 @@ const Trivia = () => {
                 width={200}
                 className="mx-auto mt-3"
               />
-              <p className="pt-10 text-lg">{trivia.content}</p>
+              <p className="pt-10 text-lg">{trivia?.content}</p>
               <p className="mt-10 text-center text-gray">
                 さらに知りたいですか？
                 <br />
@@ -95,3 +142,29 @@ const Trivia = () => {
 };
 
 export default Trivia;
+
+// // TODO: ssgじゃなくてssrにして、ユーザのリクエストー＞Linkで次のページの遷移先もレンダリングする
+// export const getStaticProps = async (
+//   context: GetStaticPropsContext<{ id: string }>,
+// ) => {
+//   const helpers = createServerSideHelpers({
+//     router: appRouter,
+//     ctx: {
+//       db: db,
+//       session: null,
+//     },
+//     transformer: superjson,
+//   });
+//   if (context.params == undefined) {
+//     return { notFound: true };
+//   }
+
+//   const id = context.params.id;
+//   await helpers.trivia.getById.prefetch(id);
+//   return {
+//     props: {
+//       trpcState: helpers.dehydrate(),
+//       id,
+//     },
+//   };
+// };

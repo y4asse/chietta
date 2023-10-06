@@ -3,6 +3,7 @@
  * for Docker builds.
  */
 await import("./src/env.mjs");
+import { withSuperjson } from "next-superjson";
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -19,4 +20,4 @@ const config = {
   },
 };
 
-export default config;
+export default withSuperjson()(config);
