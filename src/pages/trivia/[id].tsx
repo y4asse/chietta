@@ -3,7 +3,7 @@ import WrapContainer from "~/components/layout/WrapContainer";
 import Layout from "~/components/layout/layout";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { directionAtom } from "~/jotai/atoms";
+import { directionAtom, nextIdsAtom } from "~/jotai/atoms";
 import { AnimatePresence } from "framer-motion";
 import SlideAnimation from "~/components/animation/SlideAnimation";
 import { api } from "~/utils/api";
@@ -57,10 +57,7 @@ const Trivia = () =>
     const { data: trivia } = api.trivia.getById.useQuery(
       router.query.id as string,
     );
-    const { data: nextId } = api.trivia.getNextId.useQuery(undefined, {
-      staleTime: 0,
-      cacheTime: 0,
-    });
+    const { data: nextId, refetch } = api.trivia.getNextId.useQuery();
     const divRef = useRef<HTMLDivElement>(null);
     const [direction, setDirection] = useAtom(directionAtom);
     const clickHandler = useCallback(
@@ -91,6 +88,10 @@ const Trivia = () =>
     }, [clickHandler]);
 
     useEffect(() => {
+      void refetch();
+    }, [router.asPath]);
+
+    useEffect(() => {
       void router.prefetch(`/trivia/${nextId}`);
     }, [nextId]);
 
@@ -112,6 +113,7 @@ const Trivia = () =>
                   </div>
                   <h1 className="mt-3 text-center text-2xl font-bold">
                     {trivia?.title}
+                    {nextId}
                   </h1>
                 </WrapContainer>
               </SlideAnimation>
