@@ -46,8 +46,6 @@ export const getServerSideProps = async ({
     props: {
       trpcState: helpers.dehydrate(),
       id,
-      trivia,
-      nextId,
     },
   };
 };
@@ -55,7 +53,9 @@ export const getServerSideProps = async ({
 const Trivia = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ) => {
-  const { id, trivia, nextId } = props;
+  const { id } = props;
+  const { data: trivia } = api.trivia.getById.useQuery(id);
+  const { data: nextId } = api.trivia.getNextId.useQuery();
   const router = useRouter();
   const divRef = useRef<HTMLDivElement>(null);
   const [direction, setDirection] = useAtom(directionAtom);
@@ -116,12 +116,6 @@ const Trivia = (
         <AnimatePresence>
           <SlideAnimation>
             <WrapContainer>
-              <img
-                src="/img/cat.png"
-                alt="画像"
-                width={200}
-                className="mx-auto mt-3"
-              />
               <p className="pt-10 text-lg">{trivia?.content}</p>
               <p className="mt-10 text-center text-gray">
                 さらに知りたいですか？
@@ -133,6 +127,12 @@ const Trivia = (
                   もっと詳しく
                 </button>
               </div>
+              <img
+                src="/img/cat.png"
+                alt="画像"
+                width={200}
+                className="mx-auto mt-3"
+              />
             </WrapContainer>
           </SlideAnimation>
         </AnimatePresence>
