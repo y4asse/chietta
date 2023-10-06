@@ -7,21 +7,21 @@ import { directionAtom } from "~/jotai/atoms";
 import { AnimatePresence } from "framer-motion";
 import SlideAnimation from "~/components/animation/SlideAnimation";
 import { api } from "~/utils/api";
-import NotFound from "../404";
+// import NotFound from "../404";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import superjson from "superjson";
 import next, {
-  InferGetStaticPropsType,
-  GetStaticPaths,
-  GetStaticPropsContext,
+  // InferGetStaticPropsType,
+  // GetStaticPaths,
+  // GetStaticPropsContext,
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from "next";
 import { db } from "~/server/db";
 import { appRouter } from "~/server/api/root";
-import { kv } from "@vercel/kv";
-import Trpc from "../api/trpc/[trpc]";
-import { DehydratedState } from "@tanstack/react-query";
+// import { kv } from "@vercel/kv";
+// import Trpc from "../api/trpc/[trpc]";
+// import { DehydratedState } from "@tanstack/react-query";
 
 // TODO: LottieFilesをダイナミックインポート
 
