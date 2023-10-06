@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Cheeta | 明日をちょっと豊かにする知識</title>
+        <title>Chietta | 明日をちょっと豊かにする知識</title>
         <meta
           name="description"
           content="明日をちょっとだけ豊かにする知識を提供します."

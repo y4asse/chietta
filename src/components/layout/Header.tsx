@@ -8,7 +8,7 @@ const Header = () => {
       <WrapContainer>
         <div className="flex items-center justify-between py-2">
           <Link className=" text-3xl font-extrabold" href="/">
-            Cheeta
+            Chietta
           </Link>
           <div className="flex">
             <button>投稿する</button>
