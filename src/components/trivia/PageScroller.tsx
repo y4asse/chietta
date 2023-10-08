@@ -67,9 +67,7 @@ const PageScroller = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (nextIndex !== null && story?.length > 1)
-      router
-        .prefetch(`/trivia/${story[nextIndex]}`)
-        .catch((err) => console.log(err));
+      void router.prefetch(`/trivia/${story[nextIndex]}`);
   }, [story, nextIndex]);
 
   //nextIdを監視
