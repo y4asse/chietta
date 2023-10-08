@@ -36,7 +36,7 @@ export const triviaRouter = createTRPCRouter({
         }),
       ),
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       return input.map(async ({ title, content, detail, categories }) => {
         return await ctx.db.trivia.create({
           data: {
