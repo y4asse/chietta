@@ -47,7 +47,6 @@ const PageScroller = ({ children }: { children: ReactNode }) => {
   );
 
   useEffect(() => {
-    router.prefetch(`/trivia/`).catch((err) => console.log(err));
     document.addEventListener("click", clickHandler);
     return () => {
       document.removeEventListener("click", clickHandler);
@@ -64,7 +63,11 @@ const PageScroller = ({ children }: { children: ReactNode }) => {
     if (isTop) {
       void refetch();
     }
-    // TODO サーバーにこのIDの視聴済みを送信
+
+    if (nextIndex !== null)
+      router
+        .prefetch(`/trivia/${story[nextIndex]}`)
+        .catch((err) => console.log(err));
   }, [router.asPath]);
 
   //nextIdを監視
