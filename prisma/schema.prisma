@@ -9,12 +9,33 @@ datasource db {
 }
 
 model Trivia {
-    id        String   @id @default(uuid())
-    title     String   @unique
-    content   String
-    detail    String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt @map("updated_at")
+    id         String        @id @default(uuid())
+    title      String        @unique
+    content    String
+    detail     String?
+    createdAt  DateTime      @default(now())
+    updatedAt  DateTime      @updatedAt @map("updated_at")
+    categories CategoryMap[]
+}
+
+model Category {
+    id          Int           @id @default(autoincrement())
+    name        String        @unique
+    categoryMap CategoryMap[]
+
+    @@index([name])
+}
+
+model CategoryMap {
+    id          Int      @id @default(autoincrement())
+    trivia_id   String
+    category_id Int
+    trivia      Trivia   @relation(fields: [trivia_id], references: [id])
+    category    Category @relation(fields: [category_id], references: [id])
+    createdAt   DateTime @default(now())
+
+    @@index([category_id])
+    @@index([trivia_id])
 }
 
 // Necessary for Next auth

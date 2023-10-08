@@ -32,26 +32,44 @@ export const triviaRouter = createTRPCRouter({
           title: z.string(),
           content: z.string(),
           detail: z.string().nullable(),
+          categories: z.array(z.string()),
         }),
       ),
     )
-    .mutation(({ ctx, input }) => {
-      const trivias = ctx.db.trivia.createMany({
-        data: input,
-        skipDuplicates: true,
+    .mutation(async ({ ctx, input }) => {
+      return input.map(async ({ title, content, detail, categories }) => {
+        return await ctx.db.trivia.create({
+          data: {
+            title: title,
+            content: content,
+            detail: detail,
+            categories: {
+              create: categories.map((value, index) => ({
+                category: {
+                  connectOrCreate: {
+                    where: { name: value },
+                    create: { name: value },
+                  },
+                },
+              })),
+            },
+          },
+        });
       });
-
-      return trivias;
     }),
+
   getNextId: publicProcedure.query(async ({ ctx }) => {
+    const time = new Date().getTime();
     const trivias = await ctx.db.trivia.findMany({ select: { id: true } });
+    console.log("exec time", new Date().getTime() - time);
+    if (trivias.length < 1) return null;
     const randomIndex = Math.floor(Math.random() * trivias.length);
     return trivias[randomIndex]!.id;
   }),
 
   getManyIds: publicProcedure.query(async ({ ctx }) => {
     //視聴履歴にないものから選ぶ
-    const history = ["0757d92a-c15e-44f1-afe5-5509154e72b2"];
+    const history = [""];
     const trivias = await ctx.db.trivia.findMany({
       where: { id: { notIn: history } },
     });
