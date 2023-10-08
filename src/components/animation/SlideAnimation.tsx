@@ -11,13 +11,9 @@ const SlideAnimation = ({ children }: { children: ReactNode }) => {
     <motion.div
       key={router.asPath}
       initial={{
-        opacity: 0,
+        opacity: 1,
         translateX:
-          direction === "forward"
-            ? "50%"
-            : direction === "backward"
-            ? "-50%"
-            : 0,
+          direction === "forward" ? "0%" : direction === "backward" ? "-0%" : 0,
       }} // 初期状態
       animate={{ translateX: 0, opacity: 1 }} // マウント時
       transition={{ stiffness: 1000 }}

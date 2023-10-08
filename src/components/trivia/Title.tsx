@@ -19,25 +19,24 @@ const Title = ({
     | undefined;
 }) => {
   return (
-    <div className="bg-pink py-7">
+    <div className="relative bg-pink py-7">
       <AnimatePresence mode="wait">
-        <SlideAnimation>
-          <WrapContainer>
-            {/* TODO: ここにプロフ */}
-            <div className="flex items-center justify-center gap-5">
-              <img
-                src="/img/catBook.png"
-                alt="アイコン"
-                className="h-[38px] w-[38px] rounded-full"
-              />
-              <p className="text-center text-gray">雑学の本</p>
-            </div>
-            <h1 className="mt-3 text-center text-2xl font-bold">
-              {trivia?.title}
-            </h1>
-          </WrapContainer>
-        </SlideAnimation>
+        <WrapContainer>
+          {/* TODO: ここにプロフ */}
+          <div className="flex items-center justify-center gap-5">
+            <img
+              src="/img/catBook.png"
+              alt="アイコン"
+              className="h-[38px] w-[38px] rounded-full"
+            />
+            <p className="text-center text-gray">雑学の本</p>
+          </div>
+          <h1 className="mt-3 text-center text-2xl font-bold">
+            {trivia?.title}
+          </h1>
+        </WrapContainer>
       </AnimatePresence>
+      <div className="absolute bottom-0 h-2 w-screen translate-x-3 skew-x-[-70deg] bg-[#b9b9b9]" />
     </div>
   );
 };

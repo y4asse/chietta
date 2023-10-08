@@ -1,22 +1,9 @@
-import React, { Touch, useCallback, useEffect, useRef, useState } from "react";
-import WrapContainer from "~/components/layout/WrapContainer";
+import React from "react";
 import Layout from "~/components/layout/layout";
-import { useRouter } from "next/router";
-import { useAtom } from "jotai";
-import { directionAtom, storyAtom } from "~/jotai/atoms";
-import { AnimatePresence } from "framer-motion";
-import SlideAnimation from "~/components/animation/SlideAnimation";
 import { api } from "~/utils/api";
-import NotFound from "../404";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import superjson from "superjson";
-import next, {
-  InferGetStaticPropsType,
-  GetStaticPaths,
-  GetStaticPropsContext,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from "next";
+import { GetStaticPaths, GetStaticPropsContext } from "next";
 import { db } from "~/server/db";
 import { appRouter } from "~/server/api/root";
 import Content from "~/components/trivia/Content";
