@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   const lists = [
     { link: "about", text: "Chiettaとは" },
-    { link: "trivia/4fbf9651-ccdb-433e-9118-e48770ca29b6", text: "雑学" },
+    { link: "trivia/0757d92a-c15e-44f1-afe5-5509154e72b2", text: "雑学" },
   ];
   return (
     <div className=" bg-pink p-10">

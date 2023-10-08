@@ -48,4 +48,20 @@ export const triviaRouter = createTRPCRouter({
     const randomIndex = Math.floor(Math.random() * trivias.length);
     return trivias[randomIndex]!.id;
   }),
+
+  getManyIds: publicProcedure.query(async ({ ctx }) => {
+    //視聴履歴にないものから選ぶ
+    const history = ["0757d92a-c15e-44f1-afe5-5509154e72b2"];
+    const trivias = await ctx.db.trivia.findMany({
+      where: { id: { notIn: history } },
+    });
+    const ids = trivias.map((t) => t.id);
+    return ids;
+  }),
+
+  setHistory: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    // TODO ここでKVに保存する
+    const id = input;
+    return "success";
+  }),
 });
