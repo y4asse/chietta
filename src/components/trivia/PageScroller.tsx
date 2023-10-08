@@ -35,11 +35,15 @@ const PageScroller = ({ children }: { children: ReactNode }) => {
         if (touchLeft) {
           if (prevIndex === null) return;
           setDirection("backward");
-          void router.push(`/trivia/${story[prevIndex]}`);
+          void router.push(`/trivia/${story[prevIndex]}`, undefined, {
+            scroll: false,
+          });
         } else if (touchRight) {
           if (nextIndex === null) return;
           setDirection("forward");
-          void router.push(`/trivia/${story[nextIndex]}`);
+          void router.push(`/trivia/${story[nextIndex]}`, undefined, {
+            scroll: false,
+          });
         }
       }
     },
