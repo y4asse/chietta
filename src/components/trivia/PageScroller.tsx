@@ -2,15 +2,15 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { ReactNode, useCallback, useEffect, useRef } from "react";
 import { directionAtom, storyAtom } from "~/jotai/atoms";
-import { api } from "~/utils/api";
+import { trpc } from "~/utils/trpc";
 
 const PageScroller = ({ children }: { children: ReactNode }) => {
   //サーバ側のデータ(マウント時に取得するからサーバー側ではundefined)
   //queryは初回のみ実行されるので、pathが変わった時は、useEffectで監視して、refetchする
   const router = useRouter();
   const id = router.query.id as string;
-  api.trivia.setHistory.useQuery(id); //パスが変わっても毎回実行される(idが変わるから)
-  const { data: nextIds, refetch } = api.trivia.getManyIds.useQuery(); //引数がないので、初回のみ実行されるから、useEffectで監視して、refetchする
+  trpc.trivia.setHistory.useQuery(id); //パスが変わっても毎回実行される(idが変わるから)
+  const { data: nextIds, refetch } = trpc.trivia.getManyIds.useQuery(); //引数がないので、初回のみ実行されるから、useEffectで監視して、refetchする
 
   //クライアント側のデータ
   const [story, setStory] = useAtom(storyAtom);

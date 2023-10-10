@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "~/components/layout/layout";
-import { api } from "~/utils/api";
+import { api } from "~/utils/trpc";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import superjson from "superjson";
 import { GetStaticPaths, GetStaticPropsContext } from "next";

@@ -4,7 +4,7 @@ import Hero from "~/components/about/Hero";
 import Works from "~/components/about/Works";
 import Layout from "~/components/layout/layout";
 
-import { api } from "~/utils/api";
+import { api } from "~/utils/trpc";
 
 export default function Home() {
   return (
