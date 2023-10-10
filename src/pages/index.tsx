@@ -18,7 +18,6 @@ export default function Home() {
     staleTime: 1000 * 60 * 5, // 5分間キャッシュ
     cacheTime: 1000 * 60 * 5, // 5分間キャッシュ
   });
-  console.log();
   return (
     <>
       <Head>
