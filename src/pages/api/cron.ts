@@ -28,7 +28,7 @@ const updateRedis = async (updateCount: number) => {
   // redisへ書き込み
   // 用意
   const pipeline = kv.pipeline();
-  newPosts.map(async (post) => {
+  newPosts.map((post) => {
     pipeline.hset(`post:${post.id}`, {
       title: post.title,
       url: post.url,
@@ -46,15 +46,15 @@ const updateRedis = async (updateCount: number) => {
   console.log(result);
   const overFlowCount = (await kv.zcard("timeline")) - 1000;
   if (overFlowCount > 0) {
-    kv.zremrangebyrank("timeline", 0, overFlowCount - 1);
+    void kv.zremrangebyrank("timeline", 0, overFlowCount - 1);
   }
 };
 
 const updateZenn = async () => {
   // zennから取得
-  const res: ZennResponse = await fetch(
-    `https://zenn.dev/api/articles?order=latest`,
-  ).then((res) => res.json());
+  const res = await fetch(`https://zenn.dev/api/articles?order=latest`).then(
+    async (res) => (await res.json()) as ZennResponse,
+  );
 
   // すべてinsertして、重複はスキップし、insertした数を返す
   const insertPosts = res.articles.map((article: ZennArticle) => ({
@@ -75,14 +75,14 @@ const updateZenn = async () => {
 const updateQiita = async () => {
   const apiKey = env.QIITA_API;
   const perPage = 50;
-  const res: QiitaResponse = await fetch(
+  const res = await fetch(
     `https://qiita.com/api/v2/items?per_page=${perPage}`,
     {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
     },
-  ).then((res) => res.json());
+  ).then(async (res) => (await res.json()) as QiitaResponse);
 
   // すべてinsertして、重複はスキップし、insertした数を返す
   const insertPosts = res.map((article) => ({

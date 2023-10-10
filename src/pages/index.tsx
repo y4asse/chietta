@@ -10,9 +10,7 @@ import { Post } from "@prisma/client";
 import { Redis } from "@upstash/redis/nodejs";
 import { env } from "~/env.mjs";
 
-export const getServerSideProps = async ({
-  params,
-}: GetServerSidePropsContext) => {
+export const getServerSideProps = ({ params }: GetServerSidePropsContext) => {
   const kv = new Redis({
     url: env.UPSTASH_REDIS_REST_URL,
     token: env.UPSTASH_REDIS_REST_TOKEN,

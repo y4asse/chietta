@@ -7,7 +7,7 @@ import { getOGP } from "~/utils/getOGP";
 const PostItem = ({ post }: { post: Post }) => {
   const [ogp, setOgp] = useState<OGP | null>(null);
   useEffect(() => {
-    getOGP(post.url).then((ogp: OGP) => {
+    void getOGP(post.url).then((ogp: OGP) => {
       setOgp(ogp);
     });
   }, [post]);

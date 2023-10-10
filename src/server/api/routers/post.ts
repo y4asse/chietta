@@ -9,7 +9,7 @@ export const postRouter = createTRPCRouter({
   getPosts: publicProcedure.query(async ({ ctx }) => {
     const { kv } = ctx;
     const startTimeline = Date.now();
-    const timeline = (await kv.zrange("timeline", 0, 50)) as string[];
+    const timeline: string[] = await kv.zrange("timeline", 0, 50);
     const endTimeline = Date.now();
     console.log(
       "[getPosts] get timeline = " + (endTimeline - startTimeline) + "ms",

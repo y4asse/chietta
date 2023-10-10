@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "~/components/layout/layout";
-import { api } from "~/utils/trpc";
+import { trpc } from "~/utils/trpc";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import superjson from "superjson";
 import { GetStaticPaths, GetStaticPropsContext } from "next";
@@ -9,11 +9,12 @@ import { appRouter } from "~/server/api/root";
 import Content from "~/components/trivia/Content";
 import Title from "~/components/trivia/Title";
 import PageScroller from "~/components/trivia/PageScroller";
+import { kv } from "~/server/redis";
 
 // TODO: LottieFilesをダイナミックインポート
 
 const Trivia = ({ id }: { id: string }) => {
-  const { data: trivia } = api.trivia.getById.useQuery(id);
+  const { data: trivia } = trpc.trivia.getById.useQuery(id);
 
   return (
     <Layout>
@@ -35,6 +36,7 @@ export const getStaticProps = async (
     ctx: {
       db: db,
       session: null,
+      kv: kv,
     },
     transformer: superjson,
   });
