@@ -1,37 +1,53 @@
 import { createServerSideHelpers } from "@trpc/react-query/server";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import Layout from "~/components/layout/layout";
+import PostItem from "~/components/tech/PostItem";
 import { appRouter } from "~/server/api/root";
 import { db } from "~/server/db";
-
-import { api } from "~/utils/api";
+import { trpc } from "~/utils/trpc";
+import { Post } from "@prisma/client";
+import { Redis } from "@upstash/redis/nodejs";
+import { env } from "~/env.mjs";
 
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
+  const kv = new Redis({
+    url: env.UPSTASH_REDIS_REST_URL,
+    token: env.UPSTASH_REDIS_REST_TOKEN,
+  });
   const helpers = createServerSideHelpers({
     router: appRouter,
     ctx: {
       db: db,
       session: null,
+      kv: kv,
     },
   });
-  //prefetchをすることによって、クライアント側でのクエリをキャッシュする
-  await helpers.trivia.getNextId.prefetch();
+  // await helpers.post.getPosts.prefetch();
   return {
     props: {
       trpcState: helpers.dehydrate(),
-      nextId: await helpers.trivia.getNextId.fetch(),
     },
   };
 };
+export type OGP = {
+  title: string;
+  image: string;
+};
 
-export default function Home(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>,
-) {
-  const { nextId } = props;
+export type PostOgp = {
+  post: Post;
+  ogp: OGP;
+};
+
+export default function Home() {
+  const { data: posts, status } = trpc.post.getPosts.useQuery(undefined, {
+    staleTime: 1000 * 60,
+    cacheTime: 1000 * 60,
+  });
+
   return (
     <>
       <Head>
@@ -43,15 +59,12 @@ export default function Home(
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <h1 className="mt-10 text-center text-4xl">トップ</h1>
-        <div className="my-10 text-center">
-          <Link
-            href={`/trivia/${nextId}`}
-            className="rounded bg-primary p-3 text-[white]"
-          >
-            さっそく始める
-          </Link>
-          {nextId}
+        <div className="bg-pink p-10">
+          <h1 className=" bg-pink text-center text-3xl font-bold">新着</h1>
+        </div>
+        <div className="grid grid-cols-1 text-center shadow-lg">
+          {posts?.map((post) => <PostItem post={post} key={post.id} />)}
+          <button className="border">もっと</button>
         </div>
       </Layout>
     </>
