@@ -3,6 +3,10 @@ import { Post } from "@prisma/client";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
+  getHello: publicProcedure.query(() => {
+    return "hello";
+  }),
+
   // redisから取得
   getPostsFromDb: publicProcedure.query(async ({ ctx }) => {
     const take = 20;

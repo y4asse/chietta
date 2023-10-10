@@ -20,7 +20,7 @@ export const getServerSideProps = async ({
       kv: kv,
     },
   });
-  await helpers.post.getPostsFromRedis.prefetch();
+  await helpers.post.getPostsFromDb.prefetch();
   return {
     props: {
       trpcState: helpers.dehydrate(),
@@ -39,13 +39,11 @@ export type PostOgp = {
 };
 
 export default function Home() {
-  const { data: posts, status } = trpc.post.getPostsFromRedis.useQuery(
-    undefined,
-    {
-      staleTime: 1000 * 60 * 5, // 5分間キャッシュ
-      cacheTime: 1000 * 60 * 5, // 5分間キャッシュ
-    },
-  );
+  const { data } = trpc.post.getHello.useQuery();
+  const { data: posts, status } = trpc.post.getPostsFromDb.useQuery(undefined, {
+    staleTime: 1000 * 60 * 5, // 5分間キャッシュ
+    cacheTime: 1000 * 60 * 5, // 5分間キャッシュ
+  });
   return (
     <>
       <Head>
@@ -57,6 +55,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
+        <div>{data}</div>
         <div className="bg-pink p-10">
           <h1 className=" bg-pink text-center text-3xl font-bold">新着</h1>
         </div>
