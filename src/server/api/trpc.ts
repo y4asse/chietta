@@ -15,6 +15,8 @@ import { ZodError } from "zod";
 
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
+import { kv } from "../redis";
+import { Redis } from "@upstash/redis/types/pkg/redis";
 
 /**
  * 1. CONTEXT
@@ -42,6 +44,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     db,
+    kv: kv,
   };
 };
 
