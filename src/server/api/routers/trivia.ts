@@ -1,12 +1,6 @@
-import { kv } from "@vercel/kv";
-import { title } from "process";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const triviaRouter = createTRPCRouter({
   getById: publicProcedure.input(z.string()).query(({ input, ctx }) => {
@@ -19,11 +13,11 @@ export const triviaRouter = createTRPCRouter({
     return ctx.db.trivia.findMany();
   }),
 
-  getSession: publicProcedure.query(async ({ ctx }) => {
-    await kv.set("guest_aaaafdsafkfasdf", ["id1", "id2"]);
-    const session = await kv.get("user_1_session");
-    return session as string[];
-  }),
+  // getSession: publicProcedure.query(async ({ ctx }) => {
+  //   await kv.set("guest_aaaafdsafkfasdf", ["id1", "id2"]);
+  //   const session = await kv.get("user_1_session");
+  //   return session as string[];
+  // }),
 
   insertMany: publicProcedure
     .input(
