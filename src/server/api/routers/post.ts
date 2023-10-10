@@ -9,15 +9,11 @@ export const postRouter = createTRPCRouter({
   getPosts: publicProcedure.query(async ({ ctx }) => {
     const { kv } = ctx;
     const startTimeline = Date.now();
-    const timeline: string[] = await kv.zrange("timeline", 0, 50);
+    const timeline: string[] = await kv.zrange("timeline", 0, -1);
     const endTimeline = Date.now();
     console.log(
       "[getPosts] get timeline = " + (endTimeline - startTimeline) + "ms",
     );
-    // const timeline = await ctx.db.post.findMany({
-    //   orderBy: { createdAt: "desc" },
-    //   take: 50,
-    // });
     const pipeline = kv.pipeline();
     //降順に並び替え
     for (let i = timeline.length - 1; i >= 0; i--) {

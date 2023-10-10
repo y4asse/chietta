@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../server/db";
 import { ZennArticle, ZennResponse } from "types/zenn";
-import { QiitaResponse } from "types/qiita";
+import { QiitaArticle, QiitaResponse } from "types/qiita";
 import { env } from "~/env.mjs";
 import { kv } from "~/server/redis";
 
@@ -9,26 +9,32 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const zennUpdateCount = await updateZenn();
-  const qiitaUpdateCount = await updateQiita();
-  const totalUpdateCount = zennUpdateCount + qiitaUpdateCount;
-  await updateRedis(totalUpdateCount);
-  res.status(200).json({ zennUpdateCount, qiitaUpdateCount });
+  const zennNewPosts = await updateZenn();
+  const qiitaNewPosts = await updateQiita();
+  const newPosts = [...zennNewPosts, ...qiitaNewPosts];
+  const newDbPosts = await updateRedis(newPosts);
+  res.status(200).json({ updatedPosts: newDbPosts });
 }
 
-const updateRedis = async (updateCount: number) => {
-  if (updateCount === 0) return;
+const updateRedis = async (
+  newPosts: {
+    url: string;
+    provider: string;
+    createdAt: Date;
+    title: string;
+  }[],
+) => {
+  if (newPosts.length === 0) return;
 
-  // dbから取得
-  const newPosts = await db.post.findMany({
-    orderBy: { createdAt: "desc" },
-    take: updateCount,
+  //dbからidも取得
+  const newDbPosts = await db.post.findMany({
+    where: { url: { in: newPosts.map(({ url }) => url) } },
   });
 
   // redisへ書き込み
   // 用意
   const pipeline = kv.pipeline();
-  newPosts.map((post) => {
+  newDbPosts.map((post) => {
     pipeline.hset(`post:${post.id}`, {
       title: post.title,
       url: post.url,
@@ -36,6 +42,10 @@ const updateRedis = async (updateCount: number) => {
       provider: post.provider,
     });
     pipeline.expire(`post:${post.id}`, 60 * 60 * 24 * 7);
+    pipeline.zadd("timeline", {
+      score: post.createdAt.getTime(),
+      member: post.id,
+    });
   });
 
   // 実行
@@ -43,11 +53,12 @@ const updateRedis = async (updateCount: number) => {
   const result = await pipeline.exec();
   const execEnd = Date.now();
   console.log(`redis exec time: ${execEnd - execStart}ms`);
-  console.log(result);
   const overFlowCount = (await kv.zcard("timeline")) - 1000;
   if (overFlowCount > 0) {
     void kv.zremrangebyrank("timeline", 0, overFlowCount - 1);
   }
+
+  return newDbPosts;
 };
 
 const updateZenn = async () => {
@@ -55,9 +66,15 @@ const updateZenn = async () => {
   const res = await fetch(`https://zenn.dev/api/articles?order=latest`).then(
     async (res) => (await res.json()) as ZennResponse,
   );
-
-  // すべてinsertして、重複はスキップし、insertした数を返す
-  const insertPosts = res.articles.map((article: ZennArticle) => ({
+  const allUrl = res.articles.map(({ path }) => "https://zenn.dev" + path);
+  const existingPosts = await db.post.findMany({
+    where: { url: { in: allUrl } },
+  });
+  const existingUrl = existingPosts.map(({ url }) => url);
+  const newPosts = res.articles.filter(
+    (article) => !existingUrl.includes("https://zenn.dev" + article.path),
+  );
+  const insertPosts = newPosts.map((article: ZennArticle) => ({
     url: "https://zenn.dev" + article.path,
     provider: "zenn",
     createdAt: new Date(article.published_at),
@@ -69,7 +86,8 @@ const updateZenn = async () => {
     data: insertPosts,
     skipDuplicates: true,
   });
-  return count;
+  console.log("zenn update count: " + count);
+  return insertPosts;
 };
 
 const updateQiita = async () => {
@@ -83,9 +101,13 @@ const updateQiita = async () => {
       },
     },
   ).then(async (res) => (await res.json()) as QiitaResponse);
-
-  // すべてinsertして、重複はスキップし、insertした数を返す
-  const insertPosts = res.map((article) => ({
+  const allUrl = res.map(({ url }) => url);
+  const existingPosts = await db.post.findMany({
+    where: { url: { in: allUrl } },
+  });
+  const existingUrl = existingPosts.map(({ url }) => url);
+  const newPosts = res.filter(({ url }) => !existingUrl.includes(url));
+  const insertPosts = newPosts.map((article) => ({
     url: article.url,
     provider: "qiita",
     createdAt: new Date(article.created_at),
@@ -97,5 +119,6 @@ const updateQiita = async () => {
     data: insertPosts,
     skipDuplicates: true,
   });
-  return count;
+  console.log("qiita update count: " + count);
+  return insertPosts;
 };
