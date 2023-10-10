@@ -14,10 +14,13 @@ export type PostOgp = {
 };
 
 export default function Home() {
-  const { data: posts, status } = trpc.post.getPostsFromDb.useQuery(undefined, {
-    staleTime: 1000 * 60 * 5, // 5分間キャッシュ
-    cacheTime: 1000 * 60 * 5, // 5分間キャッシュ
-  });
+  const { data: posts, status } = trpc.post.getPostsFromRedis.useQuery(
+    undefined,
+    {
+      staleTime: 1000 * 60 * 5, // 5分間キャッシュ
+      cacheTime: 1000 * 60 * 5, // 5分間キャッシュ
+    },
+  );
   return (
     <>
       <Head>

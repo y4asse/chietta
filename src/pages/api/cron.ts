@@ -12,7 +12,7 @@ export default async function handler(
   const zennNewPosts = await updateZenn();
   const qiitaNewPosts = await updateQiita();
   const newPosts = [...zennNewPosts, ...qiitaNewPosts];
-  // const newDbPosts = await updateRedis(newPosts);
+  const newDbPosts = await updateRedis(newPosts);
   res.status(200).json({ updatedPosts: newPosts });
 }
 
