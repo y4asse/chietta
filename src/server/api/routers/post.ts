@@ -26,7 +26,9 @@ export const postRouter = createTRPCRouter({
     const timeline: string[] = await kv.zrange("timeline", 0, take - 1);
     const endTimeline = Date.now();
     console.log(
-      "[getPosts] get timeline = " + (endTimeline - startTimeline) + "ms",
+      "[getPostsFromRedis] get timeline = " +
+        (endTimeline - startTimeline) +
+        "ms",
     );
     if (timeline.length === 0) return [];
     const pipeline = kv.pipeline();

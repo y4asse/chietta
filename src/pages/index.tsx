@@ -3,6 +3,31 @@ import Layout from "~/components/layout/layout";
 import PostItem from "~/components/tech/PostItem";
 import { trpc } from "~/utils/trpc";
 import { Post } from "@prisma/client";
+import { createServerSideHelpers } from "@trpc/react-query/server";
+import { appRouter } from "~/server/api/root";
+import { db } from "~/server/db";
+import { kv } from "~/server/redis";
+import { GetServerSidePropsContext } from "next";
+
+export const getServerSideProps = async ({
+  params,
+}: GetServerSidePropsContext) => {
+  const helpers = createServerSideHelpers({
+    router: appRouter,
+    ctx: {
+      db: db,
+      session: null,
+      kv: kv,
+    },
+  });
+  await helpers.post.getPostsFromRedis.prefetch();
+  return {
+    props: {
+      trpcState: helpers.dehydrate(),
+    },
+  };
+};
+
 export type OGP = {
   title: string;
   image: string;
