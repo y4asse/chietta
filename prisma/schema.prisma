@@ -27,17 +27,49 @@ model Category {
 }
 
 model CategoryMap {
-    id          Int      @id @default(autoincrement())
-    trivia_id   String
-    category_id Int
-    trivia      Trivia   @relation(fields: [trivia_id], references: [id])
-    category    Category @relation(fields: [category_id], references: [id])
-    createdAt   DateTime @default(now())
+    id               Int      @id @default(autoincrement())
+    trivia_id        String
+    category_id      Int
+    trivia           Trivia   @relation(fields: [trivia_id], references: [id])
+    category         Category @relation(fields: [category_id], references: [id])
+    createdAt        DateTime @default(now())
+    post_category_id Int?
 
     @@index([category_id])
     @@index([trivia_id])
 }
 
+model Post {
+    id              String            @id @default(uuid())
+    url             String            @unique
+    provider        String
+    createdAt       DateTime
+    title           String
+    postCategoryMap PostCategoryMap[]
+
+    @@index([createdAt])
+}
+
+model PostCategory {
+    id              Int               @id @default(autoincrement())
+    name            String            @unique
+    postCategoryMap PostCategoryMap[]
+
+    @@index([name])
+}
+
+model PostCategoryMap {
+    id               Int          @id @default(autoincrement())
+    post_category    PostCategory @relation(fields: [post_category_id], references: [id])
+    post_category_id Int
+    post             Post         @relation(fields: [post_id], references: [id])
+    post_id          String
+
+    @@index([post_category_id])
+    @@index([post_id])
+}
+
+// default
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
