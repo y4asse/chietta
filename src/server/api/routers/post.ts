@@ -38,6 +38,6 @@ export const postRouter = createTRPCRouter({
     //   createdAt: new Date(post.createdAt),
     // }));
 
-    return posts as Post[];
+    return posts;
   }),
 });
