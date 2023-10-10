@@ -43,7 +43,7 @@ const updateRedis = async (
     });
     pipeline.expire(`post:${post.id}`, 60 * 60 * 24 * 7);
     pipeline.zadd("timeline", {
-      score: post.createdAt.getTime(),
+      score: -post.createdAt.getTime(),
       member: post.id,
     });
   });

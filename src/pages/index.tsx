@@ -1,35 +1,8 @@
-import { createServerSideHelpers } from "@trpc/react-query/server";
-import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import Layout from "~/components/layout/layout";
 import PostItem from "~/components/tech/PostItem";
-import { appRouter } from "~/server/api/root";
-import { db } from "~/server/db";
 import { trpc } from "~/utils/trpc";
 import { Post } from "@prisma/client";
-import { Redis } from "@upstash/redis/nodejs";
-import { env } from "~/env.mjs";
-
-export const getServerSideProps = ({ params }: GetServerSidePropsContext) => {
-  const kv = new Redis({
-    url: env.UPSTASH_REDIS_REST_URL,
-    token: env.UPSTASH_REDIS_REST_TOKEN,
-  });
-  const helpers = createServerSideHelpers({
-    router: appRouter,
-    ctx: {
-      db: db,
-      session: null,
-      kv: kv,
-    },
-  });
-  // await helpers.post.getPosts.prefetch();
-  return {
-    props: {
-      trpcState: helpers.dehydrate(),
-    },
-  };
-};
 export type OGP = {
   title: string;
   image: string;
@@ -42,10 +15,10 @@ export type PostOgp = {
 
 export default function Home() {
   const { data: posts, status } = trpc.post.getPosts.useQuery(undefined, {
-    staleTime: 1000 * 60,
-    cacheTime: 1000 * 60,
+    staleTime: 1000 * 60 * 5, // 5分間キャッシュ
+    cacheTime: 1000 * 60 * 5, // 5分間キャッシュ
   });
-
+  console.log();
   return (
     <>
       <Head>

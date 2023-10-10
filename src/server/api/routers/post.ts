@@ -1,6 +1,4 @@
 import { Post } from "@prisma/client";
-import { Redis } from "@upstash/redis/nodejs";
-import { env } from "~/env.mjs";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
@@ -8,18 +6,20 @@ export const postRouter = createTRPCRouter({
   // redisから取得
   getPosts: publicProcedure.query(async ({ ctx }) => {
     const { kv } = ctx;
+    const limit = 20;
     const startTimeline = Date.now();
     const timeline: string[] = await kv.zrange("timeline", 0, -1);
     const endTimeline = Date.now();
     console.log(
       "[getPosts] get timeline = " + (endTimeline - startTimeline) + "ms",
     );
+    if (timeline.length === 0) return [];
     const pipeline = kv.pipeline();
-    //降順に並び替え
-    for (let i = timeline.length - 1; i >= 0; i--) {
-      pipeline.hgetall(`post:${timeline[i]}`);
-    }
+    timeline.map((id) => {
+      pipeline.hgetall(`post:${id}`);
+    });
     const startExec = Date.now();
+
     const result: {
       title: string;
       url: string;
