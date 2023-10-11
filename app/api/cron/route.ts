@@ -59,9 +59,9 @@ const updateRedis = async (
 
 const updateZenn = async () => {
   // zennから取得
-  const res = await fetch(`https://zenn.dev/api/articles?order=latest`).then(
-    async (res) => (await res.json()) as ZennResponse
-  )
+  const res = await fetch(`https://zenn.dev/api/articles?order=latest`, {
+    cache: 'no-cache'
+  }).then(async (res) => (await res.json()) as ZennResponse)
   const allUrl = res.articles.map(({ path }) => 'https://zenn.dev' + path)
   const existingPosts = await db.post.findMany({
     where: { url: { in: allUrl } }
@@ -91,7 +91,8 @@ const updateQiita = async () => {
   const res = await fetch(`https://qiita.com/api/v2/items?per_page=${perPage}`, {
     headers: {
       Authorization: `Bearer ${apiKey}`
-    }
+    },
+    cache: 'no-cache'
   }).then(async (res) => (await res.json()) as QiitaResponse)
   const allUrl = res.map(({ url }) => url)
   const existingPosts = await db.post.findMany({
