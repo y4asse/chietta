@@ -60,7 +60,7 @@ const updateRedis = async (
 const updateZenn = async () => {
   // zennから取得
   const res = await fetch(`https://zenn.dev/api/articles?order=latest`, {
-    cache: 'no-cache'
+    cache: 'no-store'
   }).then(async (res) => (await res.json()) as ZennResponse)
   const allUrl = res.articles.map(({ path }) => 'https://zenn.dev' + path)
   const existingPosts = await db.post.findMany({
@@ -92,7 +92,7 @@ const updateQiita = async () => {
     headers: {
       Authorization: `Bearer ${apiKey}`
     },
-    cache: 'no-cache'
+    cache: 'no-store'
   }).then(async (res) => (await res.json()) as QiitaResponse)
   const allUrl = res.map(({ url }) => url)
   const existingPosts = await db.post.findMany({
