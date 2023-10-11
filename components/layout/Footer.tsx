@@ -4,7 +4,7 @@ import React from 'react'
 const Footer = () => {
   const lists = [{ link: 'about', text: 'Chiettaとは' }]
   return (
-    <div className=" bg-pink p-10">
+    <div className=" bg-[white] p-10">
       <span className="text-xl">Chietta</span>
       <ul className="mt-3 text-gray">
         {lists.map((list, index) => (
