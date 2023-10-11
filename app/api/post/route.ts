@@ -3,6 +3,8 @@ import { kv } from '@/server/redis'
 import { Post } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 
+export const revalidate = 0
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const posts = await getPostsFromDb()
   //   const posts = await getPostsFromRedis()
