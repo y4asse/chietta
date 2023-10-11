@@ -13,7 +13,7 @@ export type PostOgp = {
 
 const getPosts = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/post`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
       next: { revalidate: 60 * 5 } // 5分キャッシュ
     })
     if (!res.ok) {

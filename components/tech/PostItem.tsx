@@ -5,7 +5,6 @@ import ogs from 'open-graph-scraper'
 const PostItem = async ({ post }: { post: Post }) => {
   const { url } = post
   const { result: ogp } = await ogs({ url })
-  if (!ogp) return <div>skelton</div>
   return (
     <div className="w-screen overflow-hidden  px-5 py-5 text-left">
       <div className="overflow-hidden rounded-xl border-2 border-[#e6e6e6] bg-[white]">
