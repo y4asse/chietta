@@ -4,8 +4,12 @@ import ogs from 'open-graph-scraper'
 
 const PostItem = async ({ post }: { post: Post }) => {
   const { url } = post
-  const { result: ogp, error } = await ogs({ url })
+  const { result: ogp, error } = await ogs({ url }).catch((e) => {
+    console.log(e)
+    return { result: null, error: true }
+  })
   if (error) return
+  if (!ogp) return
   return (
     <div className="w-screen overflow-hidden  px-5 py-5 text-left">
       <div className="overflow-hidden rounded-xl border-2 border-[#e6e6e6] bg-[white]  w-[340px] mx-auto">
