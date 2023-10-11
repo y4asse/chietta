@@ -13,7 +13,7 @@ export const getPosts = async () => {
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as Post[]
+    const { posts } = (await res.json()) as { posts: Post[] }
     return posts
   } catch (error) {
     console.log(error)
