@@ -14,7 +14,8 @@ export type PostOgp = {
 const getPosts = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
-      next: { revalidate: 60 * 5 } // 5分キャッシュ
+      // next: { revalidate: 0 } // 5分キャッシュ
+      cache: 'no-cache'
     })
     if (!res.ok) {
       console.log('Http Error')

@@ -1,11 +1,8 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link'
+import React from 'react'
 
 const Footer = () => {
-  const lists = [
-    { link: "about", text: "Chiettaとは" },
-    { link: "trivia/0757d92a-c15e-44f1-afe5-5509154e72b2", text: "雑学" },
-  ];
+  const lists = [{ link: 'about', text: 'Chiettaとは' }]
   return (
     <div className=" bg-pink p-10">
       <span className="text-xl">Chietta</span>
@@ -17,7 +14,7 @@ const Footer = () => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
