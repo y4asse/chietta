@@ -8,11 +8,12 @@ export const revalidate = 0
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const posts = await getPostsFromDb()
   //   const posts = await getPostsFromRedis()
-  return Response.json({ posts: posts })
+
+  return Response.json(posts)
 }
 
 const getPostsFromDb = async () => {
-  const take = 20
+  const take = 10
   const startTimeline = Date.now()
   const posts = await db.post.findMany({
     orderBy: { createdAt: 'desc' },
@@ -20,7 +21,6 @@ const getPostsFromDb = async () => {
   })
   const endTimeline = Date.now()
   console.log('[getPostsFromDb] get posts = ' + (endTimeline - startTimeline) + 'ms')
-
   return posts
 }
 

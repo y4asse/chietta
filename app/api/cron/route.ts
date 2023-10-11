@@ -1,16 +1,17 @@
 import { db } from '@/server/db'
+import { getOgp } from '@/server/getOgp'
 import { kv } from '@/server/redis'
 import { QiitaResponse } from '@/types/qiita'
 import { ZennArticle, ZennResponse } from '@/types/zenn'
 import { NextRequest, NextResponse } from 'next/server'
 
-const revalidate = 0
+export const revalidate = 0
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
-  const zennNewPosts = await updateZenn()
-  const qiitaNewPosts = await updateQiita()
-  const newPosts = [...zennNewPosts, ...qiitaNewPosts]
-  const newDbPosts = await updateRedis(newPosts)
+  const zenn = await updateZenn()
+  const qiita = await updateQiita()
+  const newPosts = [...zenn, ...qiita]
+  // const newDbPosts = await updateRedis([...newPosts[0], ...newPosts[1]])
   return Response.json({ updatedPosts: newPosts })
 }
 
@@ -71,12 +72,32 @@ const updateZenn = async () => {
   const existingUrl = existingPosts.map(({ url }) => url)
   // existingUrlにないpostをresから取得
   const newPosts = res.articles.filter((article) => !existingUrl.includes('https://zenn.dev' + article.path))
-  const insertPosts = newPosts.map((article: ZennArticle) => ({
-    url: 'https://zenn.dev' + article.path,
-    provider: 'zenn',
-    createdAt: new Date(article.published_at),
-    title: article.title
-  }))
+  const ogp = await Promise.all(
+    newPosts.map(async (post) => {
+      const result = await getOgp('https://zenn.dev' + post.path)
+      return result
+    })
+  )
+  const insertPosts: {
+    url: string
+    provider: string
+    createdAt: Date
+    title: string
+    image_url: string
+  }[] = []
+  ogp.map((result, i) => {
+    if (!result) return //not found
+    if (!result.ogImage) return // 画像が設定されていないとき
+    if (result.ogImage.length === 0) return // 画像が設定されていないとき
+
+    insertPosts.push({
+      url: 'https://zenn.dev' + newPosts[i].path,
+      provider: 'zenn',
+      createdAt: new Date(newPosts[i].published_at),
+      title: newPosts[i].title,
+      image_url: result.ogImage[0].url
+    })
+  })
 
   // dbへ書き込み
   const { count } = await db.post.createMany({
@@ -103,12 +124,32 @@ const updateQiita = async () => {
   })
   const existingUrl = existingPosts.map(({ url }) => url)
   const newPosts = res.filter(({ url }) => !existingUrl.includes(url))
-  const insertPosts = newPosts.map((article) => ({
-    url: article.url,
-    provider: 'qiita',
-    createdAt: new Date(article.created_at),
-    title: article.title
-  }))
+  const ogp = await Promise.all(
+    newPosts.map(async (post) => {
+      const result = await getOgp(post.url)
+      return result
+    })
+  )
+  const insertPosts: {
+    url: string
+    provider: string
+    createdAt: Date
+    title: string
+    image_url: string
+  }[] = []
+  ogp.map((result, i) => {
+    if (!result) return //not found
+    if (!result.ogImage) return // 画像が設定されていないとき
+    if (result.ogImage.length === 0) return // 画像が設定されていないとき
+
+    insertPosts.push({
+      url: newPosts[i].url,
+      provider: 'qiita',
+      createdAt: new Date(newPosts[i].created_at),
+      title: newPosts[i].title,
+      image_url: result.ogImage[0].url
+    })
+  })
 
   // dbへ書き込み
   const { count } = await db.post.createMany({

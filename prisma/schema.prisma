@@ -45,6 +45,7 @@ model Post {
     provider        String
     createdAt       DateTime
     title           String
+    image_url       String            @db.Text
     postCategoryMap PostCategoryMap[]
 
     @@index([createdAt])
