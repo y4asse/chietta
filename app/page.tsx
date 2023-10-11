@@ -14,7 +14,8 @@ export type PostOgp = {
 const getPosts = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
-      cache: 'no-cache'
+      // cache: 'no-cache'
+      next: { revalidate: 60 * 5 }
     })
     if (!res.ok) {
       console.log('Http Error')
@@ -34,15 +35,13 @@ export default async function Home() {
   const posts = await getPosts()
   if (!posts) return <div>error</div>
   return (
-    <main className="min-h-screen">
-      <div className="bg-pink p-10">
-        <h1 className=" bg-pink text-center text-3xl font-bold">新着</h1>
-      </div>
-      <div className="grid grid-cols-1 text-center shadow-lg">
+    <main className="min-h-screen min-w-[340px] bg-[#fffafa] items-center py-10">
+      <h1 className=" text-center text-3xl font-bold">新着の記事</h1>
+      <div className="flex mx-auto flex-wrap p-5  gap-10 max-w-[800px] mt-10">
         {posts.map((post) => (
           <PostItem post={post} key={post.id} />
         ))}
-        <button className="border">もっと</button>
+        {/* <button className="border">もっと</button> */}
       </div>
     </main>
   )
