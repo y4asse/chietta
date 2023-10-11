@@ -67,6 +67,7 @@ const updateZenn = async () => {
     where: { url: { in: allUrl } }
   })
   const existingUrl = existingPosts.map(({ url }) => url)
+  // existingUrlにないpostをresから取得
   const newPosts = res.articles.filter((article) => !existingUrl.includes('https://zenn.dev' + article.path))
   const insertPosts = newPosts.map((article: ZennArticle) => ({
     url: 'https://zenn.dev' + article.path,
@@ -94,7 +95,8 @@ const updateQiita = async () => {
   }).then(async (res) => (await res.json()) as QiitaResponse)
   const allUrl = res.map(({ url }) => url)
   const existingPosts = await db.post.findMany({
-    where: { url: { in: allUrl } }
+    where: { url: { in: allUrl } },
+    orderBy: { createdAt: 'desc' }
   })
   const existingUrl = existingPosts.map(({ url }) => url)
   const newPosts = res.filter(({ url }) => !existingUrl.includes(url))
