@@ -4,7 +4,6 @@ import { getPosts } from '@/server/getPosts'
 
 export default async function Home() {
   const posts = await getPosts()
-  console.log(posts)
   if (!posts) return <div>error</div>
   return (
     <main className="min-h-screen min-w-[340px] bg-[#fffafa] items-center py-10">

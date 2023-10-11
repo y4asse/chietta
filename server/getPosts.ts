@@ -1,5 +1,9 @@
 import { Post } from '@prisma/client'
 
+type getPostsResponse = {
+  posts: Post[]
+}
+
 export const getPosts = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
@@ -13,7 +17,7 @@ export const getPosts = async () => {
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const { posts } = (await res.json()) as { posts: Post[] }
+    const posts = (await res.json()) as Post[]
     return posts
   } catch (error) {
     console.log(error)
