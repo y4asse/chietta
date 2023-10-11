@@ -4,6 +4,8 @@ import { QiitaResponse } from '@/types/qiita'
 import { ZennArticle, ZennResponse } from '@/types/zenn'
 import { NextRequest, NextResponse } from 'next/server'
 
+const revalidate = 0
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const zennNewPosts = await updateZenn()
   const qiitaNewPosts = await updateQiita()
