@@ -7,7 +7,7 @@ const PostItem = async ({ post }: { post: Post }) => {
   const { result: ogp } = await ogs({ url })
   return (
     <div className="w-screen overflow-hidden  px-5 py-5 text-left">
-      <div className="overflow-hidden rounded-xl border-2 border-[#e6e6e6] bg-[white]">
+      <div className="overflow-hidden rounded-xl border-2 border-[#e6e6e6] bg-[white]  w-[340px] mx-auto">
         <a href={post.url} target="_blank">
           <img src={ogp.ogImage ? ogp.ogImage[0].url : ''} className=" border-b-2 border-[#e6e6e6]" />
           <div className="px-[16px] py-[10px]">
