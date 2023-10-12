@@ -1,7 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react'
 
 const WrapContainer = ({ children }: { children: ReactNode }) => {
-  return <div className="mx-4">{children}</div>;
-};
+  return (
+    <div className="mx-auto max-w-[1000px] min-w-[300px]">
+      <div className="mx-5">{children}</div>
+    </div>
+  )
+}
 
-export default WrapContainer;
+export default WrapContainer
