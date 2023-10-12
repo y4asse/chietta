@@ -3,7 +3,8 @@ import Posts from '@/components/tech/Posts'
 import { getPosts } from '@/server/getPosts'
 
 export default async function Home() {
-  const posts = await getPosts()
+  const offset = 0
+  const posts = await getPosts(offset)
   if (!posts) return <div>error</div>
   return (
     <main className="min-h-screen min-w-[340px] bg-[#fffafa] items-center py-10">

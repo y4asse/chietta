@@ -1,15 +1,12 @@
 import { Post } from '@prisma/client'
 
-type getPostsResponse = {
-  posts: Post[]
-}
-
-export const getPosts = async () => {
+export const getPosts = async (offset: number) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?offset=${offset}`, {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      cache: 'no-store'
     })
     if (!res.ok) {
       console.log('Http Error')
