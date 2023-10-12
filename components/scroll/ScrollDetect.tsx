@@ -14,13 +14,15 @@ const ScrollDetect = ({ children }: { children: ReactNode }) => {
 
   // posts
   const [posts, setPosts] = useState<Post[] | null>([])
+  const initialOffset = 10
+  const offset = posts ? posts.length + initialOffset : initialOffset
   const [isLoading, setIsLoading] = useState(false)
   const isScrolledBottom = viewportBottom ? viewportBottom < 1500 : false
   useEffect(() => {
     if (isLoading) return
     if (!isScrolledBottom) return
     setIsLoading(true)
-    getPosts().then((posts) => {
+    getPosts(offset).then((posts) => {
       if (!posts) return
       setPosts((prev) => {
         if (!prev) return prev
