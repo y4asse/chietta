@@ -1,8 +1,10 @@
 import { format, parseISO } from 'date-fns'
 import { Post } from '@prisma/client'
+import { zonedTimeToUtc } from 'date-fns-tz'
 
 const PostItem = ({ post }: { post: Post }) => {
   const { image_url, title } = post
+
   return (
     <article className="rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px] overflow-hidden ">
       <a href={post.url} target="_blank">
@@ -10,7 +12,7 @@ const PostItem = ({ post }: { post: Post }) => {
         <div className="px-[16px] py-[10px]">
           <h1 className="font-bold">{title}</h1>
           <div className="text-right">
-            <time>{format(parseISO(post.createdAt.toString()), 'yyyy/MM/dd HH:mm')}</time>
+            <time>{format(zonedTimeToUtc(post.createdAt.toString(), 'Asia/Tokyo'), 'yyyy/MM/dd HH:mm')}</time>
           </div>
         </div>
       </a>
