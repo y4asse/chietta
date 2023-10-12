@@ -4,18 +4,20 @@ import { zonedTimeToUtc } from 'date-fns-tz'
 
 const PostItem = ({ post }: { post: Post }) => {
   const { image_url, title } = post
+  const createdAt = post.createdAt.toString()
+  const date = zonedTimeToUtc(new Date(createdAt), 'Asia/Tokyo')
 
   return (
-    <article className="rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px] overflow-hidden ">
+    <article className="rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative">
       <a href={post.url} target="_blank">
-        <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] mx-auto" />
-        <div className="px-[16px] py-[10px]">
-          <h1 className="font-bold">{title}</h1>
-          <div className="text-right">
-            <time>{format(zonedTimeToUtc(post.createdAt.toString(), 'Asia/Tokyo'), 'yyyy/MM/dd HH:mm')}</time>
-          </div>
-        </div>
+        <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] w-full" />
       </a>
+      <div className="px-[16px] py-[10px] mb-7">
+        <h1 className="font-bold">{title}</h1>
+        {/* <div className="text-right mt-auto">
+        </div> */}
+        <time className="absolute bottom-1 right-3 text-gray">{format(date, 'yyyy/MM/dd HH:mm')}</time>
+      </div>
     </article>
   )
 }
