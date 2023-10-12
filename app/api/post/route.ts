@@ -8,7 +8,6 @@ export const revalidate = 0
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const offsetString = req.nextUrl.searchParams.get('offset')
   const offset = offsetString ? parseInt(offsetString) : 0 // 不正な値の時0になる
-  console.log(offset)
   const posts = await getPostsFromDb({ offset: offset ? offset : 0 })
   //   const posts = await getPostsFromRedis()
 
