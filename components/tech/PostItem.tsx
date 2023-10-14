@@ -14,8 +14,6 @@ const PostItem = ({ post }: { post: Post }) => {
       </a>
       <div className="px-[16px] py-[10px] mb-7">
         <h1 className="font-bold">{title}</h1>
-        {/* <div className="text-right mt-auto">
-        </div> */}
         <time className="absolute bottom-1 right-3 text-gray">{format(date, 'yyyy/MM/dd HH:mm')}</time>
       </div>
     </article>
