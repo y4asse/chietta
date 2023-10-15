@@ -1,6 +1,7 @@
 import React from 'react'
 import WrapContainer from './WrapContainer'
 import Link from 'next/link'
+import Tab from './Tab'
 
 const Header = () => {
   return (
@@ -11,24 +12,14 @@ const Header = () => {
             <Link className=" text-3xl font-extrabold" href="/">
               Chietta
             </Link>
-            <div className="flex">
+            {/* <div className="flex">
               <button className="bg-primary rounded-lg px-5 py-1 text-[white] font-bold mr-3">投稿する</button>
               <img src="/img/cat.png" alt="アイコン画像" width={34} />
-            </div>
+            </div> */}
           </div>
         </WrapContainer>
       </nav>
-      <nav className="sticky top-0 z-10 bg-[white] py-3">
-        <WrapContainer>
-          {/* TODO CSRにしてpathによってボーダー変える */}
-          <ul className="flex text-xl text-gray gap-5 items-center font-bold">
-            <li className="border-b-[3px]  border-primary">
-              <Link href={'/'}>トレンド</Link>
-            </li>
-            <li>新着</li>
-          </ul>
-        </WrapContainer>
-      </nav>
+      <Tab />
     </>
   )
 }

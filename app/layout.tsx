@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/layout'
+import Layout from '@/components/layout/Layout'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'

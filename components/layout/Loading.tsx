@@ -1,8 +1,8 @@
-import React from "react";
-import Layout from "./layout";
+import React from 'react'
+import Layout from './Layout'
 
 const Loading = () => {
-  return <Layout>Loading</Layout>;
-};
+  return <Layout>Loading</Layout>
+}
 
-export default Loading;
+export default Loading
