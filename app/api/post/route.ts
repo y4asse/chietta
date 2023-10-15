@@ -1,17 +1,26 @@
+import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
+import { getOgp } from '@/server/getOgp'
 import { kv } from '@/server/redis'
 import { Post } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const revalidate = 0
 
+export type ReturnPost = {
+  id: string
+  title: string
+  url: string
+  createdAt: Date
+  image_url: string
+}
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const offsetString = req.nextUrl.searchParams.get('offset')
   const offset = offsetString ? parseInt(offsetString) : 0 // 不正な値の時0になる
   const posts = await getPostsFromDb({ offset: offset ? offset : 0 })
-  //   const posts = await getPostsFromRedis()
-
-  return Response.json(posts)
+  const returnPosts = await addOgp(posts)
+  return Response.json(returnPosts)
 }
 
 const getPostsFromDb = async ({ offset }: { offset: number }) => {

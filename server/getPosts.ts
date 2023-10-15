@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client'
+import { ReturnPost } from '@/app/api/post/route'
 
 export const getPosts = async (offset: number) => {
   try {
@@ -14,7 +14,7 @@ export const getPosts = async (offset: number) => {
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as Post[]
+    const posts = (await res.json()) as ReturnPost[]
     return posts
   } catch (error) {
     console.log(error)

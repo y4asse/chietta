@@ -1,8 +1,8 @@
-import { format, parseISO } from 'date-fns'
-import { Post } from '@prisma/client'
+import { ReturnPost } from '@/app/api/post/route'
+import { format } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
 
-const PostItem = ({ post }: { post: Post }) => {
+const PostItem = ({ post }: { post: ReturnPost }) => {
   const { image_url, title } = post
   const createdAt = post.createdAt.toString()
   const date = zonedTimeToUtc(new Date(createdAt), 'Asia/Tokyo')
