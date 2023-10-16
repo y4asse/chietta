@@ -1,12 +1,12 @@
 import { db } from '@/server/db'
 import { kv } from '@/server/redis'
 import { QiitaResponse } from '@/types/qiita'
-import { ZennArticle, ZennResponse } from '@/types/zenn'
+import { ZennResponse } from '@/types/zenn'
 import { NextRequest, NextResponse } from 'next/server'
 
-export const revalidate = 0
+export const revalidate = 60 * 5
 
-export const GET = async (req: NextRequest, res: NextResponse) => {
+const handler = async (req: NextRequest, res: NextResponse) => {
   const zenn = await updateZenn()
   const qiita = await updateQiita()
   const newPosts = [...zenn, ...qiita]
@@ -95,7 +95,7 @@ const updateZenn = async () => {
 
 const updateQiita = async () => {
   const apiKey = process.env.QIITA_API!
-  const perPage = 100
+  const perPage = 50
   const res = await fetch(`https://qiita.com/api/v2/items?per_page=${perPage}`, {
     headers: {
       Authorization: `Bearer ${apiKey}`
