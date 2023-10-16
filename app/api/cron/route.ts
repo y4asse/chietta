@@ -10,7 +10,6 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const zenn = await updateZenn()
   const qiita = await updateQiita()
   const newPosts = [...zenn, ...qiita]
-  // const newDbPosts = await updateRedis([...newPosts[0], ...newPosts[1]])
   return Response.json({ updatedPosts: newPosts })
 }
 
