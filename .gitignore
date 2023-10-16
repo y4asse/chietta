@@ -37,3 +37,4 @@ next-env.d.ts
 .env
 /app/api/script
 /app/api/db
+/script
