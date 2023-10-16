@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export const revalidate = 60 * 5
 
-const handler = async (req: NextRequest, res: NextResponse) => {
+export const GET = async (req: NextRequest, res: NextResponse) => {
   const zenn = await updateZenn()
   const qiita = await updateQiita()
   const newPosts = [...zenn, ...qiita]
