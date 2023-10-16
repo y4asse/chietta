@@ -1,5 +1,6 @@
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -11,21 +12,17 @@ datasource db {
 model Post {
     id              String            @id @default(uuid())
     url             String            @unique
-    provider        String
     createdAt       DateTime
     title           String
-    image_url       String            @db.Text
     postCategoryMap PostCategoryMap[]
 
-    @@index([createdAt])
+    @@fulltext([title])
 }
 
 model PostCategory {
     id              Int               @id @default(autoincrement())
     name            String            @unique
     postCategoryMap PostCategoryMap[]
-
-    @@index([name])
 }
 
 model PostCategoryMap {

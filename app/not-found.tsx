@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/layout'
+import Layout from '@/components/layout/LayoutComponent'
 import Image from 'next/image'
 import React from 'react'
 

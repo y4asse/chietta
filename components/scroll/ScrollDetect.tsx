@@ -1,10 +1,12 @@
 'use client'
 
 import { useOffsetBottom } from '@/hooks/useOffsetBottom'
-import { Post } from '@prisma/client'
-import React, { ReactNode, Suspense, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import Posts from '../tech/Posts'
 import { getPosts } from '@/server/getPosts'
+import { ReturnPost } from '@/app/api/post/route'
+import dynamic from 'next/dynamic'
+const SkeltonContainer = dynamic(() => import('../skelton/SkeltonContainer'))
 
 // 下から200pxのところで新しいやつを入れる
 const ScrollDetect = ({ children }: { children: ReactNode }) => {
@@ -13,7 +15,7 @@ const ScrollDetect = ({ children }: { children: ReactNode }) => {
   const { pageOffsetBottom, viewportBottom } = useOffsetBottom(ref)
 
   // posts
-  const [posts, setPosts] = useState<Post[] | null>([])
+  const [posts, setPosts] = useState<ReturnPost[] | null>([])
   const initialOffset = 10
   const offset = posts ? posts.length + initialOffset : initialOffset
   const [isLoading, setIsLoading] = useState(false)
@@ -34,10 +36,12 @@ const ScrollDetect = ({ children }: { children: ReactNode }) => {
     })
   }, [isScrolledBottom, isLoading])
   if (!posts) return <div>error</div>
+
   return (
     <div ref={ref}>
       {children}
       <Posts posts={posts} />
+      {isLoading && <SkeltonContainer />}
     </div>
   )
 }
