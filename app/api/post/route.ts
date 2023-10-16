@@ -5,7 +5,7 @@ import { kv } from '@/server/redis'
 import { Post } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 
-export const revalidate = 0
+export const revalidate = 5 * 60 // 5分に一回更新する
 
 export type ReturnPost = {
   id: string
