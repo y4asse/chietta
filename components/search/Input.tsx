@@ -1,13 +1,21 @@
 'use client'
 
+import useLoading from '@/hooks/useLoading'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Spinner from './Spinner'
 
 const Input = ({ q }: { q: string }) => {
   const router = useRouter()
+
+  const { value: isLoading, start: startIsLoading, stop: stopIsLoading } = useLoading()
   const [searchWord, setSearchWord] = useState(q)
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    startIsLoading()
+    inputRef.current?.blur()
     router.push(`/search?q=${searchWord}`)
   }
 
@@ -15,9 +23,14 @@ const Input = ({ q }: { q: string }) => {
     router.prefetch(`/search?q=${e.target.value}`)
     setSearchWord(e.target.value)
   }
+
+  useEffect(() => {
+    stopIsLoading()
+  }, [q])
   return (
     <form onSubmit={handleSubmit}>
       <input
+        ref={inputRef}
         type="text"
         name="q"
         required
@@ -26,6 +39,7 @@ const Input = ({ q }: { q: string }) => {
         value={searchWord}
         onChange={handleChange}
       />
+      {isLoading && <Spinner />}
     </form>
   )
 }
