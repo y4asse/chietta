@@ -7,6 +7,10 @@ import { NextRequest, NextResponse } from 'next/server'
 export const revalidate = 60 * 5
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
+  const secret = req.nextUrl.searchParams.get('secret')
+  if (secret !== process.env.MY_SECRET_TOKEN) {
+    return Response.json({ error: 'invalid token' }, { status: 401 })
+  }
   const zenn = await updateZenn()
   const qiita = await updateQiita()
   const newPosts = [...zenn, ...qiita]
