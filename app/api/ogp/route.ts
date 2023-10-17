@@ -1,8 +1,6 @@
 import { NextRequest } from 'next/server'
 import ogs from 'open-graph-scraper'
 
-// export const revalidate = 60 * 60 * 24 * 7 * 30 // 30 days
-
 export const GET = async (req: NextRequest) => {
   const url = req.nextUrl.searchParams.get('url')
   if (!url) {
