@@ -1,6 +1,5 @@
 import WrapContainer from '@/components/layout/WrapContainer'
 import React from 'react'
-import { ReturnPost } from '../api/post/route'
 import Posts from '@/components/tech/Posts'
 import Input from '@/components/search/Input'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
@@ -15,6 +14,7 @@ const Search = async ({ searchParams }: { searchParams: { q: string } }) => {
     <div className="py-10 border-b border-[#cacaca] min-h-screen bg-[#fffafa]">
       <WrapContainer>
         <Input q={q} />
+
         {filteredPosts ? (
           filteredPosts.length === 0 ? (
             <div className="text-center text-gray text-2xl font-bold mt-10">見つかりませんでした</div>
