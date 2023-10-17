@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 
 const Tab = () => {
   const pathname = usePathname()
-  console.log(pathname)
   const list = [
     {
       name: 'トレンド',
