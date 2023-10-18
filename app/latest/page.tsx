@@ -1,5 +1,3 @@
-'use server'
-
 import WrapContainer from '@/components/layout/WrapContainer'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
 import Posts from '@/components/tech/Posts'

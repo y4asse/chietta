@@ -14,6 +14,7 @@ const Input = ({ q }: { q: string }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (q === searchWord) return
     startIsLoading()
     inputRef.current?.blur()
     router.push(`/search?q=${searchWord}`)
