@@ -17,6 +17,7 @@
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "dayjs": "^1.11.10",
     "firebase": "^10.4.0",
     "framer-motion": "^10.16.4",
     "jotai": "^2.4.3",
