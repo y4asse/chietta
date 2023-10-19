@@ -17,6 +17,9 @@ export const GET = async (req: NextRequest) => {
         search: searchQuery
       }
     },
+    orderBy: {
+      createdAt: 'desc'
+    },
     skip: offset,
     take
   })
@@ -25,4 +28,11 @@ export const GET = async (req: NextRequest) => {
   console.log('[db] search time: ' + (end.getTime() - start.getTime()) + 'ms')
   const count = result.length
   return Response.json(returnPosts)
+}
+
+// 同義語リスト
+const synonymLists = {
+  go: ['golang'],
+  nextjs: ['next.js'],
+  ラズパイ: ['raspberry pi']
 }

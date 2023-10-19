@@ -16,6 +16,7 @@ model Post {
     title           String
     postCategoryMap PostCategoryMap[]
 
+    @@index([createdAt])
     @@fulltext([title])
 }
 
