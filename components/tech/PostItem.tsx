@@ -9,7 +9,7 @@ const PostItem = ({ post }: { post: ReturnPost }) => {
 
   return (
     <article className="rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative">
-      <a href={post.url} target="_blank">
+      <a href={post.url}>
         <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] w-full" />
       </a>
       <div className="px-[16px] py-[10px] mb-7">
