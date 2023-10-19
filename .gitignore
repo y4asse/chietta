@@ -38,3 +38,4 @@ next-env.d.ts
 /app/api/script
 /app/api/db
 /script
+data.json
