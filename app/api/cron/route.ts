@@ -12,14 +12,19 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   if (secret !== process.env.MY_SECRET_TOKEN) {
     return Response.json({ error: 'invalid token' }, { status: 401 })
   }
-  // const zenn = await updateZenn()
-  // const qiita = await updateQiita()
+  const zenn = await updateZenn()
+  const qiita = await updateQiita()
   await deleteOldTrends()
   const zennTrends = await updateZennTrend()
   const qiitaTrends = await updateQiitaTrend()
-  // const newPosts = [...zenn, ...qiita]
-  return Response.json({ zennTrendsCount: zennTrends.length, qiitaTrendsCount: qiitaTrends.length })
-  // return Response.json({ updatedPosts: newPosts, zennTrends, qiitaTrends })
+  const newPosts = [...zenn, ...qiita]
+  return Response.json({
+    zennTrendsCount: zennTrends.length,
+    qiitaTrendsCount: qiitaTrends.length,
+    updatedPosts: newPosts,
+    zennTrends,
+    qiitaTrends
+  })
 }
 
 const deleteOldTrends = async () => {
