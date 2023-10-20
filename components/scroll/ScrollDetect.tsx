@@ -36,7 +36,6 @@ const ScrollDetect = ({
     if (!posts) return
 
     setIsLoading(true)
-    console.log('fetching')
     getPosts(offset, q).then((newPosts) => {
       //エラーが起きた時isLoadingはtrueのままになる
       if (!newPosts) return
