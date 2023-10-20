@@ -1,62 +1,100 @@
 import { db } from '@/server/db'
 import { kv } from '@/server/redis'
-import { QiitaResponse } from '@/types/qiita'
+import { Feed } from '@/types/feed'
+import { QiitaArticle, QiitaResponse } from '@/types/qiita'
+import { TrendArticle } from '@/types/trendsArticle'
 import { ZennResponse } from '@/types/zenn'
 import { NextRequest, NextResponse } from 'next/server'
+import { parseStringPromise } from 'xml2js'
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const secret = req.nextUrl.searchParams.get('secret')
   if (secret !== process.env.MY_SECRET_TOKEN) {
     return Response.json({ error: 'invalid token' }, { status: 401 })
   }
-  const zenn = await updateZenn()
-  const qiita = await updateQiita()
-  const newPosts = [...zenn, ...qiita]
-  return Response.json({ updatedPosts: newPosts })
+  // const zenn = await updateZenn()
+  // const qiita = await updateQiita()
+  await deleteOldTrends()
+  const zennTrends = await updateZennTrend()
+  const qiitaTrends = await updateQiitaTrend()
+  // const newPosts = [...zenn, ...qiita]
+  return Response.json({ zennTrendsCount: zennTrends.length, qiitaTrendsCount: qiitaTrends.length })
+  // return Response.json({ updatedPosts: newPosts, zennTrends, qiitaTrends })
 }
 
-const updateRedis = async (
-  newPosts: {
-    url: string
-    provider: string
-    createdAt: Date
-    title: string
-  }[]
-) => {
-  if (newPosts.length === 0) return
+const deleteOldTrends = async () => {
+  const startTime = Date.now()
+  await kv.del('trends')
+  const endTime = Date.now()
+  console.log(`[trends] delete old trends exec pipeline: ${endTime - startTime}ms`)
+}
 
-  //dbからidも取得
-  const newDbPosts = await db.post.findMany({
-    where: { url: { in: newPosts.map(({ url }) => url) } }
-  })
-
-  // redisへ書き込み
-  // 用意
+const updateZennTrend = async () => {
+  // zennから取得
+  const res = await fetch(`https://zenn.dev/api/articles?order=daily`, {
+    cache: 'no-store'
+  }).then(async (res) => (await res.json()) as ZennResponse)
   const pipeline = kv.pipeline()
-  newDbPosts.map((post) => {
-    pipeline.hset(`post:${post.id}`, {
-      title: post.title,
-      url: post.url,
-      createdAt: post.createdAt
+  const startTime = Date.now()
+  const { articles } = res
+  for (const article of articles) {
+    const post = {
+      url: 'https://zenn.dev' + article.path,
+      createdAt: new Date(article.published_at),
+      title: article.title,
+      likedCount: article.liked_count
+    } as TrendArticle
+    const stringPost = JSON.stringify(post)
+    pipeline.zadd('trends', {
+      score: -post.likedCount,
+      member: stringPost
     })
-    pipeline.expire(`post:${post.id}`, 60 * 60 * 24 * 7)
-    pipeline.zadd('timeline', {
-      score: -post.createdAt.getTime(),
-      member: post.id
+  }
+  const result = await pipeline.exec()
+  const endTime = Date.now()
+  console.log(`[zenn] update trends exec: ${endTime - startTime}ms`)
+  console.log(`[zenn] update trends count: ${result.length}`)
+  return result
+}
+
+const updateQiitaTrend = async () => {
+  // 30個
+  const res = await fetch(`https://qiita.com/popular-items/feed`, {
+    cache: 'no-cache'
+  })
+  const pipeline = kv.pipeline()
+  const startTime = Date.now()
+
+  const qiitaFeedResponse = await res.text()
+  const jsonData = await parseStringPromise(qiitaFeedResponse)
+  const articles = jsonData.feed.entry as Feed
+  const asyncFuncs = articles.map(async (article) => {
+    const url = new URL(article.link[0].$.href.split('?')[0])
+    const articleId = url.pathname.split('/').pop()!
+    const res = await fetch(`https://qiita.com/api/v2/items/${articleId}`, {
+      cache: 'no-store',
+      headers: {
+        Authorization: `Bearer ${process.env.QIITA_API}`
+      }
+    }).then(async (res) => (await res.json()) as QiitaArticle)
+    const post = {
+      url: res.url,
+      createdAt: new Date(article.published[0]),
+      title: article.title[0],
+      likedCount: res.likes_count
+    } as TrendArticle
+    const stringPost = JSON.stringify(post)
+    pipeline.zadd('trends', {
+      score: -post.likedCount,
+      member: stringPost
     })
   })
-
-  // 実行
-  const execStart = Date.now()
+  await Promise.all(asyncFuncs)
   const result = await pipeline.exec()
-  const execEnd = Date.now()
-  console.log(`redis exec time: ${execEnd - execStart}ms`)
-  const overFlowCount = (await kv.zcard('timeline')) - 1000
-  if (overFlowCount > 0) {
-    void kv.zremrangebyrank('timeline', 0, overFlowCount - 1)
-  }
-
-  return newDbPosts
+  const endTime = Date.now()
+  console.log(`[qiita] update trends exec : ${endTime - startTime}ms`)
+  console.log(`[qiita] update trends count: ${result.length}`)
+  return result
 }
 
 const updateZenn = async () => {
