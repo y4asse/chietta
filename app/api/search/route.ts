@@ -12,13 +12,13 @@ export const GET = async (req: NextRequest) => {
   const searchQuery = searchWords.map((word) => '+' + word).join(' ')
   const start = new Date()
   const result = await db.post.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    },
     where: {
       title: {
         search: searchQuery
       }
-    },
-    orderBy: {
-      createdAt: 'desc'
     },
     skip: offset,
     take
