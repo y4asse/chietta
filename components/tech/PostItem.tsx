@@ -19,10 +19,12 @@ const PostItem = ({ post }: { post: ReturnPost }) => {
       </a>
       <div className="px-[16px] py-[10px] mb-10">
         <h1 className="font-bold">{title}</h1>
-        <div className="absolute bottom-1 left-3 text-gray flex items-center justify-center gap-1">
-          <Image src="/heart.svg" alt="ハートの画像" width={17} height={17} className=" opacity-70" />
-          <span>{likedCount && likedCount}</span>
-        </div>
+        {likedCount && (
+          <div className="absolute bottom-1 left-3 text-gray flex items-center justify-center gap-1">
+            <Image src="/heart.svg" alt="ハートの画像" width={17} height={17} className=" opacity-70" />
+            <span>{likedCount}</span>
+          </div>
+        )}
         <time className="absolute bottom-1 right-3 text-gray">{date}</time>
       </div>
     </article>
