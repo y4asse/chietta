@@ -1,10 +1,18 @@
 import { ReturnPost } from '@/app/api/post/route'
 import { Post } from '@prisma/client'
 import { getOgp } from './getOgp'
+import { TrendArticle } from '@/types/trendsArticle'
 
-export const addOgp = async (posts: Post[]): Promise<ReturnPost[]> => {
+interface HasUrl {
+  url: string
+}
+
+// &演算子はTypeScriptの交差型（Intersection Types）を表し、複数の型を一つに合成する
+type WithImageUrl<T> = T & { image_url: string }
+
+export const addOgp = async <T extends HasUrl>(posts: T[]): Promise<WithImageUrl<T>[]> => {
   const startTime = Date.now()
-  let array: ReturnPost[] = []
+  let array: WithImageUrl<T>[] = []
 
   // getOgpがキャッシュされてる
   const ogpPromises = posts.map((post) => getOgp(post.url))

@@ -5,15 +5,23 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import Posts from '../tech/Posts'
 import { ReturnPost } from '@/app/api/post/route'
 import dynamic from 'next/dynamic'
-import { getLatestPosts, getSearchPosts } from '@/server/getPosts'
+import { getLatestPosts, getSearchPosts, getTrends } from '@/server/getPosts'
 const SkeltonContainer = dynamic(() => import('../skelton/SkeltonContainer'))
 
 // 下から200pxのところで新しいやつを入れる
-const ScrollDetect = ({ children, type, q }: { children: ReactNode; type: 'latest' | 'search'; q: string }) => {
+const ScrollDetect = ({
+  children,
+  type,
+  q
+}: {
+  children: ReactNode
+  type: 'latest' | 'search' | 'trend'
+  q: string
+}) => {
   // scroll ref
   const ref = useRef(null)
   const { pageOffsetBottom, viewportBottom } = useOffsetBottom(ref)
-  const getPosts = type === 'latest' ? getLatestPosts : getSearchPosts
+  const getPosts = type === 'latest' ? getLatestPosts : 'trend' ? getTrends : getSearchPosts
   // posts
   const [posts, setPosts] = useState<ReturnPost[] | null>([])
   const initialOffset = 10
@@ -28,6 +36,7 @@ const ScrollDetect = ({ children, type, q }: { children: ReactNode; type: 'lates
     if (!posts) return
 
     setIsLoading(true)
+    console.log('fetching')
     getPosts(offset, q).then((newPosts) => {
       //エラーが起きた時isLoadingはtrueのままになる
       if (!newPosts) return
