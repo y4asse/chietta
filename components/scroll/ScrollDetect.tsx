@@ -18,11 +18,12 @@ const ScrollDetect = ({
   type: 'latest' | 'search' | 'trend'
   q: string
 }) => {
-  // scroll ref
+  console.log(type)
   const ref = useRef(null)
   const { pageOffsetBottom, viewportBottom } = useOffsetBottom(ref)
-  const getPosts = type === 'latest' ? getLatestPosts : 'trend' ? getTrends : getSearchPosts
+  const getPosts = type === 'latest' ? getLatestPosts : type === 'trend' ? getTrends : getSearchPosts
   // posts
+
   const [posts, setPosts] = useState<ReturnPost[] | null>([])
   const initialOffset = 10
   const offset = posts ? posts.length + initialOffset : initialOffset
