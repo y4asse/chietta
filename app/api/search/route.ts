@@ -9,8 +9,7 @@ export const GET = async (req: NextRequest) => {
   const take = 10
   if (!q) return Response.json({ message: '検索ワードを入力してください' })
 
-  // 2文字以下のワードを区別
-  const searchWords = q.split(' ')
+  const searchWords = q.replaceAll('　', ' ').split(' ')
   const search = searchWords.map((word) => '+' + word + '*').join(' ')
   const start = new Date()
   const result = await db.post.findMany({
