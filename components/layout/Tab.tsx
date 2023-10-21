@@ -19,6 +19,10 @@ const Tab = () => {
     {
       name: '検索',
       path: '/search'
+    },
+    {
+      name: '企業ブログ',
+      path: '/company'
     }
   ]
   return (

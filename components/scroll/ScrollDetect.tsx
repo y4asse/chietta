@@ -5,7 +5,7 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import Posts from '../tech/Posts'
 import { ReturnPost } from '@/app/api/post/route'
 import dynamic from 'next/dynamic'
-import { getLatestPosts, getSearchPosts, getTrends } from '@/server/getPosts'
+import { getLatestCompanyPosts, getLatestPosts, getSearchPosts, getTrends } from '@/server/getPosts'
 const SkeltonContainer = dynamic(() => import('../skelton/SkeltonContainer'))
 
 // 下から200pxのところで新しいやつを入れる
@@ -15,12 +15,19 @@ const ScrollDetect = ({
   q
 }: {
   children: ReactNode
-  type: 'latest' | 'search' | 'trend'
+  type: 'latest' | 'search' | 'trend' | 'company'
   q: string
 }) => {
   const ref = useRef(null)
   const { pageOffsetBottom, viewportBottom } = useOffsetBottom(ref)
-  const getPosts = type === 'latest' ? getLatestPosts : type === 'trend' ? getTrends : getSearchPosts
+  const getPosts =
+    type === 'latest'
+      ? getLatestPosts
+      : type === 'trend'
+      ? getTrends
+      : type === 'company'
+      ? getLatestCompanyPosts
+      : getSearchPosts
   // posts
 
   const [posts, setPosts] = useState<ReturnPost[] | null>([])
