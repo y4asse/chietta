@@ -10,58 +10,26 @@ export const GET = async (req: NextRequest) => {
   if (!q) return Response.json({ message: '検索ワードを入力してください' })
 
   // 2文字以下のワードを区別
-  let exist2Words = false
   const searchWords = q.split(' ')
-  const search = searchWords
-    .map((word) => {
-      if (word.length <= 2) {
-        exist2Words = true
-      }
-      return '+' + word
-    })
-    .join(' ')
+  const search = searchWords.map((word) => '+' + word + '*').join(' ')
   const start = new Date()
+  const result = await db.post.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    },
+    where: {
+      title: {
+        search: search
+      }
+    },
+    skip: offset,
+    take
+  })
 
-  const searchObjects = searchWords.map((word) => ({
-    title: {
-      contains: word
-    }
-  }))
-  const result = exist2Words
-    ? // 2文字以下のワードがあるとき
-      await db.post.findMany({
-        orderBy: {
-          createdAt: 'desc'
-        },
-        where: {
-          AND: searchObjects
-        },
-        skip: offset,
-        take
-      })
-    : // 2文字以下のワードがないとき
-      await db.post.findMany({
-        orderBy: {
-          createdAt: 'desc'
-        },
-        where: {
-          title: {
-            search: search
-          }
-        },
-        skip: offset,
-        take
-      })
   const returnPosts = await addOgp(result)
+  console.log(returnPosts.length)
   const end = new Date()
   console.log('[db] search time: ' + (end.getTime() - start.getTime()) + 'ms')
   const count = result.length
   return Response.json(returnPosts)
-}
-
-// 同義語リスト
-const synonymLists = {
-  go: ['golang'],
-  nextjs: ['next.js'],
-  ラズパイ: ['raspberry pi']
 }

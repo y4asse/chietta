@@ -19,10 +19,11 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 }
 
 const getTrendsFromRedis = async (offset: number) => {
+  const locate = process.env.ENV === 'dev' ? 'trends-dev' : 'trends'
   const take = 9 + offset
   const startTime = Date.now()
   // TODO restにして、キャッシュする
-  const trendsJson = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/zrange/trends/${offset}/${take}`, {
+  const trendsJson = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/zrange/${locate}/${offset}/${take}`, {
     headers: {
       Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
     },
