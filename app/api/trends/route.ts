@@ -19,7 +19,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 }
 
 const getTrendsFromRedis = async (offset: number) => {
-  const locate = process.env.ENV === 'dev' ? 'trends-dev' : 'trends'
+  const locate = process.env.NODE_ENV === 'development' ? 'trends-dev' : 'trends'
   const take = 9 + offset
   const startTime = Date.now()
   // TODO restにして、キャッシュする

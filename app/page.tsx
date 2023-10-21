@@ -2,7 +2,6 @@ import WrapContainer from '@/components/layout/WrapContainer'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
 import Posts from '@/components/tech/Posts'
 import { getTrends } from '@/server/getPosts'
-import { usePathname } from 'next/navigation'
 
 const Home = async () => {
   const offset = 0

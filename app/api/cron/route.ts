@@ -7,7 +7,7 @@ import { ZennResponse } from '@/types/zenn'
 import { NextRequest, NextResponse } from 'next/server'
 import { parseStringPromise } from 'xml2js'
 
-const locate = process.env.ENV === 'dev' ? 'trends-dev' : 'trends'
+const locate = process.env.NODE_ENV === 'development' ? 'trends-dev' : 'trends'
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const secret = req.nextUrl.searchParams.get('secret')
