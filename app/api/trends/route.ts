@@ -22,15 +22,15 @@ const getTrendsFromRedis = async (offset: number) => {
   const take = 9 + offset
   const startTime = Date.now()
   // TODO restにして、キャッシュする
-  const trendsString = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/trend`, {
+  const trendsJson = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/zrange/trends/${offset}/${take}`, {
     headers: {
       Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
     },
-    next: { revalidate: 0 }
-  }).then(async (res) => (await res.json()).result as string)
-  const trends = JSON.parse(trendsString) as TrendArticle[]
+    next: { revalidate: 5 * 60 }
+  }).then(async (res) => (await res.json()).result as string[])
+  const trends = trendsJson.map((trend) => JSON.parse(trend) as TrendArticle)
   const endTime = Date.now()
   console.log('[getPostsFromRedis] get trends = ' + (endTime - startTime) + 'ms')
-  if (!trends) return []
+  if (trends.length === 0) return []
   return trends
 }
