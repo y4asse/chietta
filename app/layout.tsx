@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Chietta | 技術記事プラットフォーム',
   description:
-    'Chiettaはエンジニアのための技術記事をまとめたサービスです。トレンド記事や新着記事を見たり、検索をすることができます。新しい記事を'
+    'Chiettaはエンジニアのための技術記事をまとめたサービスです。様々な媒体の記事を見たり、検索することができます。'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

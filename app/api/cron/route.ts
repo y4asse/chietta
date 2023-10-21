@@ -26,6 +26,13 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   })
 }
 
+const deleteOldTrends = async () => {
+  const startTime = Date.now()
+  await kv.del('trend').catch((e) => console.log(e))
+  const endTime = Date.now()
+  console.log(`[trends] delete old trends exec pipeline: ${endTime - startTime}ms`)
+}
+
 const updateRedis = async (zennTrends: TrendArticle[], qiitaTrends: TrendArticle[]) => {
   const startTime = Date.now()
 
