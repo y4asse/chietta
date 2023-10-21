@@ -134,7 +134,7 @@ const getDena = async () => {
   const $ = load(feedResponse)
   const articles = [] as { url: string; createdAt: Date; title: string }[]
   $('li.flex-col').each((index, element) => {
-    const url = 'https://engineering.dena.com/' + $(element).find('section').find('a.text-xl').attr('href')
+    const url = 'https://engineering.dena.com' + $(element).find('section').find('a.text-xl').attr('href')
     const datetime = $(element).find('section').find('span.text-sm').text()
     const title = $(element).find('section').find('a.text-xl').text().replaceAll('\n', '').replaceAll(' ', '')
     if (url === undefined) return
