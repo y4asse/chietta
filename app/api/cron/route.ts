@@ -12,35 +12,47 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   if (secret !== process.env.MY_SECRET_TOKEN) {
     return Response.json({ error: 'invalid token' }, { status: 401 })
   }
+  //db
   const zenn = await updateZenn()
   const qiita = await updateQiita()
-  await deleteOldTrends()
-  const zennTrends = await updateZennTrend()
-  const qiitaTrends = await updateQiitaTrend()
   const newPosts = [...zenn, ...qiita]
+
+  //redis
+  const zennTrends = await getZennTrends()
+  const qiitaTrends = await getQiitaTrends()
+  await updateRedis(zennTrends, qiitaTrends)
   return Response.json({
-    zennTrendsCount: zennTrends.length,
-    qiitaTrendsCount: qiitaTrends.length,
-    updatedPosts: newPosts,
-    zennTrends,
-    qiitaTrends
+    updatedPosts: newPosts
   })
 }
 
 const deleteOldTrends = async () => {
   const startTime = Date.now()
-  await kv.del('trends')
+  await kv.del('trend').catch((e) => console.log(e))
   const endTime = Date.now()
   console.log(`[trends] delete old trends exec pipeline: ${endTime - startTime}ms`)
 }
 
-const updateZennTrend = async () => {
+const updateRedis = async (zennTrends: TrendArticle[], qiitaTrends: TrendArticle[]) => {
+  const startTime = Date.now()
+
+  // likeCountを降順にソート
+  const trends = [...zennTrends, ...qiitaTrends].sort((a, b) => {
+    return a.likedCount > b.likedCount ? -1 : 1
+  })
+
+  const stringTrends = JSON.stringify(trends)
+  await kv.set('trend', stringTrends)
+  const endTime = Date.now()
+  console.log(`[trend] update trend exec: ${endTime - startTime}ms`)
+}
+
+const getZennTrends = async () => {
   // zennから取得
+  const trends = [] as TrendArticle[]
   const res = await fetch(`https://zenn.dev/api/articles?order=daily`, {
     cache: 'no-store'
   }).then(async (res) => (await res.json()) as ZennResponse)
-  const pipeline = kv.pipeline()
-  const startTime = Date.now()
   const { articles } = res
   for (const article of articles) {
     const post = {
@@ -49,26 +61,17 @@ const updateZennTrend = async () => {
       title: article.title,
       likedCount: article.liked_count
     } as TrendArticle
-    const stringPost = JSON.stringify(post)
-    pipeline.zadd('trends', {
-      score: -post.likedCount,
-      member: stringPost
-    })
+    trends.push(post)
   }
-  const result = await pipeline.exec()
-  const endTime = Date.now()
-  console.log(`[zenn] update trends exec: ${endTime - startTime}ms`)
-  console.log(`[zenn] update trends count: ${result.length}`)
-  return result
+  return trends
 }
 
-const updateQiitaTrend = async () => {
+const getQiitaTrends = async () => {
   // 30個
+  const trends = [] as TrendArticle[]
   const res = await fetch(`https://qiita.com/popular-items/feed`, {
     cache: 'no-cache'
   })
-  const pipeline = kv.pipeline()
-  const startTime = Date.now()
 
   const qiitaFeedResponse = await res.text()
   const jsonData = await parseStringPromise(qiitaFeedResponse)
@@ -88,18 +91,10 @@ const updateQiitaTrend = async () => {
       title: article.title[0],
       likedCount: res.likes_count
     } as TrendArticle
-    const stringPost = JSON.stringify(post)
-    pipeline.zadd('trends', {
-      score: -post.likedCount,
-      member: stringPost
-    })
+    trends.push(post)
   })
   await Promise.all(asyncFuncs)
-  const result = await pipeline.exec()
-  const endTime = Date.now()
-  console.log(`[qiita] update trends exec : ${endTime - startTime}ms`)
-  console.log(`[qiita] update trends count: ${result.length}`)
-  return result
+  return trends
 }
 
 const updateZenn = async () => {
