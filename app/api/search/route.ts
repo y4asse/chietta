@@ -27,7 +27,6 @@ export const GET = async (req: NextRequest) => {
   })
 
   const returnPosts = await addOgp(result)
-  console.log(returnPosts.length)
   const end = new Date()
   console.log('[db] search time: ' + (end.getTime() - start.getTime()) + 'ms')
   const count = result.length
