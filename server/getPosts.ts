@@ -26,7 +26,7 @@ export const getSearchPosts = async (offset: number, q: string): Promise<ReturnP
   try {
     const queryURL = new URL(`${process.env.NEXT_PUBLIC_API_URL}/search?q=${q}&offset=${offset}`)
     const res = await fetch(queryURL, {
-      next: { revalidate: 5 * 60 }
+      cache: 'no-cache'
     })
     if (!res.ok) {
       console.log('Http Error')
