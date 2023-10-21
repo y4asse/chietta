@@ -12,10 +12,6 @@ const Header = () => {
             <Link className=" text-3xl font-extrabold" href="/">
               Chietta
             </Link>
-            {/* <div className="flex">
-              <button className="bg-primary rounded-lg px-5 py-1 text-[white] font-bold mr-3">投稿する</button>
-              <img src="/img/cat.png" alt="アイコン画像" width={34} />
-            </div> */}
           </div>
         </WrapContainer>
       </nav>

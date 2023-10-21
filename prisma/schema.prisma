@@ -12,9 +12,19 @@ datasource db {
 model Post {
     id              String            @id @default(uuid())
     url             String            @unique
-    createdAt       DateTime
+    createdAt       DateTime          @default(now())
     title           String
     postCategoryMap PostCategoryMap[]
+
+    @@index([createdAt])
+    @@fulltext([title])
+}
+
+model CompanyArticle {
+    id        String   @id @default(uuid())
+    url       String   @unique
+    createdAt DateTime @default(now())
+    title     String
 
     @@index([createdAt])
     @@fulltext([title])
