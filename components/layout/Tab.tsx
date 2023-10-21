@@ -28,7 +28,7 @@ const Tab = () => {
   return (
     <nav className="sticky top-0 z-10 bg-[white] py-3">
       <WrapContainer>
-        <ul className="flex text-xl text-gray gap-7 items-center font-bold">
+        <ul className="flex flex-wrap text-xl text-gray gap-5 items-center font-bold">
           {list.map((item, index) => {
             const isActive = item.path === '/' ? pathname === item.path : pathname.startsWith(item.path)
             return (
