@@ -25,11 +25,14 @@ const Tab = () => {
     <nav className="sticky top-0 z-10 bg-[white] py-3">
       <WrapContainer>
         <ul className="flex text-xl text-gray gap-7 items-center font-bold">
-          {list.map((item, index) => (
-            <li key={index} className={pathname === item.path ? `border-b-[3px]  border-primary` : ''}>
-              <Link href={item.path}>{item.name}</Link>
-            </li>
-          ))}
+          {list.map((item, index) => {
+            const isActive = item.path === '/' ? pathname === item.path : pathname.startsWith(item.path)
+            return (
+              <li key={index} className={isActive ? `border-b-[3px]  border-primary` : ''}>
+                <Link href={item.path}>{item.name}</Link>
+              </li>
+            )
+          })}
         </ul>
       </WrapContainer>
     </nav>
