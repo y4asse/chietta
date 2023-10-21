@@ -7,6 +7,8 @@ import { ZennResponse } from '@/types/zenn'
 import { NextRequest, NextResponse } from 'next/server'
 import { parseStringPromise } from 'xml2js'
 
+const locate = process.env.ENV === 'dev' ? 'trends-dev' : 'trends'
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const secret = req.nextUrl.searchParams.get('secret')
   if (secret !== process.env.MY_SECRET_TOKEN) {
@@ -21,15 +23,13 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   return Response.json({
     zennTrendsCount: zennTrends.length,
     qiitaTrendsCount: qiitaTrends.length,
-    updatedPosts: newPosts,
-    zennTrends,
-    qiitaTrends
+    updatedPosts: newPosts
   })
 }
 
 const deleteOldTrends = async () => {
   const startTime = Date.now()
-  await kv.del('trends')
+  await kv.del(locate)
   const endTime = Date.now()
   console.log(`[trends] delete old trends exec pipeline: ${endTime - startTime}ms`)
 }
@@ -50,7 +50,7 @@ const updateZennTrend = async () => {
       likedCount: article.liked_count
     } as TrendArticle
     const stringPost = JSON.stringify(post)
-    pipeline.zadd('trends', {
+    pipeline.zadd(locate, {
       score: -post.likedCount,
       member: stringPost
     })
@@ -89,7 +89,7 @@ const updateQiitaTrend = async () => {
       likedCount: res.likes_count
     } as TrendArticle
     const stringPost = JSON.stringify(post)
-    pipeline.zadd('trends', {
+    pipeline.zadd(locate, {
       score: -post.likedCount,
       member: stringPost
     })
@@ -122,6 +122,7 @@ const updateZenn = async () => {
   }[] = []
   newPosts.map((result, i) => {
     if (result.body_letters_count < MIN_CONTENT_LENGTH) return
+    if (result.published === false) return
     insertPosts.push({
       url: 'https://zenn.dev' + result.path,
       createdAt: new Date(result.published_at),

@@ -8,8 +8,10 @@ export const GET = async (req: NextRequest) => {
   const offset = offsetString ? parseInt(offsetString) : 10
   const take = 10
   if (!q) return Response.json({ message: '検索ワードを入力してください' })
+
+  // 2文字以下のワードを区別
   const searchWords = q.split(' ')
-  const searchQuery = searchWords.map((word) => '+' + word).join(' ')
+  const search = searchWords.map((word) => '+' + word + '*').join(' ')
   const start = new Date()
   const result = await db.post.findMany({
     orderBy: {
@@ -17,22 +19,17 @@ export const GET = async (req: NextRequest) => {
     },
     where: {
       title: {
-        search: searchQuery
+        search: search
       }
     },
     skip: offset,
     take
   })
+
   const returnPosts = await addOgp(result)
+  console.log(returnPosts.length)
   const end = new Date()
   console.log('[db] search time: ' + (end.getTime() - start.getTime()) + 'ms')
   const count = result.length
   return Response.json(returnPosts)
-}
-
-// 同義語リスト
-const synonymLists = {
-  go: ['golang'],
-  nextjs: ['next.js'],
-  ラズパイ: ['raspberry pi']
 }
