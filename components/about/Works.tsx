@@ -27,6 +27,11 @@ const Works = () => {
               <Image src="/img/catWalking.png" alt="検索画面" width={200} height={200} className="w-full" />
               <p className="text-gray">複数のサイトの情報をまとめて検索することができます。</p>
             </div>
+            {/* <div className="w-[90%] mx-auto mb-6 border border-[#b6b6b6] rounded-xl p-5">
+              <h3 className="text-xl font-semibold">記事の共有</h3>
+              <Image src="/img/catSitting.png" alt="検索画面" width={200} height={200} className="w-full" />
+              <p className="text-gray">いいと思った記事をみんなへ共有しましょう</p>
+            </div> */}
             <div className="w-[90%] mx-auto mb-6 border border-[#b6b6b6] rounded-xl p-5">
               <h3 className="text-xl font-semibold">ユーザーフレンドリー</h3>
               <Image src="/img/catSitting.png" alt="検索画面" width={200} height={200} className="w-full" />
@@ -34,9 +39,6 @@ const Works = () => {
             </div>
           </div>
         </section>
-        {/* <section>
-          <h2 className="text-center text-2xl font-bold w-full">新しい知識の1ページを</h2>
-        </section> */}
       </WrapContainer>
     </section>
   )
