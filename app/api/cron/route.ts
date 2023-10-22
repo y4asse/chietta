@@ -19,11 +19,9 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   await deleteOldTrends()
   const zennTrends = await updateZennTrend()
   const qiitaTrends = await updateQiitaTrend()
-  const newPosts = [...zenn, ...qiita]
   return Response.json({
     zennTrendsCount: zennTrends.length,
-    qiitaTrendsCount: qiitaTrends.length,
-    updatedPosts: newPosts
+    qiitaTrendsCount: qiitaTrends.length
   })
 }
 
@@ -31,7 +29,7 @@ const deleteOldTrends = async () => {
   const startTime = Date.now()
   await kv.del(locate)
   const endTime = Date.now()
-  console.log(`[trends] delete old trends exec pipeline: ${endTime - startTime}ms`)
+  console.log(`[delete trends] delete old trends exec pipeline: ${endTime - startTime}ms`)
 }
 
 const updateZennTrend = async () => {
@@ -104,6 +102,7 @@ const updateQiitaTrend = async () => {
 
 const updateZenn = async () => {
   // zennから取得
+  const startTime = Date.now()
   const res = await fetch(`https://zenn.dev/api/articles?order=latest`, {
     cache: 'no-store'
   }).then(async (res) => (await res.json()) as ZennResponse)
@@ -130,11 +129,14 @@ const updateZenn = async () => {
     data: insertPosts,
     skipDuplicates: true
   })
+  const endTime = Date.now()
+  console.log(`[zenn] update exec: ${endTime - startTime}ms`)
   console.log('[zenn] update count: ' + count)
   return insertPosts
 }
 
 const updateQiita = async () => {
+  const startTime = Date.now()
   const apiKey = process.env.QIITA_API!
   const MIN_CONTENT_LENGTH = 1000
   const perPage = 50
@@ -164,6 +166,8 @@ const updateQiita = async () => {
     data: insertPosts,
     skipDuplicates: true
   })
+  const endTime = Date.now()
+  console.log(`[qiita] update exec: ${endTime - startTime}ms`)
   console.log('[qiita] update count: ' + count)
   return insertPosts
 }
