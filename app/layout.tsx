@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Gtag from '@/utils/gtag'
+import AuthProvider from '@/components/provider/authProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +18,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja">
       <Gtag />
       <body className={inter.className}>
-        <LayoutComponent>{children}</LayoutComponent>
+        <AuthProvider>
+          <LayoutComponent>{children}</LayoutComponent>
+        </AuthProvider>
       </body>
     </html>
   )
