@@ -1,6 +1,6 @@
 import Logo from '@/components/layout/Logo'
 import WrapContainer from '@/components/layout/WrapContainer'
-import LoginButton from '@/components/login/LoginButton'
+import LoginButton from '@/components/auth/LoginButton'
 import Link from 'next/link'
 import React from 'react'
 

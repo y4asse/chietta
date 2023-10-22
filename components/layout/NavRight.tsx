@@ -1,18 +1,20 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
-import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
+import UserIcon from './UserIcon'
 
 const NavRight = async () => {
   const data = await getServerSession(authOptions)
+
   return (
     <div className="flex gap-3">
-      {data && (
-        <img src={data.user.image!} alt="ユーザーアイコン" className="rounded-full w-10 h-10 border border-[#dddddd]" />
-      )}
-      <Link href={'/login'} className="bg-primary text-[white] rounded-lg px-3 py-2 text-lg font-semibold">
-        ログイン
+      {data && <UserIcon data={data} />}
+      <Link
+        href={data ? '/post' : '/login'}
+        className="bg-primary text-[white] rounded-lg px-3 py-2 text-lg font-semibold"
+      >
+        {data ? '記事を共有' : 'ログイン'}
       </Link>
     </div>
   )

@@ -14,12 +14,6 @@ const LoginButton = () => {
         <FcGoogle />
         <span className="text-lg">Googleでログイン</span>
       </button>
-      <button
-        className="shadow px-3 py-2 rounded-lg flex items-center text-xl mx-auto mt-10 gap-3"
-        onClick={() => signOut({ callbackUrl: '/' })}
-      >
-        <span className="text-lg">ログアウト</span>
-      </button>
     </>
   )
 }
