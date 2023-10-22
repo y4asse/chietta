@@ -22,6 +22,7 @@
     "firebase": "^10.4.0",
     "framer-motion": "^10.16.4",
     "jotai": "^2.4.3",
+    "lottie-react": "^2.4.0",
     "next": "13.5.4",
     "next-superjson": "^0.0.4",
     "node-fetch": "^3.3.2",
