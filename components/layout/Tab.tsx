@@ -4,6 +4,7 @@ import React from 'react'
 import WrapContainer from './WrapContainer'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { FaSearch } from 'react-icons/fa'
 
 const Tab = () => {
   const pathname = usePathname()
@@ -17,10 +18,6 @@ const Tab = () => {
       path: '/latest'
     },
     {
-      name: '検索',
-      path: '/search'
-    },
-    {
       name: '企業ブログ',
       path: '/company'
     }
@@ -28,16 +25,21 @@ const Tab = () => {
   return (
     <nav className="sticky top-0 z-10 bg-[white] py-3">
       <WrapContainer>
-        <ul className="flex flex-wrap text-xl text-gray gap-5 items-center font-bold">
-          {list.map((item, index) => {
-            const isActive = item.path === '/' ? pathname === item.path : pathname.startsWith(item.path)
-            return (
-              <li key={index} className={isActive ? `border-b-[3px]  border-primary` : ''}>
-                <Link href={item.path}>{item.name}</Link>
-              </li>
-            )
-          })}
-        </ul>
+        <div className="flex justify-between items-center">
+          <ul className="flex flex-wrap text-xl text-gray gap-5 items-center font-bold">
+            {list.map((item, index) => {
+              const isActive = item.path === '/' ? pathname === item.path : pathname.startsWith(item.path)
+              return (
+                <li key={index} className={isActive ? `border-b-[3px]  border-primary` : ''}>
+                  <Link href={item.path}>{item.name}</Link>
+                </li>
+              )
+            })}
+          </ul>
+          <Link className="text-gray text-xl" href="/search">
+            <FaSearch />
+          </Link>
+        </div>
       </WrapContainer>
     </nav>
   )
