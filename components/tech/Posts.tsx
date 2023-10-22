@@ -3,6 +3,7 @@ import PostItem from './PostItem'
 import { ReturnPost } from '@/app/api/post/route'
 
 const Posts = ({ posts }: { posts: ReturnPost[] }) => {
+  if (posts.length === 0) return <></>
   return (
     <div className="flex mx-auto flex-wrap p-5 gap-10 max-w-[800px]">
       {posts.map((post) => (

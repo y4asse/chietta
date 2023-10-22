@@ -108,19 +108,14 @@ const updateZenn = async () => {
     cache: 'no-store'
   }).then(async (res) => (await res.json()) as ZennResponse)
   const allUrl = res.articles.map(({ path }) => 'https://zenn.dev' + path)
-  const existingPosts = await db.post.findMany({
-    where: { url: { in: allUrl } }
-  })
-  const existingUrl = existingPosts.map(({ url }) => url)
-  // existingUrlにないpostをresから取得
-  const newPosts = res.articles.filter((article) => !existingUrl.includes('https://zenn.dev' + article.path))
+  const { articles } = res
   const MIN_CONTENT_LENGTH = 1000
   const insertPosts: {
     url: string
     createdAt: Date
     title: string
   }[] = []
-  newPosts.map((result, i) => {
+  articles.map((result, i) => {
     if (result.body_letters_count < MIN_CONTENT_LENGTH) return
     if (result.published === false) return
     insertPosts.push({
@@ -149,20 +144,13 @@ const updateQiita = async () => {
     },
     cache: 'no-store'
   }).then(async (res) => (await res.json()) as QiitaResponse)
-  const allUrl = res.map(({ url }) => url)
-  const existingPosts = await db.post.findMany({
-    where: { url: { in: allUrl } },
-    orderBy: { createdAt: 'desc' }
-  })
-  const existingUrl = existingPosts.map(({ url }) => url)
-  const newPosts = res.filter(({ url }) => !existingUrl.includes(url))
-
+  const articles = res
   const insertPosts: {
     url: string
     createdAt: Date
     title: string
   }[] = []
-  newPosts.map((result, i) => {
+  articles.map((result, i) => {
     if (result.rendered_body.length < MIN_CONTENT_LENGTH) return
     insertPosts.push({
       url: result.url,
