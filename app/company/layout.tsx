@@ -1,12 +1,6 @@
-'use client'
-
-import WrapContainer from '@/components/layout/WrapContainer'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import React from 'react'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname()
   const list = [
     { name: 'Qiita/Zenn', path: '' },
     { name: '企業ブログ', path: '/company' }

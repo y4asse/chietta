@@ -6,9 +6,8 @@ import UserIcon from './UserIcon'
 
 const NavRight = async () => {
   const data = await getServerSession(authOptions)
-
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 items-center">
       {data && <UserIcon data={data} />}
       <Link
         href={data ? '/post' : '/login'}
