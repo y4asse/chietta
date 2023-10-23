@@ -21,11 +21,10 @@ const PostItem = ({ post }: { post: PostItem }) => {
   return (
     <article
       className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative ${
-        isViewed &&
-        'before:absolute before:bottom-0 before:left-0 before:bg-[black] before:bg-opacity-[5%] before:w-full before:h-full'
+        isViewed && 'brightness-[0.9]'
       }`}
     >
-      <PostLink post={post} setIsViewed={setIsViewed} />
+      <PostLink post={post} setIsViewed={setIsViewed} isViewed={isViewed} />
       <div className="px-[16px] py-[10px] mb-10">
         <h1 className="font-bold">{title}</h1>
         {displayName && <p className="text-sm text-gray pt-3">{displayName}</p>}
