@@ -2,7 +2,7 @@ import { PostItem } from '@/types/postItem'
 
 const getLatestPosts = async (offset: number, userId: string | null): Promise<PostItem[] | null> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?offset=${offset}?user_id=${userId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?offset=${offset}&user_id=${userId}`, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -91,7 +91,7 @@ type Props = {
 
 export type Type = 'latest' | 'company' | 'search' | 'trends'
 
-export const getPost = async (type: Type, { offset, q, userId }: Props) => {
+export const getPost = async (type: Type, { offset, q, userId }: Props): Promise<PostItem[] | null> => {
   switch (type) {
     case 'latest':
       return await getLatestPosts(offset, userId)

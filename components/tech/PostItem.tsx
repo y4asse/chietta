@@ -1,23 +1,31 @@
-import { ReturnPost } from '@/app/api/post/route'
+'use client'
+
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import { displayCompanyName } from '@/utils/displayCompanyName'
+import PostLink from './PostLink'
+import { PostItem } from '@/types/postItem'
+import { useState } from 'react'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const PostItem = ({ post }: { post: ReturnPost }) => {
-  const { image_url, title, likedCount } = post
+const PostItem = ({ post }: { post: PostItem }) => {
+  const { title, likedCount } = post
+  const [isViewed, setIsViewed] = useState(post.isViewd)
   const createdAt = post.createdAt.toString()
   const date = dayjs(createdAt).tz('Asia/Tokyo').format('YYYY/M/D/ HH:mm')
   const displayName = displayCompanyName(post.url)
   return (
-    <article className="rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative">
-      <a href={post.url}>
-        <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] w-full aspect-[16/9]" />
-      </a>
+    <article
+      className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative ${
+        isViewed &&
+        'before:absolute before:bottom-0 before:left-0 before:bg-[black] before:bg-opacity-[5%] before:w-full before:h-full'
+      }`}
+    >
+      <PostLink post={post} setIsViewed={setIsViewed} />
       <div className="px-[16px] py-[10px] mb-10">
         <h1 className="font-bold">{title}</h1>
         {displayName && <p className="text-sm text-gray pt-3">{displayName}</p>}
