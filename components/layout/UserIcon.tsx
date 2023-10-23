@@ -30,7 +30,6 @@ const UserIcon = ({ data }: { data: Session }) => {
       document.removeEventListener('click', handleOutsideClick)
     }
   })
-
   return (
     <div className="relative" id="modal">
       <button aria-label="タブを表示・非表示にする" onClick={handleClick}>

@@ -1,9 +1,6 @@
-import { ReturnPost } from '@/app/api/post/route'
-import { Post } from '@prisma/client'
 import { getOgp } from './getOgp'
-import { TrendArticle } from '@/types/trendsArticle'
 
-interface HasUrl {
+export interface HasUrl {
   url: string
 }
 

@@ -1,8 +1,8 @@
-import { ReturnPost } from '@/app/api/post/route'
+import { PostItem } from '@/types/postItem'
 
-export const getLatestPosts = async (offset: number, q?: string): Promise<ReturnPost[] | null> => {
+const getLatestPosts = async (offset: number, userId: string | null): Promise<PostItem[] | null> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?offset=${offset}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?offset=${offset}?user_id=${userId}`, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -14,14 +14,14 @@ export const getLatestPosts = async (offset: number, q?: string): Promise<Return
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as ReturnPost[]
+    const posts = (await res.json()) as PostItem[]
     return posts
   } catch (error) {
     console.log(error)
     return null
   }
 }
-export const getLatestCompanyPosts = async (offset: number, q?: string): Promise<ReturnPost[] | null> => {
+const getLatestCompanyPosts = async (offset: number): Promise<PostItem[] | null> => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/company?offset=${offset}`, {
       headers: {
@@ -35,7 +35,7 @@ export const getLatestCompanyPosts = async (offset: number, q?: string): Promise
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as ReturnPost[]
+    const posts = (await res.json()) as PostItem[]
     return posts
   } catch (error) {
     console.log(error)
@@ -43,7 +43,7 @@ export const getLatestCompanyPosts = async (offset: number, q?: string): Promise
   }
 }
 
-export const getSearchPosts = async (offset: number, q: string): Promise<ReturnPost[] | null> => {
+const getSearchPosts = async (offset: number, q: string): Promise<PostItem[] | null> => {
   try {
     const queryURL = new URL(`${process.env.NEXT_PUBLIC_API_URL}/search?q=${q}&offset=${offset}`)
     const res = await fetch(queryURL, {
@@ -55,7 +55,7 @@ export const getSearchPosts = async (offset: number, q: string): Promise<ReturnP
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as ReturnPost[]
+    const posts = (await res.json()) as PostItem[]
     return posts
   } catch (error) {
     console.log(error)
@@ -63,7 +63,7 @@ export const getSearchPosts = async (offset: number, q: string): Promise<ReturnP
   }
 }
 
-export const getTrends = async (offset: number, q?: string): Promise<ReturnPost[] | null> => {
+const getTrends = async (offset: number): Promise<PostItem[] | null> => {
   try {
     const queryURL = new URL(`${process.env.NEXT_PUBLIC_API_URL}/trends?offset=${offset}`)
     const res = await fetch(queryURL, {
@@ -75,10 +75,34 @@ export const getTrends = async (offset: number, q?: string): Promise<ReturnPost[
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as ReturnPost[]
+    const posts = (await res.json()) as PostItem[]
     return posts
   } catch (error) {
     console.log(error)
     return null
+  }
+}
+
+type Props = {
+  offset: number
+  userId: string | null
+  q?: string
+}
+
+export type Type = 'latest' | 'company' | 'search' | 'trends'
+
+export const getPost = async (type: Type, { offset, q, userId }: Props) => {
+  switch (type) {
+    case 'latest':
+      return await getLatestPosts(offset, userId)
+    case 'company':
+      return await getLatestCompanyPosts(offset)
+    case 'search':
+      if (!q) throw new Error('q is not found')
+      return await getSearchPosts(offset, q)
+    case 'trends':
+      return await getTrends(offset)
+    default:
+      throw new Error('type is not found')
   }
 }

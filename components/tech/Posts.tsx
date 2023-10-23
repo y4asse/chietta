@@ -1,8 +1,7 @@
 import React from 'react'
 import PostItem from './PostItem'
-import { ReturnPost } from '@/app/api/post/route'
 
-const Posts = ({ posts }: { posts: ReturnPost[] }) => {
+const Posts = ({ posts }: { posts: PostItem[] }) => {
   if (posts.length === 0) return <></>
   return (
     <div className="flex mx-auto flex-wrap p-5 gap-10 max-w-[800px]">

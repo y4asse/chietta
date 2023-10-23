@@ -2,14 +2,6 @@ import { addOgp } from '@/server/addOgp'
 import { TrendArticle } from '@/types/trendsArticle'
 import { NextRequest, NextResponse } from 'next/server'
 
-export type ReturnPost = {
-  id: string
-  title: string
-  url: string
-  createdAt: Date
-  image_url: string
-}
-
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const offsetString = req.nextUrl.searchParams.get('offset')
   const offset = offsetString ? parseInt(offsetString) : 0 // 不正な値の時0になる
