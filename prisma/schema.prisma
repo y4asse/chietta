@@ -63,10 +63,11 @@ model UserPost {
     id        String   @id @default(uuid())
     user_id   String
     url       String
-    comment   String
+    content   String
     title     String
     updatedAt DateTime @updatedAt
     createdAt DateTime @default(now())
+    isPublic  Boolean  @default(true)
 
     user User @relation(fields: [user_id], references: [id])
 
