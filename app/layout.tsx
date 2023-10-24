@@ -3,8 +3,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Gtag from '@/utils/gtag'
-import AuthProvider from '@/components/provider/AuthProvider'
-import JotaiProvider from '@/components/provider/JotaiProvider'
+import AuthProvider from '@/components/provider/authProvider'
+import JotaiProvider from '@/components/provider/jotaiProvider'
 import HistoryProviderS from '@/components/provider/HistoryProviderS'
 
 const inter = Inter({ subsets: ['latin'] })
