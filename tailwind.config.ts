@@ -10,7 +10,8 @@ const config: Config = {
     colors: {
       primary: '#FF8383',
       gray: '#65717b',
-      pink: '#fff2f2'
+      pink: '#fff2f2',
+      main: '#fffafa'
     },
     extend: {
       backgroundImage: {
