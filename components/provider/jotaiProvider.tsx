@@ -2,14 +2,9 @@
 
 import { Provider } from 'jotai'
 import React, { ReactNode } from 'react'
-import History from '../jotai/History'
 
 const JotaiProvider = ({ children }: { children: ReactNode }) => {
-  return (
-    <Provider>
-      <History>{children}</History>
-    </Provider>
-  )
+  return <Provider>{children}</Provider>
 }
 
 export default JotaiProvider
