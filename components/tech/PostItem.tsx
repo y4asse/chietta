@@ -13,7 +13,7 @@ import { viewHistoryAtom } from '@/jotai/viewHistory'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const PostItem = ({ post }: { post: PostItem }) => {
+const PostItem = ({ post, hiddenDate }: { post: PostItem; hiddenDate?: boolean }) => {
   const { title, likedCount } = post
   const [viewHistory, setViewHistory] = useAtom(viewHistoryAtom)
   const isViewed = viewHistory.some((url) => url === post.url)
@@ -36,7 +36,11 @@ const PostItem = ({ post }: { post: PostItem }) => {
             <span>{likedCount}</span>
           </div>
         )}
-        <time className="absolute bottom-1 right-3 text-gray">{date}</time>
+        {!hiddenDate && (
+          <time dateTime={post.createdAt.toISOString()} className="absolute bottom-1 right-3 text-gray">
+            {date}
+          </time>
+        )}
       </div>
     </article>
   )
