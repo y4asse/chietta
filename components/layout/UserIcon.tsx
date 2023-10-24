@@ -12,7 +12,7 @@ const UserIcon = ({ data }: { data: Session }) => {
     setIsShow(!isShow)
   }
   const list = [
-    // { name: 'マイページ', path: '/mypage', icon: <FaHome /> },
+    { name: 'マイページ', path: '/mypage', icon: <FaHome /> },
     { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
   ]
 
