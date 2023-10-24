@@ -26,7 +26,7 @@ const PostItem = ({ post }: { post: PostItem }) => {
         isViewed && 'brightness-[0.9]'
       }`}
     >
-      <PostLink post={post} isViewed={isViewed} />
+      <PostLink url={post.url} image_url={post.image_url} isViewed={isViewed} />
       <div className="px-[16px] py-[10px] mb-10">
         <h1 className="font-bold">{title}</h1>
         {displayName && <p className="text-sm text-gray pt-3">{displayName}</p>}
