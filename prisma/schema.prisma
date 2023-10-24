@@ -59,6 +59,21 @@ model ViewHistory {
     @@index([user_id])
 }
 
+model UserPost {
+    id        String   @id @default(uuid())
+    user_id   String
+    url       String
+    comment   String
+    title     String
+    updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [user_id], references: [id])
+
+    @@index([user_id])
+    @@index([createdAt])
+}
+
 // default
 // Necessary for Next auth
 model Account {
@@ -88,4 +103,5 @@ model User {
     image         String?
     accounts      Account[]
     ViewHistory   ViewHistory[]
+    UserPost      UserPost[]
 }
