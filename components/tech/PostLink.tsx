@@ -6,7 +6,7 @@ import { useAtom } from 'jotai'
 import { useSession } from 'next-auth/react'
 import React from 'react'
 
-const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string; isViewed: boolean }) => {
+const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string; isViewed?: boolean }) => {
   const { data: session } = useSession()
   const user = session ? session.user : null
   const [, setViewHistory] = useAtom(viewHistoryAtom)

@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
   const schema = z.object({
     url: z.string(),
     title: z.string(),
-    comment: z.string(),
+    content: z.string(),
     user_id: z.string()
   })
   const body = await req.json()
@@ -25,12 +25,12 @@ export const POST = async (req: NextRequest) => {
   if (!ret.success) {
     return Response.json({ message: ret.error })
   }
-  const { url, title, comment, user_id } = ret.data
+  const { url, title, content, user_id } = ret.data
   const result = await db.userPost.create({
     data: {
       url,
       title,
-      comment,
+      content,
       user_id
     }
   })
@@ -42,7 +42,7 @@ export const PUT = async (req: NextRequest) => {
     id: z.string(),
     url: z.string(),
     title: z.string(),
-    comment: z.string(),
+    content: z.string(),
     user_id: z.string()
   })
   const body = await req.json()
@@ -50,7 +50,7 @@ export const PUT = async (req: NextRequest) => {
   if (!ret.success) {
     return Response.json({ message: ret.error })
   }
-  const { url, title, comment, user_id, id } = ret.data
+  const { url, title, content, user_id, id } = ret.data
   const result = await db.userPost.update({
     where: {
       id: id
@@ -58,7 +58,7 @@ export const PUT = async (req: NextRequest) => {
     data: {
       url,
       title,
-      comment,
+      content,
       user_id
     }
   })

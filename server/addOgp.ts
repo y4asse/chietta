@@ -5,7 +5,7 @@ export interface HasUrl {
 }
 
 // &演算子はTypeScriptの交差型（Intersection Types）を表し、複数の型を一つに合成する
-type WithImageUrl<T> = T & { image_url: string }
+export type WithImageUrl<T> = T & { image_url: string }
 
 export const addOgp = async <T extends HasUrl>(posts: T[]): Promise<WithImageUrl<T>[]> => {
   const startTime = Date.now()
