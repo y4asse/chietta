@@ -34,7 +34,7 @@ const UserPostItem = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>>
             <PostLink url={userPost.url} image_url={userPost.image_url} />
           </div>
           <div className="text-gray mt-2 text-right">
-            <time dateTime={userPost.createdAt.toISOString()}>{date}</time>
+            <time dateTime={userPost.createdAt.toString()}>{date}</time>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItem; hiddenDate?: boolean }
           </div>
         )}
         {!hiddenDate && (
-          <time dateTime={post.createdAt.toISOString()} className="absolute bottom-1 right-3 text-gray">
+          <time dateTime={post.createdAt.toString()} className="absolute bottom-1 right-3 text-gray">
             {date}
           </time>
         )}
