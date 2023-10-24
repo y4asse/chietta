@@ -19,39 +19,13 @@ const getPostsFromDb = async ({ offset, userId }: { offset: number; userId: stri
   const startTimeline = Date.now()
 
   // ユーザーがログインしていない場合
-  if (!userId) {
-    const dbPosts = await db.post.findMany({
-      orderBy: { createdAt: 'desc' },
-      take,
-      skip: offset
-    })
-    return dbPosts.map((post) => ({ ...post, isViewd: false }))
-  }
-
-  // ユーザーがログインしている場合
-  const dbPosts = db.post.findMany({
+  const dbPosts = await db.post.findMany({
     orderBy: { createdAt: 'desc' },
     take,
     skip: offset
   })
 
-  const viewdPosts = db.viewHistory.findMany({
-    where: {
-      user_id: userId
-    }
-  })
-
-  const [posts, viewd] = await Promise.all([dbPosts, viewdPosts])
-  const retPosts = posts.map((post) => {
-    const isViewd = viewd.some((viewdPost) => viewdPost.post_url === post.url)
-    if (isViewd) {
-      return { ...post, isViewd: true }
-    } else {
-      return { ...post, isViewd: false }
-    }
-  })
-
   const endTimeline = Date.now()
   console.log('[getPostsFromDb] get posts = ' + (endTimeline - startTimeline) + 'ms')
-  return retPosts
+  return dbPosts
 }

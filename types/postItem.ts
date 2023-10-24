@@ -5,7 +5,6 @@ export type PostItem = {
   createdAt: Date
   image_url: string
   likedCount?: number
-  isViewd: boolean
 }
 
 interface WithIsViewd<T> {
