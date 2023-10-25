@@ -34,7 +34,7 @@ const UserPostItem = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>>
               {userPost.user.name}
             </Link>
           </h1>
-          <span className=" font-semibold">{userPost.content}</span>
+          <span className=" font-normal">{userPost.content}</span>
           <div className="max-w-[512px] rounded-xl overflow-hidden mt-3">
             <PostLink url={userPost.url} image_url={userPost.image_url} />
           </div>
