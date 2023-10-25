@@ -1,5 +1,6 @@
 import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
+import { getToken } from 'next-auth/jwt'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 
@@ -27,6 +28,16 @@ export const POST = async (req: NextRequest) => {
     return Response.json({ message: ret.error })
   }
   const { url, title, content, user_id } = ret.data
+
+  // 認可
+  const token = await getToken({ req })
+  if (token === null) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+  if (token.sub !== user_id) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+
   const result = await db.userPost.create({
     data: {
       url,
@@ -35,7 +46,6 @@ export const POST = async (req: NextRequest) => {
       user_id
     }
   })
-  console.log(result)
   return Response.json(result)
 }
 export const PUT = async (req: NextRequest) => {
@@ -52,9 +62,20 @@ export const PUT = async (req: NextRequest) => {
     return Response.json({ message: ret.error })
   }
   const { url, title, content, user_id, id } = ret.data
+
+  // 認可
+  const token = await getToken({ req })
+  if (token === null) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+  if (token.sub !== user_id) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+
   const result = await db.userPost.update({
     where: {
-      id: id
+      id: id,
+      user_id: user_id
     },
     data: {
       url,
@@ -66,21 +87,32 @@ export const PUT = async (req: NextRequest) => {
   console.log(result)
   return Response.json(result)
 }
+
 export const DELETE = async (req: NextRequest) => {
   const body = await req.json()
   const schema = z.object({
-    post_id: z.string()
+    post_id: z.string(),
+    user_id: z.string()
   })
   const ret = schema.safeParse(body)
   if (!ret.success) {
     return Response.json({ message: ret.error })
   }
-  const { post_id } = ret.data
+  const { post_id, user_id } = ret.data
+  // 認可
+  const token = await getToken({ req })
+  if (token === null) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+  if (token.sub !== user_id) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
 
   const result = await db.userPost
     .delete({
       where: {
-        id: post_id
+        id: post_id,
+        user_id: user_id
       }
     })
     .catch((e) => {
