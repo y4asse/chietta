@@ -1,16 +1,20 @@
-import { ReturnPost } from '@/app/api/post/route'
-import { Post } from '@prisma/client'
 import { getOgp } from './getOgp'
-import { TrendArticle } from '@/types/trendsArticle'
 
-interface HasUrl {
+export interface HasUrl {
   url: string
 }
 
 // &演算子はTypeScriptの交差型（Intersection Types）を表し、複数の型を一つに合成する
-type WithImageUrl<T> = T & { image_url: string }
+export type WithImageUrl<T> = T & { image_url: string }
 
-export const addOgp = async <T extends HasUrl>(posts: T[]): Promise<WithImageUrl<T>[]> => {
+type Options = {
+  allowNull?: boolean
+}
+
+export const addOgp = async <T extends HasUrl>(
+  posts: T[],
+  { allowNull }: Options = { allowNull: false }
+): Promise<WithImageUrl<T>[]> => {
   const startTime = Date.now()
   let array: WithImageUrl<T>[] = []
 
@@ -18,12 +22,22 @@ export const addOgp = async <T extends HasUrl>(posts: T[]): Promise<WithImageUrl
   const ogpPromises = posts.map((post) => getOgp(post.url))
   const ogps = await Promise.all(ogpPromises)
   posts.map((post, i) => {
-    const ogp = ogps[i]
-    if (!ogp) return
-    if (!ogp.ogImage) return
-    if (ogp.ogImage.length < 1) return
-    const image_url = ogp.ogImage[0].url
-    array = [...array, { ...post, image_url }]
+    if (allowNull) {
+      const ogp = ogps[i]
+      if (!ogp || !ogp.ogImage || ogp.ogImage.length < 1) {
+        array = [...array, { ...post, image_url: '' }]
+        return
+      }
+      const image_url = ogp.ogImage[0].url
+      array = [...array, { ...post, image_url }]
+    } else {
+      const ogp = ogps[i]
+      if (!ogp) return
+      if (!ogp.ogImage) return
+      if (ogp.ogImage.length < 1) return
+      const image_url = ogp.ogImage[0].url
+      array = [...array, { ...post, image_url }]
+    }
   })
 
   const endTime = Date.now()

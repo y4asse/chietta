@@ -1,23 +1,32 @@
-import { ReturnPost } from '@/app/api/post/route'
+'use client'
+
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import { displayCompanyName } from '@/utils/displayCompanyName'
+import PostLink from './PostLink'
+import { PostItem } from '@/types/postItem'
+import { useAtom } from 'jotai'
+import { viewHistoryAtom } from '@/jotai/viewHistory'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const PostItem = ({ post }: { post: ReturnPost }) => {
-  const { image_url, title, likedCount } = post
+const PostItem = ({ post, hiddenDate }: { post: PostItem; hiddenDate?: boolean }) => {
+  const { title, likedCount } = post
+  const [viewHistory, setViewHistory] = useAtom(viewHistoryAtom)
+  const isViewed = viewHistory.some((url) => url === post.url)
   const createdAt = post.createdAt.toString()
   const date = dayjs(createdAt).tz('Asia/Tokyo').format('YYYY/M/D/ HH:mm')
   const displayName = displayCompanyName(post.url)
   return (
-    <article className="rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative">
-      <a href={post.url}>
-        <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] w-full aspect-[16/9]" />
-      </a>
+    <article
+      className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative transition-all duration-300 ${
+        isViewed && 'brightness-[0.9]'
+      }`}
+    >
+      <PostLink url={post.url} image_url={post.image_url} isViewed={isViewed} />
       <div className="px-[16px] py-[10px] mb-10">
         <h1 className="font-bold">{title}</h1>
         {displayName && <p className="text-sm text-gray pt-3">{displayName}</p>}
@@ -27,7 +36,11 @@ const PostItem = ({ post }: { post: ReturnPost }) => {
             <span>{likedCount}</span>
           </div>
         )}
-        <time className="absolute bottom-1 right-3 text-gray">{date}</time>
+        {!hiddenDate && (
+          <time dateTime={post.createdAt.toString()} className="absolute bottom-1 right-3 text-gray">
+            {date}
+          </time>
+        )}
       </div>
     </article>
   )

@@ -3,15 +3,19 @@ import React from 'react'
 import Posts from '@/components/tech/Posts'
 import Input from '@/components/search/Input'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
-import { getSearchPosts } from '@/server/getPosts'
+import { getPost } from '@/server/getPosts'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]/route'
 
 const Search = async ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = searchParams
   const offset = 0
-  const filteredPosts = q ? await getSearchPosts(offset, q) : null
+  const data = await getServerSession(authOptions)
+  const userId = data ? data.user.id : null
+  const filteredPosts = q ? await getPost('search', { offset, q, userId }) : null
 
   return (
-    <div className="py-10 border-b border-[#cacaca] min-h-screen bg-[#fffafa]">
+    <div className="py-10 border-b border-[#cacaca] min-h-screen bg-main">
       <WrapContainer>
         <Input q={q} />
 

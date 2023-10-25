@@ -47,6 +47,34 @@ model PostCategoryMap {
     @@index([post_id])
 }
 
+model ViewHistory {
+    id       String @id @default(uuid())
+    post_url String
+    user_id  String
+
+    user      User     @relation(fields: [user_id], references: [id])
+    createdAt DateTime @default(now())
+
+    @@unique([post_url, user_id])
+    @@index([user_id])
+}
+
+model UserPost {
+    id        String   @id @default(uuid())
+    user_id   String
+    url       String
+    content   String?
+    title     String
+    updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    isPublic  Boolean  @default(true)
+
+    user User @relation(fields: [user_id], references: [id])
+
+    @@index([user_id])
+    @@index([createdAt])
+}
+
 // default
 // Necessary for Next auth
 model Account {
@@ -68,30 +96,16 @@ model Account {
     @@index([userId])
 }
 
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@index([userId])
-}
-
 model User {
-    id            String    @id @default(cuid())
+    id            String        @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?       @unique
     emailVerified DateTime?
     image         String?
+    createdAt     DateTime      @default(now())
+    updatedAt     DateTime      @default(now()) @updatedAt
+    introduction  String?
     accounts      Account[]
-    sessions      Session[]
-}
-
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
+    ViewHistory   ViewHistory[]
+    UserPost      UserPost[]
 }

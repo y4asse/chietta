@@ -18,25 +18,29 @@ const Tab = () => {
       path: '/latest'
     },
     {
+      name: 'タイムライン',
+      path: '/posts'
+    },
+    {
       name: '企業ブログ',
       path: '/company'
     }
   ]
   return (
-    <nav className="sticky top-0 z-10 bg-[white] py-3">
+    <nav className="sticky top-0 z-10 bg-[white] py-3 px-2">
       <WrapContainer>
         <div className="flex justify-between items-center">
-          <ul className="flex flex-wrap text-xl text-gray gap-5 items-center font-bold">
+          <ul className="flex text-xl text-gray gap-5 items-center font-bold flex-nowrap sm:overflow-auto overflow-x-scroll">
             {list.map((item, index) => {
               const isActive = item.path === '/' ? pathname === item.path : pathname.startsWith(item.path)
               return (
-                <li key={index} className={isActive ? `border-b-[3px]  border-primary` : ''}>
+                <li key={index} className={`${isActive ? `border-b-[3px]  border-primary` : ''} whitespace-nowrap`}>
                   <Link href={item.path}>{item.name}</Link>
                 </li>
               )
             })}
           </ul>
-          <Link className="text-gray text-xl" href="/search">
+          <Link className="text-gray text-xl pl-2" href="/search">
             <FaSearch />
           </Link>
         </div>

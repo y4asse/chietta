@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { name: '企業ブログ', path: '/company' }
   ]
   return (
-    <main className="min-h-screen min-w-[300px] bg-[#fffafa] items-center py-10">
+    <main className="min-h-screen min-w-[300px] bg-main items-center py-10">
       <h1 className="text-center text-3xl font-bold my-5">新着の記事</h1>
       {/* <div className="flex justify-center gap-3 items-center my-7">
         {list.map((item) => {

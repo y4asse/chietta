@@ -3,6 +3,9 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Gtag from '@/utils/gtag'
+import AuthProvider from '@/components/provider/authProvider'
+import JotaiProvider from '@/components/provider/jotaiProvider'
+import HistoryProviderS from '@/components/provider/HistoryProviderS'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +20,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja">
       <Gtag />
       <body className={inter.className}>
-        <LayoutComponent>{children}</LayoutComponent>
+        <AuthProvider>
+          <JotaiProvider>
+            <HistoryProviderS>
+              <LayoutComponent>{children}</LayoutComponent>
+            </HistoryProviderS>
+          </JotaiProvider>
+        </AuthProvider>
       </body>
     </html>
   )

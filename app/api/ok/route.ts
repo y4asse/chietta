@@ -1,5 +1,4 @@
-
 export const GET = async () => {
-  return Response.json({ message: "ok" });
-};
-
+  console.log('ok')
+  return Response.json({ message: 'ok' })
+}

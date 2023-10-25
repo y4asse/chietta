@@ -1,17 +1,17 @@
 import React from 'react'
 import WrapContainer from './WrapContainer'
-import Link from 'next/link'
 import Tab from './Tab'
+import NavRight from './NavRight'
+import NavLeft from './NavLeft'
 
 const Header = () => {
   return (
     <>
-      <nav className=" bg-[white] ">
+      <nav className=" bg-[white] p-2">
         <WrapContainer>
-          <div className="flex items-center justify-between py-2">
-            <Link className=" text-3xl font-extrabold" href="/">
-              Chietta
-            </Link>
+          <div className="flex justify-between items-center">
+            <NavLeft />
+            <NavRight />
           </div>
         </WrapContainer>
       </nav>
