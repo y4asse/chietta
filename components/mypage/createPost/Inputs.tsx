@@ -24,13 +24,14 @@ const Inputs = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (isLoading) return
     setIsLoading(true)
 
     const newPost = {
       user_id: user.id,
       url: data.url,
       content: data.content,
-      title: title
+      title: title ? title : ''
     }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/userPost`, {
       method: 'POST',

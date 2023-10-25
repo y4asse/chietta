@@ -27,7 +27,7 @@ const UserPostItem = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>>
             alt="ユーザアイコン"
           />
         </div>
-        <div className="max-w-[512px] ">
+        <div className="max-w-[512px] w-[95%]">
           <h1 className="mb-2 font-semibold">{userPost.user.name}</h1>
           <span className=" font-semibold">{userPost.content}</span>
           <div className="max-w-[512px] rounded-xl overflow-hidden mt-3">

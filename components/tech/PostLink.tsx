@@ -1,7 +1,6 @@
 'use client'
 
 import { viewHistoryAtom } from '@/jotai/viewHistory'
-import { PostItem } from '@/types/postItem'
 import { useAtom } from 'jotai'
 import { useSession } from 'next-auth/react'
 import React from 'react'
@@ -21,8 +20,12 @@ const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string
     })
   }
   return (
-    <a href={url} onClick={handleClick}>
-      <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] w-full aspect-[16/9]" />
+    <a href={url} onClick={handleClick} className="w-[95%]">
+      {image_url !== '' ? (
+        <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] mx-auto" />
+      ) : (
+        <p className="underline text-center">{url}</p>
+      )}
     </a>
   )
 }
