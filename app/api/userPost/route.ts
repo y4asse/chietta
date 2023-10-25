@@ -1,14 +1,15 @@
+import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 
 export const GET = async () => {
   const result = await db.userPost.findMany({
-    orderBy: {
-      createdAt: 'desc'
-    }
+    orderBy: { createdAt: 'desc' },
+    include: { user: true }
   })
-  return Response.json(result)
+  const userPosts = await addOgp(result, { allowNull: true })
+  return Response.json(userPosts)
 }
 
 //TODO 認証されたユーザしかできないようにする

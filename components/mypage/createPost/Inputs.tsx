@@ -45,7 +45,9 @@ const Inputs = ({ user }: { user: User }) => {
         setIsLoading(false)
         return
       })
+    //cacheの更新
     router.push('/posts')
+    router.refresh()
   }
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value
