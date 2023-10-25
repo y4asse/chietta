@@ -1,6 +1,7 @@
 'use client'
 
 import { User } from '@prisma/client'
+import { User as SessionUser } from 'next-auth'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -11,7 +12,7 @@ type Inputs = {
   image: string
 }
 
-const Profile = ({ user }: { user: User }) => {
+const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser | null }) => {
   const router = useRouter()
   const {
     register,
@@ -97,14 +98,16 @@ const Profile = ({ user }: { user: User }) => {
       <div className="mx-auto">
         <h1 className="text-2xl font-bold">{user.name}</h1>
         <p className="mt-5 text-gray">{user.introduction ?? '自己紹介がありません'}</p>
-        <div className="mt-5">
-          <button
-            onClick={() => setIsEditing(true)}
-            className="rounded bg-primary text-[white] px-3 py-1 font-semibold"
-          >
-            プロフィールを編集
-          </button>
-        </div>
+        {sessionUser && user.id === sessionUser.id && (
+          <div className="mt-5">
+            <button
+              onClick={() => setIsEditing(true)}
+              className="rounded bg-primary text-[white] px-3 py-1 font-semibold"
+            >
+              プロフィールを編集
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
