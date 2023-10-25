@@ -20,11 +20,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
       <div className="flex flex-wrap pt-10">
         <Profile user={user} />
         <div className="w-full">
-          {postsWithOgp.length === 0 && (
-            <div className="text-center bg-[white] p-5 py-10 rounded shadow">
-              <h2 className="text-2xl font-bold">まだ記事の共有がありません</h2>
-            </div>
-          )}
+          {postsWithOgp.length === 0 && <h2 className="text-center text-2xl font-bold">まだ記事の共有がありません</h2>}
           {postsWithOgp.map((post) => {
             const userPost = {
               user: user,
