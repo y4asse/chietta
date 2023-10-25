@@ -92,7 +92,7 @@ const Profile = ({ user }: { user: User }) => {
       <img src={user.image!} alt="ユーザアイコン" className="w-[150px] h-[150px] rounded-full mx-auto" />
       <div className="mx-auto">
         <h1 className="text-2xl font-bold">{user.name}</h1>
-        <p className="mt-5">{user.introduction}</p>
+        <p className="mt-5 text-gray">{user.introduction ?? '自己紹介がありません'}</p>
         <div className="mt-5">
           <button
             onClick={() => setIsEditing(true)}
