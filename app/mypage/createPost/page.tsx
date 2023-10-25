@@ -4,6 +4,7 @@ import Inputs from '@/components/mypage/createPost/Inputs'
 import { getServerSession } from 'next-auth'
 import React from 'react'
 
+// TODO IDの中に入れる必要ない
 const CreatePost = async ({ params }: { params: { id: string } }) => {
   const data = await getServerSession(authOptions)
   const sessionUser = data!.user
