@@ -94,7 +94,7 @@ const Inputs = ({ user }: { user: User }) => {
         <div className="mt-5">
           <label className="">
             <textarea
-              rows={3}
+              rows={5}
               className={`font-bold py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full resize-none placeholder:font-normal`}
               placeholder="この記事めっちゃ参考になった"
               {...register('content', { required: true })}

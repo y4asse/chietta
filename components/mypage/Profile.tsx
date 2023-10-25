@@ -41,14 +41,13 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
     setIsEditing(false)
     setIsLoading(false)
   }
-
   if (isEditing) {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap max-x-[1000px] mx-auto gap-10 pb-10">
         <div className="mx-auto">
           <img src={user.image!} alt="ユーザアイコン" className="w-[100px] h-[100px] rounded-full " />
         </div>
-        <div className="mx-auto font-semibold w-[400px]">
+        <div className="mx-auto font-semibold max-w-[500px]">
           <div className="">
             <label className="w-full">
               表示名:
