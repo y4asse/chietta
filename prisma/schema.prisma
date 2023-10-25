@@ -63,7 +63,7 @@ model UserPost {
     id        String   @id @default(uuid())
     user_id   String
     url       String
-    content   String
+    content   String?
     title     String
     updatedAt DateTime @updatedAt
     createdAt DateTime @default(now())

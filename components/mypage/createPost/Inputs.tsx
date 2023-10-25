@@ -9,6 +9,7 @@ import { useForm, SubmitHandler, set } from 'react-hook-form'
 type Inputs = {
   url: string
   content: string
+  isPublic: boolean
 }
 
 const Inputs = ({ user }: { user: User }) => {
@@ -31,7 +32,8 @@ const Inputs = ({ user }: { user: User }) => {
       user_id: user.id,
       url: data.url,
       content: data.content,
-      title: title ? title : ''
+      title: title ? title : '',
+      isPublic: data.isPublic
     }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/userPost`, {
       method: 'POST',
@@ -69,52 +71,45 @@ const Inputs = ({ user }: { user: User }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <div className="pt-5">
-          <label>
-            URL
-            <input
-              {...register('url', { required: true })}
-              type="url"
-              onChange={handleChange}
-              placeholder="https://example.com"
-              className="py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full"
-            />
-            {errors.url && (
-              <span className="text-[#ff8f8f]" role="alert">
-                このフィールドは必須です
-              </span>
-            )}
-          </label>
-        </div>
-        {(image || title) && (
-          <div className="mt-5 bg-[white] border border-[#cfcfcf] rounded-xl max-w-[400px] overflow-hidden text-lg text-gray font-bold mx-auto">
-            {image && <img src={image} className=" aspect-[16/9]" alt="OGP画像" />}
-            {title && <div className="p-1">{title}</div>}
-          </div>
-        )}
-        <div className="mt-5">
-          <label className="">
-            <textarea
-              rows={5}
-              className={`font-bold py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full resize-none placeholder:font-normal`}
-              placeholder="この記事めっちゃ参考になった"
-              {...register('content', { required: true })}
-            />
-            {errors.content && (
-              <span className="text-[#ff8f8f]" role="alert">
-                このフィールドは必須です
-              </span>
-            )}
-          </label>
-        </div>
-        <div className="text-right">
+      <div className="pt-5">
+        <label>
+          URL
           <input
-            type="submit"
-            className="rounded bg-primary text-[white] px-3 py-1 mt-5 font-semibold hover:cursor-pointer"
-            value={isLoading ? '投稿中...' : '投稿する'}
+            {...register('url', { required: true })}
+            type="url"
+            onChange={handleChange}
+            placeholder="https://example.com"
+            className="py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full"
           />
+          {errors.url && (
+            <span className="text-[#ff8f8f]" role="alert">
+              このフィールドは必須です
+            </span>
+          )}
+        </label>
+      </div>
+      {(image || title) && (
+        <div className="mt-5 bg-[white] border border-[#cfcfcf] rounded-xl max-w-[400px] overflow-hidden text-lg text-gray font-bold mx-auto">
+          {image && <img src={image} className=" aspect-[16/9]" alt="OGP画像" />}
+          {title && <div className="p-1">{title}</div>}
         </div>
+      )}
+      <div className="mt-5">
+        <label className="">
+          <textarea
+            rows={5}
+            className={`font-bold py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full resize-none placeholder:font-normal`}
+            placeholder="この記事めっちゃ参考になった"
+            {...register('content')}
+          />
+        </label>
+      </div>
+      <div className="text-right">
+        <input
+          type="submit"
+          className="rounded bg-primary text-[white] px-3 py-1 mt-5 font-semibold hover:cursor-pointer"
+          value={isLoading ? '投稿中...' : '投稿する'}
+        />
       </div>
     </form>
   )
