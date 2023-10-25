@@ -2,7 +2,7 @@
 
 import { User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
 type Inputs = {
@@ -54,11 +54,15 @@ const Profile = ({ user }: { user: User }) => {
               <input
                 id="name"
                 defaultValue={user.name!}
-                className="py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-[#fdcaca] w-full"
+                className="py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full"
                 placeholder="名前を入力..."
                 {...register('name', { required: true })}
               />
-              {errors.name && <span className="text-[#ff8f8f]">このフィールドは必須です</span>}
+              {errors.name && (
+                <span role="alert" className="text-[#ff8f8f]">
+                  このフィールドは必須です
+                </span>
+              )}
             </label>
           </div>
           <div className="mt-5">
@@ -67,7 +71,7 @@ const Profile = ({ user }: { user: User }) => {
               <textarea
                 defaultValue={user.introduction ? user.introduction : ''}
                 rows={3}
-                className={`font-bold py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-[#fdcaca] w-full resize-none `}
+                className={`font-bold py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full resize-none `}
                 placeholder="自己紹介を入力..."
                 {...register('introduction')}
               />
