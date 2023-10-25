@@ -11,7 +11,7 @@ const NavRight = async () => {
       {data && <UserIcon data={data} />}
       <Link
         href={data ? '/mypage/createPost' : '/login'}
-        className="bg-primary text-[white] rounded-lg px-3 py-2 text-lg font-semibold"
+        className="bg-primary text-[white] rounded-lg px-3 py-1  md:py-2 text-normal font-semibold md:text-lg"
       >
         {data ? '記事を共有' : 'ログイン'}
       </Link>

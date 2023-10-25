@@ -7,7 +7,7 @@ export type WithUser<T> = T & { user: User }
 
 const UserPosts = ({ userPosts }: { userPosts: WithImageUrl<WithUser<UserPost>>[] }) => {
   return (
-    <div className="flex mx-auto flex-wrap p-5 max-w-[800px]">
+    <div className="flex mx-auto flex-wrap max-w-[800px]">
       {userPosts.map((item) => {
         return <UserPostItem key={item.id} userPost={item} />
       })}

@@ -10,7 +10,9 @@ const CreatePost = async ({ params }: { params: { id: string } }) => {
   const sessionUser = data!.user
   return (
     <WrapContainer>
-      <Inputs user={sessionUser} />
+      <div className="px-2">
+        <Inputs user={sessionUser} />
+      </div>
     </WrapContainer>
   )
 }

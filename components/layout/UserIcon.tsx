@@ -33,7 +33,11 @@ const UserIcon = ({ data }: { data: Session }) => {
   return (
     <div className="relative" id="modal">
       <button aria-label="タブを表示・非表示にする" onClick={handleClick}>
-        <img src={data.user.image!} alt="ユーザーアイコン" className="rounded-full w-10 h-10 border border-[#dddddd]" />
+        <img
+          src={data.user.image!}
+          alt="ユーザーアイコン"
+          className="rounded-full w-8 h-8 md:w-10 md:h-10 border border-[#dddddd]"
+        />
       </button>
       {isShow && (
         <ul className="shadow rounded-xl p-5 flex flex-col gap-3 absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">

@@ -7,7 +7,7 @@ import NavLeft from './NavLeft'
 const Header = () => {
   return (
     <>
-      <nav className=" bg-[white] py-2">
+      <nav className=" bg-[white] p-2">
         <WrapContainer>
           <div className="flex justify-between items-center">
             <NavLeft />
