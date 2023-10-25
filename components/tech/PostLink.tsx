@@ -11,7 +11,6 @@ const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string
   const [, setViewHistory] = useAtom(viewHistoryAtom)
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault()
     if (isViewed) return
     setViewHistory((prev) => [...prev, url])
     if (!user) return
@@ -20,7 +19,7 @@ const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string
     })
   }
   return (
-    <a href={url} onClick={handleClick} className="w-[95%]">
+    <a href={url} onClick={handleClick} className="w-[95%]" target="blank">
       {image_url !== '' ? (
         <img src={image_url} alt="image" className=" border-b-2 border-[#e6e6e6] mx-auto" />
       ) : (
