@@ -10,7 +10,12 @@ export const GET = async (req: NextRequest) => {
   if (!q) return Response.json({ message: '検索ワードを入力してください' })
 
   const searchWords = q.replaceAll('　', ' ').split(' ')
-  const search = searchWords.map((word) => '+' + word + '*').join(' ')
+  const search = searchWords
+    .map((word) => {
+      if (word.length <= 2) return '+' + word + '*'
+      return '+' + word
+    })
+    .join(' ')
   const start = new Date()
   const result = await db.post.findMany({
     orderBy: {
