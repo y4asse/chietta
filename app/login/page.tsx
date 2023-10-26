@@ -12,7 +12,7 @@ const Login = () => {
           <div className="flex justify-center">
             <Logo />
           </div>
-          <p className="text-gray mt-10">ログインすると記事のストックなどの様々な機能が使えるようになります。</p>
+          <p className="text-gray mt-10">ログインすると記事の共有などの様々な機能が使えるようになります。</p>
           <LoginButton />
           <hr className="mt-10 text-[#c2c2c2]" />
           <p className="text-gray mt-5">
