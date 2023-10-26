@@ -29,6 +29,12 @@ const Inputs = ({ sessionUser, post }: { sessionUser: User; post: UserPost }) =>
     if (isLoading) return
     setIsLoading(true)
 
+    if (sessionUser.id !== post.user_id) {
+      alert('権限がありません')
+      setIsLoading(false)
+      return
+    }
+
     const newPost = {
       id: post.id,
       url: data.url,
@@ -42,15 +48,15 @@ const Inputs = ({ sessionUser, post }: { sessionUser: User; post: UserPost }) =>
       body: JSON.stringify(newPost)
     })
       .then((res) => {
-        return res.json()
+        if (!res.ok) throw new Error('エラーが発生しました')
+        router.push('/posts')
+        router.refresh()
       })
       .catch((err) => {
         alert(err)
         setIsLoading(false)
         return
       })
-    router.push('/posts')
-    router.refresh()
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

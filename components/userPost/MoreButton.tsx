@@ -60,7 +60,7 @@ const MoreButton = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>> }
         </span>
       </button>
       {showModal && (
-        <div className="absolute border rounded-xl text-xl border-[#c2c2c2] p-3 bg-[white] top-full right-0 flex flex-col gap-3">
+        <div className="absolute border rounded-xl text-xl border-[#c2c2c2] py-3 px-5 bg-[white] top-full right-0 flex flex-col gap-3">
           {moreList.map((item, index) => (
             <button key={index} className="flex items-center gap-3 text-gray" onClick={item.handler}>
               {item.icon}
