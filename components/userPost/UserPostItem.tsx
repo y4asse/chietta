@@ -9,6 +9,7 @@ import { WithUser } from './UserPosts'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import MoreButton from './MoreButton'
 
 export type UserPostsWithImage = UserPost & { image: string }
 
@@ -36,11 +37,16 @@ const UserPostItem = async ({ userPost }: { userPost: WithImageUrl<WithUser<User
           />
         </Link>
         <div className="max-w-[512px] w-[95%]">
-          <h1>
+          <div className="relative">
             <Link href={`/user/${userPost.user_id}`} className="mb-2 font-semibold">
               {userPost.user.name}
             </Link>
-          </h1>
+            {isMine && (
+              <span className="absolute top-1 right-1">
+                <MoreButton userPost={userPost} />
+              </span>
+            )}
+          </div>
           <span className=" font-normal">{userPost.content}</span>
           <div className="max-w-[512px] rounded-xl overflow-hidden mt-3">
             <PostLink url={userPost.url} image_url={userPost.image_url} />

@@ -57,14 +57,15 @@ export const PUT = async (req: NextRequest) => {
     url: z.string(),
     title: z.string(),
     content: z.string(),
-    user_id: z.string()
+    user_id: z.string(),
+    isPublic: z.boolean()
   })
   const body = await req.json()
   const ret = schema.safeParse(body)
   if (!ret.success) {
     return Response.json({ message: ret.error })
   }
-  const { url, title, content, user_id, id } = ret.data
+  const { url, title, content, user_id, id, isPublic } = ret.data
 
   // 認可
   const token = await getToken({ req })
@@ -84,7 +85,8 @@ export const PUT = async (req: NextRequest) => {
       url,
       title,
       content,
-      user_id
+      user_id,
+      isPublic
     }
   })
   console.log(result)
