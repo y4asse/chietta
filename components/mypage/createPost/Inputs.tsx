@@ -40,16 +40,15 @@ const Inputs = ({ user }: { user: User }) => {
       body: JSON.stringify(newPost)
     })
       .then((res) => {
-        return res.json()
+        if (!res.ok) throw new Error('エラーが発生しました')
+        router.push(`/user/${user.id}`)
+        router.refresh()
       })
       .catch((err) => {
         alert(err)
         setIsLoading(false)
         return
       })
-    //cacheの更新
-    router.push('/posts')
-    router.refresh()
   }
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value
