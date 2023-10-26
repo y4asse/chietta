@@ -12,8 +12,7 @@ export const GET = async (req: NextRequest) => {
   const searchWords = q.replaceAll('　', ' ').split(' ')
   const search = searchWords
     .map((word) => {
-      if (word.length <= 2) return '+' + word + '*'
-      return '+' + word
+      return '+' + word + '*'
     })
     .join(' ')
   const start = new Date()

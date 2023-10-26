@@ -9,6 +9,7 @@ import { WithUser } from './UserPosts'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import MoreButton from './MoreButton'
 
 export type UserPostsWithImage = UserPost & { image: string }
 
@@ -36,10 +37,11 @@ const UserPostItem = async ({ userPost }: { userPost: WithImageUrl<WithUser<User
           />
         </Link>
         <div className="max-w-[512px] w-[95%]">
-          <h1>
+          <h1 className="flex justify-between">
             <Link href={`/user/${userPost.user_id}`} className="mb-2 font-semibold">
               {userPost.user.name}
             </Link>
+            <MoreButton />
           </h1>
           <span className=" font-normal">{userPost.content}</span>
           <div className="max-w-[512px] rounded-xl overflow-hidden mt-3">
