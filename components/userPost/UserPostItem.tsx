@@ -41,9 +41,11 @@ const UserPostItem = async ({ userPost }: { userPost: WithImageUrl<WithUser<User
             <Link href={`/user/${userPost.user_id}`} className="mb-2 font-semibold">
               {userPost.user.name}
             </Link>
-            <span className="absolute top-1 right-1">
-              <MoreButton userPost={userPost} />
-            </span>
+            {isMine && (
+              <span className="absolute top-1 right-1">
+                <MoreButton userPost={userPost} />
+              </span>
+            )}
           </div>
           <span className=" font-normal">{userPost.content}</span>
           <div className="max-w-[512px] rounded-xl overflow-hidden mt-3">
