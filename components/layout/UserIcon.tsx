@@ -6,13 +6,13 @@ import React, { useEffect } from 'react'
 import { MdLogout } from 'react-icons/md'
 import { FaHome } from 'react-icons/fa'
 
-const UserIcon = ({ data }: { data: Session }) => {
+const UserIcon = ({ session }: { session: Session }) => {
   const [isShow, setIsShow] = React.useState(false)
   const handleClick = () => {
     setIsShow(!isShow)
   }
   const list = [
-    { name: 'マイページ', path: `/user/${data.user.id}`, icon: <FaHome /> },
+    { name: 'マイページ', path: `/user/${session.user.id}`, icon: <FaHome /> },
     { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
   ]
 
@@ -34,7 +34,7 @@ const UserIcon = ({ data }: { data: Session }) => {
     <div className="relative" id="modal">
       <button aria-label="タブを表示・非表示にする" onClick={handleClick}>
         <img
-          src={data.user.image!}
+          src={session.user.image!}
           alt="ユーザーアイコン"
           className="rounded-full w-8 h-8 md:w-10 md:h-10 border border-[#dddddd]"
         />
