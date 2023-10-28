@@ -1,3 +1,5 @@
+'use client'
+
 import { WithImageUrl } from '@/server/addOgp'
 import { UserPost } from '@prisma/client'
 import React from 'react'
@@ -7,17 +9,17 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { WithUser } from './UserPosts'
 import Link from 'next/link'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import MoreButton from './MoreButton'
+import { useSession } from 'next-auth/react'
+import { motion } from 'framer-motion'
 
 export type UserPostsWithImage = UserPost & { image: string }
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const UserPostItem = async ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>> }) => {
-  const session = await getServerSession(authOptions)
+const UserPostItem = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>> }) => {
+  const { data: session } = useSession()
   const user = session ? session.user : null
   const isMine = userPost.user_id === user?.id
   if (!userPost.isPublic && !isMine) {
@@ -42,9 +44,9 @@ const UserPostItem = async ({ userPost }: { userPost: WithImageUrl<WithUser<User
               {userPost.user.name}
             </Link>
             {isMine && (
-              <span className="absolute top-1 right-1">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute top-1 right-1">
                 <MoreButton userPost={userPost} />
-              </span>
+              </motion.div>
             )}
           </div>
           <span className=" font-normal">{userPost.content}</span>
