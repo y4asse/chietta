@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 import Gtag from '@/utils/gtag'
 import AuthProvider from '@/components/provider/authProvider'
 import JotaiProvider from '@/components/provider/jotaiProvider'
-import HistoryProviderS from '@/components/provider/HistoryProviderS'
+import HistoryProvider from '@/components/provider/HistoryProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthProvider>
           <JotaiProvider>
-            <HistoryProviderS>
+            <HistoryProvider>
               <LayoutComponent>{children}</LayoutComponent>
-            </HistoryProviderS>
+            </HistoryProvider>
           </JotaiProvider>
         </AuthProvider>
       </body>

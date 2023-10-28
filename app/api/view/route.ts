@@ -1,5 +1,7 @@
 import { db } from '@/server/db'
+import { getServerSession } from 'next-auth'
 import { NextRequest } from 'next/server'
+import { authOptions } from '../auth/[...nextauth]/route'
 
 export const POST = async (req: NextRequest) => {
   const userId = req.nextUrl.searchParams.get('user_id')
@@ -22,10 +24,17 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
   const userId = req.nextUrl.searchParams.get('user_id')
   if (!userId) return Response.json({ message: 'userIdを入力してください' }, { status: 400 })
+  const sessionUser = await getServerSession(authOptions)
+  if (!sessionUser) return Response.json({ message: 'ログインしてください' }, { status: 403 })
+  if (sessionUser?.user.id !== userId) return Response.json({ message: '権限がありません' }, { status: 403 })
+
   const result = await db.viewHistory.findMany({
     where: {
       user_id: userId
+    },
+    select: {
+      post_url: true
     }
   })
-  return Response.json({ result })
+  return Response.json(result)
 }

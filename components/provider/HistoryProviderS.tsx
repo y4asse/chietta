@@ -21,7 +21,7 @@ const HistoryProviderS = async ({ children }: { children: React.ReactNode }) => 
   const end = new Date()
   console.log('[HistoryProviderS] get history', end.getTime() - start.getTime(), 'ms')
   const history = result.map((item) => item.post_url)
-  return <HistoryProvider history={history}>{children}</HistoryProvider>
+  return <HistoryProvider>{children}</HistoryProvider>
 }
 
 export default HistoryProviderS
