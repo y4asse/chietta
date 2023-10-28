@@ -4,19 +4,16 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const offsetString = req.nextUrl.searchParams.get('offset')
-  const userId = req.nextUrl.searchParams.get('user_id')
-  console.log(userId)
   const offset = offsetString ? parseInt(offsetString) : 0 // 不正な値の時0になる
-  const posts = await getPostsFromDb({ offset: offset ? offset : 0, userId })
+  const posts = await getPostsFromDb({ offset: offset ? offset : 0 })
   const postsWithOgp = await addOgp(posts)
   return Response.json(postsWithOgp)
 }
 
-const getPostsFromDb = async ({ offset, userId }: { offset: number; userId: string | null }) => {
+const getPostsFromDb = async ({ offset }: { offset: number }) => {
   const take = 10
   const startTimeline = Date.now()
 
-  // ユーザーがログインしていない場合
   const dbPosts = await db.post.findMany({
     orderBy: { createdAt: 'desc' },
     take,

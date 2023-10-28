@@ -2,14 +2,10 @@ import WrapContainer from '@/components/layout/WrapContainer'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
 import Posts from '@/components/tech/Posts'
 import { getPost } from '@/server/getPosts'
-import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
 
 const Home = async () => {
   const offset = 0
-  const data = await getServerSession(authOptions)
-  const userId = data ? data.user.id : null
-  const posts = await getPost('trends', { offset, userId })
+  const posts = await getPost('trends', { offset })
   if (!posts) return <WrapContainer>error</WrapContainer>
   return (
     <main className="min-h-screen min-w-[300px] bg-main items-center py-10">
