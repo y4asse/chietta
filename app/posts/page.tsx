@@ -6,10 +6,9 @@ import React from 'react'
 
 const Post = async () => {
   // 規模が小さい間はSSRの方がむしろよさそう？
-  const revalidate = 0 // 5分ごとに再生成
+  const revalidate = 60
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/userPost`, {
-    // next: { revalidate } // 5分ごとに再生成
-    cache: 'no-cache'
+    next: { revalidate }
   }).catch((err) => {
     return null
   })

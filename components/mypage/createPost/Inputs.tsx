@@ -1,7 +1,7 @@
 'use client'
 
 import { getOgp } from '@/server/getOgp'
-import { User } from 'next-auth'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React, { ChangeEvent, useState } from 'react'
 import { useForm, SubmitHandler, set } from 'react-hook-form'
@@ -12,7 +12,9 @@ type Inputs = {
   isClosed: boolean
 }
 
-const Inputs = ({ user }: { user: User }) => {
+const Inputs = () => {
+  const { data: session } = useSession()
+  const user = session ? session.user : null
   const router = useRouter()
   const [image, setImage] = useState<string | null>(null)
   const [title, setTitle] = useState<string | null>(null)
@@ -23,6 +25,7 @@ const Inputs = ({ user }: { user: User }) => {
     watch
   } = useForm<Inputs>()
   const [isLoading, setIsLoading] = useState(false)
+  if (!user) return
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (isLoading) return
