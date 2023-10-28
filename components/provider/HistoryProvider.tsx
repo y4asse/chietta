@@ -7,9 +7,11 @@ import React, { useEffect } from 'react'
 
 const HistoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [, setHistory] = useAtom(viewHistoryAtom)
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+
   const userId = session ? session.user.id : null
   useEffect(() => {
+    if (status === 'loading') return
     if (!userId) return
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/view?user_id=${userId}`, {
       cache: 'no-cache'
