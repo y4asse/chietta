@@ -54,7 +54,7 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
               <input
                 id="name"
                 defaultValue={user.name!}
-                className="py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full"
+                className="py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-[170px]"
                 placeholder="名前を入力..."
                 {...register('name', { required: true })}
               />

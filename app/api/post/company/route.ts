@@ -2,8 +2,6 @@ import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
 import { NextRequest, NextResponse } from 'next/server'
 
-export const revalidate = 5 * 60 // 5分に一回更新する
-
 export const GET = async (req: NextRequest, res: NextResponse) => {
   const offsetString = req.nextUrl.searchParams.get('offset')
   const offset = offsetString ? parseInt(offsetString) : 0 // 不正な値の時0になる
