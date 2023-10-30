@@ -1,11 +1,10 @@
 'use client'
 
 import { User } from '@prisma/client'
-import { useSession } from 'next-auth/react'
+import { User as SessionUser } from 'next-auth'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { motion } from 'framer-motion'
 
 type Inputs = {
   name: string
@@ -13,9 +12,7 @@ type Inputs = {
   image: string
 }
 
-const Profile = ({ user }: { user: User }) => {
-  const { data: session } = useSession()
-  const sessionUser = session ? session.user : null
+const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser | null }) => {
   const router = useRouter()
   const {
     register,
@@ -44,7 +41,6 @@ const Profile = ({ user }: { user: User }) => {
     setIsEditing(false)
     setIsLoading(false)
   }
-
   if (isEditing) {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap max-x-[1000px] mx-auto gap-10 pb-10">
@@ -98,18 +94,18 @@ const Profile = ({ user }: { user: User }) => {
   return (
     <div className="items-center flex flex-wrap max-x-[800px] mx-auto gap-10 pb-10">
       <img src={user.image!} alt="ユーザアイコン" className="w-[150px] h-[150px] rounded-full mx-auto" />
-      <div className="mx-auto relative pb-[50px]">
+      <div className="mx-auto">
         <h1 className="text-2xl font-bold">{user.name}</h1>
         <p className="mt-5 text-gray">{user.introduction ?? '自己紹介がありません'}</p>
         {sessionUser && user.id === sessionUser.id && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5 absolute bottom-1">
+          <div className="mt-5">
             <button
               onClick={() => setIsEditing(true)}
               className="rounded bg-primary text-[white] px-3 py-1 font-semibold"
             >
               プロフィールを編集
             </button>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>
