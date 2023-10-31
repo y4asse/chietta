@@ -1,6 +1,5 @@
 import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
-import { authRequest } from '@/utils/auth'
 import { getToken } from 'next-auth/jwt'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
@@ -33,7 +32,13 @@ export const POST = async (req: NextRequest) => {
   const { url, title, content, user_id, isPublic } = ret.data
 
   // 認可
-  await authRequest(req, user_id)
+  const token = await getToken({ req })
+  if (token === null) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+  if (token.sub !== user_id) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
 
   const result = await db.userPost.create({
     data: {
@@ -63,7 +68,13 @@ export const PUT = async (req: NextRequest) => {
   const { url, title, content, user_id, id, isPublic } = ret.data
 
   // 認可
-  await authRequest(req, user_id)
+  const token = await getToken({ req })
+  if (token === null) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+  if (token.sub !== user_id) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
 
   const result = await db.userPost.update({
     where: {
@@ -94,7 +105,13 @@ export const DELETE = async (req: NextRequest) => {
   }
   const { post_id, user_id } = ret.data
   // 認可
-  await authRequest(req, user_id)
+  const token = await getToken({ req })
+  if (token === null) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+  if (token.sub !== user_id) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
 
   const result = await db.userPost
     .delete({
