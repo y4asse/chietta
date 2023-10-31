@@ -1,5 +1,6 @@
 import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
+import { authRequest } from '@/utils/auth'
 import { getToken } from 'next-auth/jwt'
 import { NextRequest } from 'next/server'
 import z from 'zod'
@@ -43,13 +44,7 @@ export const PUT = async (req: NextRequest) => {
   const { id, name, introduction } = ret.data
 
   // 認可
-  const token = await getToken({ req })
-  if (token === null) {
-    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
-  }
-  if (token.sub !== id) {
-    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
-  }
+  await authRequest(req, id)
   const result = await db.user.update({
     where: {
       id: id
