@@ -14,8 +14,8 @@ const UserIcon = ({ session }: { session: Session }) => {
   }
   const list = [
     { name: 'マイページ', path: `/user/${session.user.id}`, icon: <FaHome /> },
-    { name: 'ログアウト', path: '/logout', icon: <MdLogout /> },
-    { name: 'カテゴリ', path: '/mypage/category', icon: <BiSolidCategoryAlt /> }
+    { name: 'カテゴリ', path: '/mypage/category', icon: <BiSolidCategoryAlt /> },
+    { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
   ]
 
   useEffect(() => {
