@@ -83,13 +83,32 @@ const getTrends = async (offset: number): Promise<PostItem[] | null> => {
   }
 }
 
+const getFollowingCategoryPosts = async (offset: number, userId: string): Promise<PostItem[] | null> => {
+  try {
+    const queryURL = new URL(
+      `${process.env.NEXT_PUBLIC_API_URL}/post/followingCategory?user_id=${userId}&offset=${offset}`
+    )
+    const res = await fetch(queryURL)
+    if (!res.ok) {
+      console.log('status: ' + res.status)
+      console.log('statusText: ' + res.statusText)
+      throw new Error(`HTTP error! Status: ${res.statusText}`)
+    }
+    const posts = (await res.json()) as PostItem[]
+    return posts
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
 type Props = {
   offset: number
   userId?: string | null
   q?: string
 }
 
-export type Type = 'latest' | 'company' | 'search' | 'trends'
+export type Type = 'latest' | 'company' | 'search' | 'trends' | 'followingCategory'
 
 export const getPost = async (type: Type, { offset, q, userId }: Props): Promise<PostItem[] | null> => {
   switch (type) {
@@ -102,6 +121,9 @@ export const getPost = async (type: Type, { offset, q, userId }: Props): Promise
       return await getSearchPosts(offset, q)
     case 'trends':
       return await getTrends(offset)
+    case 'followingCategory':
+      if (!userId) return null
+      return await getFollowingCategoryPosts(offset, userId)
     default:
       throw new Error('type is not found')
   }
