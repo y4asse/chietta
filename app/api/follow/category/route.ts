@@ -4,6 +4,7 @@ import { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
 export const GET = async (req: NextRequest) => {
+  const start = Date.now()
   const userId = req.nextUrl.searchParams.get('user_id')
   if (userId === null) {
     return Response.json({ message: '不正なリクエスト' }, { status: 400 })
@@ -16,11 +17,13 @@ export const GET = async (req: NextRequest) => {
       postCategory: true
     }
   })
-  console.log(result)
+  const end = Date.now()
+  console.log(`[category] getByUserId: ${end - start}ms`)
   return Response.json(result)
 }
 
 export const POST = async (req: NextRequest) => {
+  const time = Date.now()
   const schema = z.object({
     user_id: z.string(),
     post_category_id: z.number()
@@ -44,6 +47,8 @@ export const POST = async (req: NextRequest) => {
         post_category_id
       }
     })
+    const end = Date.now()
+    console.log(`[category] followCategory: ${end - time}ms`)
     return Response.json(result)
   } catch (e) {
     return Response.json({ message: '既にフォローしています' }, { status: 400 })

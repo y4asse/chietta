@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 import Gtag from '@/utils/gtag'
 import AuthProvider from '@/components/provider/authProvider'
 import JotaiProvider from '@/components/provider/jotaiProvider'
-import HistoryProvider from '@/components/provider/HistoryProvider'
+import HistoryProvider from '@/components/provider/ClientProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
