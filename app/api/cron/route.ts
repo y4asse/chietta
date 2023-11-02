@@ -4,6 +4,7 @@ import { Feed } from '@/types/feed'
 import { QiitaArticle, QiitaResponse } from '@/types/qiita'
 import { TrendArticle } from '@/types/trendsArticle'
 import { ZennResponse } from '@/types/zenn'
+import { PostCategory } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 import { parseStringPromise } from 'xml2js'
 
@@ -14,14 +15,19 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   if (secret !== process.env.MY_SECRET_TOKEN) {
     return Response.json({ error: 'invalid token' }, { status: 401 })
   }
-  const zenn = await updateZenn()
-  const qiita = await updateQiita()
+  const categories = await db.postCategory.findMany({
+    orderBy: {
+      id: 'asc'
+    }
+  })
+  const zenn = await updateZenn(categories)
+  const qiita = await updateQiita(categories)
   await deleteOldTrends()
-  const zennTrends = await updateZennTrend()
-  const qiitaTrends = await updateQiitaTrend()
+  // const zennTrends = await updateZennTrend()
+  // const qiitaTrends = await updateQiitaTrend()
   return Response.json({
-    zennTrendsCount: zennTrends.length,
-    qiitaTrendsCount: qiitaTrends.length
+    // zennTrendsCount: zennTrends.length,
+    // qiitaTrendsCount: qiitaTrends.length
   })
 }
 
@@ -100,7 +106,7 @@ const updateQiitaTrend = async () => {
   return result
 }
 
-const updateZenn = async () => {
+const updateZenn = async (categories: PostCategory[]) => {
   // zennから取得
   const startTime = Date.now()
   const res = await fetch(`https://zenn.dev/api/articles?order=latest`, {
@@ -132,10 +138,35 @@ const updateZenn = async () => {
   const endTime = Date.now()
   console.log(`[zenn] update exec: ${endTime - startTime}ms`)
   console.log('[zenn] update count: ' + count)
+
+  //　カテゴリーと紐づけ
+  const newPosts = await db.post.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    },
+    take: count
+  })
+  const data: { post_category_id: number; post_id: string }[] = []
+  newPosts.map((post) => {
+    categories.map(async (category) => {
+      if (post.title.toLowerCase().includes(category.name.toLowerCase())) {
+        data.push({
+          post_category_id: category.id,
+          post_id: post.id
+        })
+      }
+    })
+  })
+  const result = await db.postCategoryMap.createMany({
+    data: data,
+    skipDuplicates: true
+  })
+  console.log(result)
+
   return insertPosts
 }
 
-const updateQiita = async () => {
+const updateQiita = async (categories: PostCategory[]) => {
   const startTime = Date.now()
   const apiKey = process.env.QIITA_API!
   const MIN_CONTENT_LENGTH = 1000
@@ -169,5 +200,29 @@ const updateQiita = async () => {
   const endTime = Date.now()
   console.log(`[qiita] update exec: ${endTime - startTime}ms`)
   console.log('[qiita] update count: ' + count)
+
+  // カテゴリーと紐づけ
+  const newPosts = await db.post.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    },
+    take: count
+  })
+  const data: { post_category_id: number; post_id: string }[] = []
+  newPosts.map((post) => {
+    categories.map(async (category) => {
+      if (post.title.toLowerCase().includes(category.name.toLowerCase())) {
+        data.push({
+          post_category_id: category.id,
+          post_id: post.id
+        })
+      }
+    })
+  })
+  const result = await db.postCategoryMap.createMany({
+    data: data,
+    skipDuplicates: true
+  })
+  console.log(result)
   return insertPosts
 }
