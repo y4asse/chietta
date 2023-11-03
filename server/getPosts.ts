@@ -88,7 +88,9 @@ const getFollowingCategoryPosts = async (offset: number, userId: string): Promis
     const queryURL = new URL(
       `${process.env.NEXT_PUBLIC_API_URL}/post/followingCategory?user_id=${userId}&offset=${offset}`
     )
-    const res = await fetch(queryURL)
+    const res = await fetch(queryURL, {
+      cache: 'no-cache'
+    })
     if (!res.ok) {
       console.log('status: ' + res.status)
       console.log('statusText: ' + res.statusText)
