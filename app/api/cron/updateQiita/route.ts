@@ -58,6 +58,11 @@ const updateQiita = async (categories: PostCategory[]) => {
     orderBy: {
       createdAt: 'desc'
     },
+    where: {
+      url: {
+        startsWith: 'https://qiita.com'
+      }
+    },
     take: count
   })
   const data: { post_category_id: number; post_id: string }[] = []

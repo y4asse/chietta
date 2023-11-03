@@ -15,6 +15,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       id: 'asc'
     }
   })
+  console.log(categories)
   const zenn = await updateZenn(categories)
   return Response.json({ count: zenn.length })
 }
@@ -57,10 +58,16 @@ const updateZenn = async (categories: PostCategory[]) => {
     orderBy: {
       createdAt: 'desc'
     },
+    where: {
+      url: {
+        startsWith: 'https://zenn.dev'
+      }
+    },
     take: count
   })
   const data: { post_category_id: number; post_id: string }[] = []
   newPosts.map((post) => {
+    console.log(post.title)
     categories.map(async (category) => {
       if (post.title.toLowerCase().includes(category.name.toLowerCase())) {
         data.push({
@@ -74,6 +81,7 @@ const updateZenn = async (categories: PostCategory[]) => {
     data: data,
     skipDuplicates: true
   })
+  console.log('category map count')
   console.log(result)
 
   return insertPosts
