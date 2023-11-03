@@ -43,10 +43,12 @@ model PostCategoryMap {
     post_category_id Int
     post             Post         @relation(fields: [post_id], references: [id])
     post_id          String
+    createdAt        DateTime     @default(now())
 
     @@unique([post_category_id, post_id])
     @@index([post_category_id])
     @@index([post_id])
+    @@index([createdAt])
 }
 
 model FollowCategory {
