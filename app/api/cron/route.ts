@@ -23,11 +23,11 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const zenn = await updateZenn(categories)
   const qiita = await updateQiita(categories)
   await deleteOldTrends()
-  // const zennTrends = await updateZennTrend()
-  // const qiitaTrends = await updateQiitaTrend()
+  const zennTrends = await updateZennTrend()
+  const qiitaTrends = await updateQiitaTrend()
   return Response.json({
-    // zennTrendsCount: zennTrends.length,
-    // qiitaTrendsCount: qiitaTrends.length
+    zennTrendsCount: zennTrends.length,
+    qiitaTrendsCount: qiitaTrends.length
   })
 }
 
