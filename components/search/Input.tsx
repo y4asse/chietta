@@ -21,7 +21,6 @@ const Input = ({ q }: { q: string }) => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    router.prefetch(`/search?q=${e.target.value}`)
     setSearchWord(e.target.value)
   }
 
