@@ -1,29 +1,19 @@
 import { addOgp } from '@/server/addOgp'
-import { TrendArticle } from '@/types/trendsArticle'
-import { NextRequest, NextResponse } from 'next/server'
+import { Trends } from '@prisma/client'
+import { NextRequest } from 'next/server'
 
-export const GET = async (req: NextRequest, res: NextResponse) => {
+export const revalidate = 60 * 60 // 1時間
+
+export const GET = async (req: NextRequest) => {
   const offsetString = req.nextUrl.searchParams.get('offset')
   const offset = offsetString ? parseInt(offsetString) : 0 // 不正な値の時0になる
-  const articles = await getTrendsFromRedis(offset)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trendsFromDb?offset=${offset}`, {
+    next: { revalidate: 60 * 30 } // 30分
+  })
+  if (!res.ok) {
+    return Response.json({ message: 'サーバーエラー' }, { status: 500 })
+  }
+  const articles = (await res.json()).result as Trends[]
   const returnPosts = await addOgp(articles)
   return Response.json(returnPosts)
-}
-
-const getTrendsFromRedis = async (offset: number) => {
-  const locate = process.env.NODE_ENV === 'development' ? 'trends-dev' : 'trends'
-  const take = 9 + offset
-  const startTime = Date.now()
-  // TODO restにして、キャッシュする
-  const trendsJson = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/zrange/${locate}/${offset}/${take}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
-    },
-    next: { revalidate: 5 * 60 }
-  }).then(async (res) => (await res.json()).result as string[])
-  const trends = trendsJson.map((trend) => JSON.parse(trend) as TrendArticle)
-  const endTime = Date.now()
-  console.log('[getPostsFromRedis] get trends = ' + (endTime - startTime) + 'ms')
-  if (trends.length === 0) return []
-  return trends
 }
