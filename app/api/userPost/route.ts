@@ -33,10 +33,7 @@ export const POST = async (req: NextRequest) => {
 
   // 認可
   const token = await getToken({ req })
-  if (token === null) {
-    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
-  }
-  if (token.sub !== user_id) {
+  if (token === null || token.sub !== user_id) {
     return Response.json({ message: '不正なリクエスト' }, { status: 400 })
   }
 
@@ -69,10 +66,7 @@ export const PUT = async (req: NextRequest) => {
 
   // 認可
   const token = await getToken({ req })
-  if (token === null) {
-    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
-  }
-  if (token.sub !== user_id) {
+  if (token === null || token.sub !== user_id) {
     return Response.json({ message: '不正なリクエスト' }, { status: 400 })
   }
 
@@ -106,10 +100,7 @@ export const DELETE = async (req: NextRequest) => {
   const { post_id, user_id } = ret.data
   // 認可
   const token = await getToken({ req })
-  if (token === null) {
-    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
-  }
-  if (token.sub !== user_id) {
+  if (token === null || token.sub !== user_id) {
     return Response.json({ message: '不正なリクエスト' }, { status: 400 })
   }
 

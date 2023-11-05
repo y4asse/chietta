@@ -34,6 +34,7 @@ model PostCategory {
     id              Int               @id @default(autoincrement())
     name            String            @unique
     postCategoryMap PostCategoryMap[]
+    FollowCategory  FollowCategory[]
 }
 
 model PostCategoryMap {
@@ -42,9 +43,26 @@ model PostCategoryMap {
     post_category_id Int
     post             Post         @relation(fields: [post_id], references: [id])
     post_id          String
+    createdAt        DateTime     @default(now())
 
+    @@unique([post_category_id, post_id])
     @@index([post_category_id])
     @@index([post_id])
+    @@index([createdAt])
+}
+
+model FollowCategory {
+    id               String   @id @default(uuid())
+    user_id          String
+    post_category_id Int
+    createdAt        DateTime @default(now())
+
+    user         User         @relation(fields: [user_id], references: [id])
+    postCategory PostCategory @relation(fields: [post_category_id], references: [id])
+
+    @@unique([user_id, post_category_id])
+    @@index([user_id])
+    @@index([post_category_id])
 }
 
 model ViewHistory {
@@ -97,15 +115,16 @@ model Account {
 }
 
 model User {
-    id            String        @id @default(cuid())
-    name          String?
-    email         String?       @unique
-    emailVerified DateTime?
-    image         String?
-    createdAt     DateTime      @default(now())
-    updatedAt     DateTime      @default(now()) @updatedAt
-    introduction  String?
-    accounts      Account[]
-    ViewHistory   ViewHistory[]
-    UserPost      UserPost[]
+    id             String           @id @default(cuid())
+    name           String?
+    email          String?          @unique
+    emailVerified  DateTime?
+    image          String?
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @default(now()) @updatedAt
+    introduction   String?
+    accounts       Account[]
+    ViewHistory    ViewHistory[]
+    UserPost       UserPost[]
+    FollowCategory FollowCategory[]
 }

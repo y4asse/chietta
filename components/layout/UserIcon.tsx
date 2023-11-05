@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { MdLogout } from 'react-icons/md'
 import { FaHome } from 'react-icons/fa'
+import { BiSolidCategoryAlt } from 'react-icons/bi'
 
 const UserIcon = ({ session }: { session: Session }) => {
   const [isShow, setIsShow] = React.useState(false)
@@ -13,6 +14,7 @@ const UserIcon = ({ session }: { session: Session }) => {
   }
   const list = [
     { name: 'マイページ', path: `/user/${session.user.id}`, icon: <FaHome /> },
+    { name: 'カテゴリ', path: '/mypage/category', icon: <BiSolidCategoryAlt /> },
     { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
   ]
 
