@@ -93,6 +93,16 @@ model UserPost {
     @@index([createdAt])
 }
 
+model Trends {
+    id         String   @id @default(uuid())
+    url        String   @unique
+    title      String
+    createdAt  DateTime @default(now())
+    likedCount Int      @default(0)
+
+    @@index([createdAt])
+}
+
 // default
 // Necessary for Next auth
 model Account {
