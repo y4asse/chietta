@@ -1,4 +1,5 @@
 import Hero from '@/components/about/Hero'
+import Recruit from '@/components/about/Recruit'
 import Works from '@/components/about/Works'
 import React from 'react'
 
@@ -7,6 +8,8 @@ const About = () => {
     <div className="min-h-screen">
       <Hero />
       <Works />
+      {/* TODO  */}
+      {/* <Recruit /> */}
     </div>
   )
 }

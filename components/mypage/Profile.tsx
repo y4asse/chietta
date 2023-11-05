@@ -92,8 +92,12 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
     )
   }
   return (
-    <div className="items-center flex flex-wrap max-x-[800px] mx-auto gap-10 pb-10">
-      <img src={user.image!} alt="ユーザアイコン" className="w-[150px] h-[150px] rounded-full mx-auto" />
+    <div className=" flex flex-wrap max-x-[800px] mx-auto gap-10 pb-10">
+      <img
+        src={user.image!}
+        alt="ユーザアイコン"
+        className="w-[70px] h-[70px] md:w-[150px] md:h-[150px] rounded-full mx-auto"
+      />
       <div className="mx-auto">
         <h1 className="text-2xl font-bold">{user.name}</h1>
         <p className="mt-5 text-gray">{user.introduction ?? '自己紹介がありません'}</p>
