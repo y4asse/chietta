@@ -13,7 +13,11 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       id: userId
     },
     include: {
-      FollowCategory: true
+      FollowCategory: {
+        select: {
+          post_category_id: true
+        }
+      }
     }
   })
   const endSearchUser = new Date()
