@@ -40,7 +40,7 @@ const Tab = () => {
               )
             })}
           </ul>
-          <Link className="text-gray text-xl pl-2" href="/search">
+          <Link className="text-gray text-xl px-2" href="/search">
             <FaSearch />
           </Link>
         </div>

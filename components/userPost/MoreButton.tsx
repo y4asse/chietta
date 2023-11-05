@@ -54,7 +54,7 @@ const MoreButton = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>> }
   }, [])
   return (
     <div className="relative">
-      <button className="text-3xl" onClick={clickHandler}>
+      <button className="text-2xl" onClick={clickHandler}>
         <span id={`moreModal_${userPost.id}`}>
           <MdMoreHoriz />
         </span>
