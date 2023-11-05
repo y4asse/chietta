@@ -1,4 +1,4 @@
-import { kv } from '@/server/redis'
+import { db } from '@/server/db'
 import { Feed } from '@/types/feed'
 import { QiitaArticle } from '@/types/qiita'
 import { TrendArticle } from '@/types/trendsArticle'
@@ -17,14 +17,14 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const zennTrends = await updateZennTrend()
   const qiitaTrends = await updateQiitaTrend()
   return Response.json({
-    zennTrendsCount: zennTrends.length,
-    qiitaTrendsCount: qiitaTrends.length
+    zennTrendsCount: zennTrends.count,
+    qiitaTrendsCount: qiitaTrends.count
   })
 }
 
 const deleteOldTrends = async () => {
   const startTime = Date.now()
-  await kv.del(locate)
+  await db.trends.deleteMany({})
   const endTime = Date.now()
   console.log(`[delete trends] delete old trends exec pipeline: ${endTime - startTime}ms`)
 }
@@ -34,7 +34,9 @@ const updateZennTrend = async () => {
   const res = await fetch(`https://zenn.dev/api/articles?order=daily`, {
     cache: 'no-store'
   }).then(async (res) => (await res.json()) as ZennResponse)
-  const pipeline = kv.pipeline()
+
+  const insertPosts = [] as TrendArticle[]
+
   const startTime = Date.now()
   const { articles } = res
   for (const article of articles) {
@@ -44,16 +46,15 @@ const updateZennTrend = async () => {
       title: article.title,
       likedCount: article.liked_count
     } as TrendArticle
-    const stringPost = JSON.stringify(post)
-    pipeline.zadd(locate, {
-      score: -post.likedCount,
-      member: stringPost
-    })
+    insertPosts.push(post)
   }
-  const result = await pipeline.exec()
+  const result = await db.trends.createMany({
+    data: insertPosts,
+    skipDuplicates: true
+  })
   const endTime = Date.now()
   console.log(`[zenn] update trends exec: ${endTime - startTime}ms`)
-  console.log(`[zenn] update trends count: ${result.length}`)
+  console.log(`[zenn] update trends count: ${result.count}`)
   return result
 }
 
@@ -62,7 +63,7 @@ const updateQiitaTrend = async () => {
   const res = await fetch(`https://qiita.com/popular-items/feed`, {
     cache: 'no-cache'
   })
-  const pipeline = kv.pipeline()
+  const insertPosts = [] as TrendArticle[]
   const startTime = Date.now()
 
   const qiitaFeedResponse = await res.text()
@@ -83,16 +84,15 @@ const updateQiitaTrend = async () => {
       title: article.title[0],
       likedCount: res.likes_count
     } as TrendArticle
-    const stringPost = JSON.stringify(post)
-    pipeline.zadd(locate, {
-      score: -post.likedCount,
-      member: stringPost
-    })
+    insertPosts.push(post)
   })
   await Promise.all(asyncFuncs)
-  const result = await pipeline.exec()
+  const result = await db.trends.createMany({
+    data: insertPosts,
+    skipDuplicates: true
+  })
   const endTime = Date.now()
   console.log(`[qiita] update trends exec : ${endTime - startTime}ms`)
-  console.log(`[qiita] update trends count: ${result.length}`)
+  console.log(`[qiita] update trends count: ${result.count}`)
   return result
 }

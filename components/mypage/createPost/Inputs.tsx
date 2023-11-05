@@ -128,7 +128,7 @@ const Inputs = () => {
         </div>
         <div>
           <a className="inline-block pl-[0.15rem] hover:cursor-pointer text-xl font-bold">
-            Xでもつぶやく
+            Xで投稿
             <input
               type="checkbox"
               role="switch"
