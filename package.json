@@ -26,6 +26,7 @@
     "next": "13.5.4",
     "next-auth": "^4.24.3",
     "next-superjson": "^0.0.4",
+    "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
     "open-graph-scraper": "^6.3.0",
     "react": "^18",
