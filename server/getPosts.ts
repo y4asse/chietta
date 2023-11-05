@@ -67,7 +67,7 @@ const getTrends = async (offset: number): Promise<PostItem[] | null> => {
   try {
     const queryURL = new URL(`${process.env.NEXT_PUBLIC_API_URL}/trends?offset=${offset}`)
     const res = await fetch(queryURL, {
-      next: { revalidate: 5 * 60 }
+      next: { revalidate: 60 * 30 } // 30分に一回更新する
     })
     if (!res.ok) {
       console.log('Http Error')
