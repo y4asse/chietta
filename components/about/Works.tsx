@@ -6,7 +6,7 @@ const Works = () => {
   return (
     <section className="bg-white pb-10 pt-20 text-xl">
       <WrapContainer>
-        <section>
+        <section className="px-3">
           <h2 className="text-center text-3xl font-bold w-full">Chiettaとは?</h2>
           <p className="mt-5 text-gray text-center">
             ChiettaではQiitaやZennの記事や、企業の技術ブログなどの複数のサイトの情報をまとめています。
