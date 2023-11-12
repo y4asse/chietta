@@ -5,6 +5,7 @@ import React from 'react'
 import UserIcon from './UserIcon'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
+import { FaSearch } from 'react-icons/fa'
 
 const NavRight = () => {
   const { data: session, status } = useSession()
@@ -12,6 +13,9 @@ const NavRight = () => {
   return (
     <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
       <div className="flex gap-3 items-center">
+        <Link className="text-gray text-xl px-2" href="/search">
+          <FaSearch />
+        </Link>
         {session && <UserIcon session={session} />}
         <Link
           href={session ? '/mypage/createPost' : '/login'}

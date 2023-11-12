@@ -58,7 +58,7 @@ model FollowCategory {
     createdAt        DateTime @default(now())
 
     user         User         @relation(fields: [user_id], references: [id])
-    postCategory PostCategory @relation(fields: [post_category_id], references: [id])
+    postCategory PostCategory @relation(fields: [post_category_id], references: [id], onDelete: Cascade)
 
     @@unique([user_id, post_category_id])
     @@index([user_id])
@@ -70,7 +70,7 @@ model ViewHistory {
     post_url String
     user_id  String
 
-    user      User     @relation(fields: [user_id], references: [id])
+    user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
     createdAt DateTime @default(now())
 
     @@unique([post_url, user_id])
@@ -87,7 +87,7 @@ model UserPost {
     createdAt DateTime @default(now())
     isPublic  Boolean  @default(true)
 
-    user User @relation(fields: [user_id], references: [id])
+    user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
     @@index([user_id])
     @@index([createdAt])

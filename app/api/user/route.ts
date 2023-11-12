@@ -58,3 +58,27 @@ export const PUT = async (req: NextRequest) => {
   })
   return Response.json(result)
 }
+
+export const DELETE = async (req: NextRequest) => {
+  const schema = z.object({
+    id: z.string()
+  })
+  const body = await req.json()
+  const ret = schema.safeParse(body)
+  if (!ret.success) {
+    return Response.json({ message: ret.error })
+  }
+  const { id } = ret.data
+
+  // 認可
+  const token = await getToken({ req })
+  if (token === null || token.sub !== id) {
+    return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+  }
+  const result = await db.user.delete({
+    where: {
+      id: id
+    }
+  })
+  return Response.json(result)
+}
