@@ -57,7 +57,7 @@ model FollowCategory {
     post_category_id Int
     createdAt        DateTime @default(now())
 
-    user         User         @relation(fields: [user_id], references: [id])
+    user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
     postCategory PostCategory @relation(fields: [post_category_id], references: [id], onDelete: Cascade)
 
     @@unique([user_id, post_category_id])
