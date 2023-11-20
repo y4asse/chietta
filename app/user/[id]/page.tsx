@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/server/auth'
 import Profile from '@/components/mypage/Profile'
 import UserPostItem from '@/components/userPost/UserPostItem'
 import { addOgp } from '@/server/addOgp'
