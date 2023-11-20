@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/server/auth'
 import NotFound from '@/app/not-found'
 import WrapContainer from '@/components/layout/WrapContainer'
 import Inputs from '@/components/mypage/updatePost/Inputs'

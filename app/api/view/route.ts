@@ -1,7 +1,7 @@
 import { db } from '@/server/db'
 import { getServerSession } from 'next-auth'
 import { NextRequest } from 'next/server'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/server/auth'
 
 export const POST = async (req: NextRequest) => {
   const userId = req.nextUrl.searchParams.get('user_id')

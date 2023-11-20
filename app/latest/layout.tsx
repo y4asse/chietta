@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import { BiSolidCategoryAlt } from 'react-icons/bi'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname()
@@ -29,6 +30,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           )
         })}
       </div>
+      {pathname === '/latest/category' && (
+        <div className="text-center mb-3">
+          <Link href="/mypage/category" className="py-1 px-3 rounded-xl text-primary font-bold">
+            カテゴリ一覧を見る
+            <BiSolidCategoryAlt className="inline ml-1" />
+          </Link>
+        </div>
+      )}
       {children}
     </main>
   )

@@ -5,7 +5,7 @@ import Input from '@/components/search/Input'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
 import { getPost } from '@/server/getPosts'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import { authOptions } from '@/server/auth'
 
 const Search = async ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = searchParams

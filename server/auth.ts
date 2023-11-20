@@ -1,6 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { type GetServerSidePropsContext } from 'next'
-import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth'
+import { getServerSession, type DefaultSession } from 'next-auth'
+import  { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { db } from './db'
 
@@ -25,23 +26,30 @@ declare module 'next-auth' {
   // }
 }
 
-export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id
-      }
-    })
+export const authOptions: AuthOptions = {
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60 // 30 days
   },
   adapter: PrismaAdapter(db),
+  secret: process.env.NEXTAUTH_SECRET!,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     })
-  ]
+  ],
+  pages: {
+    signIn: '/login'
+  },
+  callbacks: {
+    async session({ session, user, token }) {
+      if (session.user != null && token.sub != null) {
+        session.user.id = token.sub
+      }
+      return session
+    }
+  }
 }
 
 /**
