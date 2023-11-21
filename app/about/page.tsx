@@ -5,7 +5,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className="min-h-screen">
+    <div className="">
       <Hero />
       <Works />
       {/* TODO  */}

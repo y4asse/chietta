@@ -15,7 +15,7 @@ const Search = async ({ searchParams }: { searchParams: { q: string } }) => {
   const filteredPosts = q ? await getPost('search', { offset, q, userId }) : null
 
   return (
-    <div className="py-10 border-b border-[#cacaca] min-h-screen bg-main">
+    <div className="py-10 border-b border-[#cacaca]  bg-main">
       <WrapContainer>
         <Input q={q} />
 

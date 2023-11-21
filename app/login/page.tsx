@@ -6,7 +6,7 @@ import React from 'react'
 
 const Login = () => {
   return (
-    <div className="min-h-screen bg-pink pt-16">
+    <div className=" bg-pink pt-16">
       <WrapContainer>
         <div className="bg-[white] py-10 px-5 rounded-xl max-w-[400px] mx-auto">
           <div className="flex justify-center">
