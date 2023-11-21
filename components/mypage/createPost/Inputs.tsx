@@ -18,7 +18,7 @@ const Inputs = () => {
   const router = useRouter()
   const [image, setImage] = useState<string | null>(null)
   const [title, setTitle] = useState<string | null>(null)
-  const [checkTwitter, setCheckTwitter] = useState<boolean>(true)
+  const [checkTwitter, setCheckTwitter] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
