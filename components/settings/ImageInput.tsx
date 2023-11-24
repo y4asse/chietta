@@ -69,7 +69,7 @@ const ImageInput = () => {
       <div className="text-center">
         <img
           src={session.user.image ? session.user.image : ''}
-          className="w-[120px] h-[120px] rounded-full border border-[#afafaf] overflow-hidden hover:opacity-80 duration-200 transition-all"
+          className="w-[120px] h-[120px] rounded-full border border-[#afafaf] overflow-hidden hover:opacity-80 duration-200 transition-all mx-auto"
           role="button"
           onClick={handleImageClick}
         />
