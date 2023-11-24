@@ -2,9 +2,9 @@
 
 import { useRef, useState } from 'react'
 import { storage } from '@/utils/firebase'
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { updateUserIcon } from '@/app/settings/profile/action'
-import { getSession, signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import Toast from '../utils/Toast'
 import { usePathname, useRouter } from 'next/navigation'
 
@@ -57,7 +57,15 @@ const ImageInput = () => {
   return (
     <div>
       <Toast content="更新しました" setIsOpen={setIsOpen} isOpen={isOpen} />
-      <input type="file" id="image" accept="image/*" className="hidden" ref={imageInputRef} onInput={handleInput} />
+      <input
+        type="file"
+        aria-label="プロフィール画像を選択"
+        id="image"
+        accept="image/*"
+        className="hidden"
+        ref={imageInputRef}
+        onInput={handleInput}
+      />
       <div className="text-center">
         <img
           src={session.user.image ? session.user.image : ''}
