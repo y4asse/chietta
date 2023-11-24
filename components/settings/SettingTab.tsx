@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { FaUserLarge } from 'react-icons/fa6'
+import { FaGlobe } from 'react-icons/fa6'
+import { FaUserGear } from 'react-icons/fa6'
 
 const SettingTab = () => {
   const list = [
-    { name: 'プロフィール', path: '/settings/profile', icon: <FaUserLarge /> },
-    { name: 'アカウント', path: '/settings/account', icon: <FaUserLarge /> }
+    { name: 'プロフィール', path: '/settings/profile', icon: <FaGlobe /> },
+    { name: 'アカウント', path: '/settings/account', icon: <FaUserGear /> }
   ]
   const pathname = usePathname()
   return (
