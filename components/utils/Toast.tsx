@@ -35,7 +35,7 @@ const Toast = ({
           <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200">
             <FaCheck />
           </div>
-          <div className="ms-3 text-sm font-normal">{content}</div>
+          <div className="ms-3 text-xl font-bold">{content}</div>
           <button
             onClick={() => setIsOpen(false)}
             type="button"
