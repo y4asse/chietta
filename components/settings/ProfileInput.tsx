@@ -60,7 +60,7 @@ const ProfileInput = () => {
       <form className="bg-[white] p-10" onSubmit={handleSubmit(onSubmit)}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-between flex-wrap gap-3 ">
           <div className="w-full md:w-auto">
-            <ImageInput image={user.image ? user.image : ''} />
+            <ImageInput />
           </div>
           <div className="w-full md:max-w-[700px]">
             <div>

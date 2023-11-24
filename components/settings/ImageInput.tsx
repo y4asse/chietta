@@ -4,17 +4,19 @@ import { useRef, useState } from 'react'
 import { storage } from '@/utils/firebase'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { updateUserIcon } from '@/app/settings/profile/action'
-import { useSession } from 'next-auth/react'
+import { getSession, signIn, useSession } from 'next-auth/react'
 import Toast from '../utils/Toast'
+import { usePathname, useRouter } from 'next/navigation'
 
-const ImageInput = ({ image }: { image: string }) => {
-  const { data: session } = useSession()
+const ImageInput = () => {
+  const { data: session, update } = useSession()
   const imageInputRef = useRef<HTMLInputElement>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string | null>(null)
-  const [imageUrl, setImageUrl] = useState(image)
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
+  const path = usePathname()
 
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0]
@@ -42,22 +44,23 @@ const ImageInput = ({ image }: { image: string }) => {
       try {
         const snapshot = await uploadBytes(imageRef, imageFile)
         const downloadURL = await getDownloadURL(snapshot.ref)
-        setImageUrl(downloadURL)
         await updateUserIcon({ userId: session.user.id, imageUrl: downloadURL })
         closeDialog()
         setIsOpen(true)
+        update()
       } catch (error) {
         alert('サーバーエラーが発生しました。')
       }
     }
   }
+  if (session === null) return
   return (
     <div>
       <Toast content="更新しました" setIsOpen={setIsOpen} isOpen={isOpen} />
       <input type="file" id="image" accept="image/*" className="hidden" ref={imageInputRef} onInput={handleInput} />
       <div className="text-center">
         <img
-          src={imageUrl}
+          src={session.user.image ? session.user.image : ''}
           className="w-[120px] h-[120px] rounded-full border border-[#afafaf] overflow-hidden hover:opacity-80 duration-200 transition-all"
           role="button"
           onClick={handleImageClick}

@@ -46,6 +46,13 @@ export const authOptions: AuthOptions = {
     async session({ session, user, token }) {
       if (session.user != null && token.sub != null) {
         session.user.id = token.sub
+
+        const dbUser = await db.user.findUnique({
+          where: { id: token.sub }
+        })
+        if (dbUser && dbUser.image) {
+          session.user.image = dbUser.image;
+        }
       }
       return session
     }
