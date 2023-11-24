@@ -6,6 +6,7 @@ import { db } from '@/server/db'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import React from 'react'
+import Image from 'next/image'
 
 const Mypage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
@@ -25,10 +26,15 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
   const posts = user.UserPost
   const postsWithOgp = await addOgp(posts, { allowNull: true })
   return (
-    <div className="flex flex-wrap pt-10">
+    <div className="pt-10 min-h-screen">
       <Profile user={user} sessionUser={sessionUser} />
       <div className="w-full">
-        {postsWithOgp.length === 0 && <h2 className="text-center text-2xl font-bold">まだ記事の共有がありません</h2>}
+        {postsWithOgp.length === 0 && (
+          <div>
+            <h2 className="text-center text-2xl font-bold mt-20">まだ記事の共有がありません</h2>
+            <Image src={'/img/cat.png'} width={300} height={300} alt="cat" className="mx-auto" />
+          </div>
+        )}
         {postsWithOgp.map((post) => {
           const userPost = {
             user: user,
