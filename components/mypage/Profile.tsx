@@ -11,7 +11,7 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
       <img
         src={user.image!}
         alt="ユーザアイコン"
-        className="w-[70px] h-[70px] md:w-[150px] md:h-[150px] rounded-full mx-auto"
+        className="w-[70px] h-[70px] md:w-[150px] md:h-[150px] rounded-full mx-auto border border-[#afafaf]"
       />
       <div className="w-full md:w-1/2">
         <h1 className="text-2xl font-bold">{user.name}</h1>

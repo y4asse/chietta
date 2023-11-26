@@ -1,23 +1,16 @@
 'use client'
 
-import { Session } from 'next-auth'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
-import { MdLogout } from 'react-icons/md'
 import { MdSecurity } from 'react-icons/md'
 import { MdOutlineQuestionMark } from 'react-icons/md'
 
-import { FaHome } from 'react-icons/fa'
-import { BiSolidCategoryAlt } from 'react-icons/bi'
-
-const UserIcon = ({ session }: { session: Session }) => {
+const QuestionButton = () => {
   const [isShow, setIsShow] = React.useState(false)
   const handleClick = () => {
     setIsShow(!isShow)
   }
   const list = [
-    { name: 'マイページ', path: `/user/${session.user.id}`, icon: <FaHome /> },
-    { name: 'カテゴリ', path: '/mypage/category', icon: <BiSolidCategoryAlt /> },
     {
       name: 'Chiettaとは',
       path: '/about',
@@ -27,8 +20,7 @@ const UserIcon = ({ session }: { session: Session }) => {
       name: 'プライバシー',
       path: '/about/privacy',
       icon: <MdSecurity />
-    },
-    { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
+    }
   ]
 
   useEffect(() => {
@@ -47,12 +39,12 @@ const UserIcon = ({ session }: { session: Session }) => {
   })
   return (
     <div className="relative" id="modal">
-      <button aria-label="タブを表示・非表示にする" onClick={handleClick}>
-        <img
-          src={session.user.image!}
-          alt="ユーザーアイコン"
-          className="rounded-full w-8 h-8 md:w-10 md:h-10 border border-[#dddddd]"
-        />
+      <button
+        aria-label="タブを表示・非表示にする"
+        onClick={handleClick}
+        className="border rounded-full text-gray text-2xl"
+      >
+        <MdOutlineQuestionMark />
       </button>
       {isShow && (
         <ul className="shadow rounded-xl p-5 flex flex-col gap-3 absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
@@ -70,4 +62,4 @@ const UserIcon = ({ session }: { session: Session }) => {
   )
 }
 
-export default UserIcon
+export default QuestionButton

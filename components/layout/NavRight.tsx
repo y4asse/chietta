@@ -6,6 +6,7 @@ import UserIcon from './UserIcon'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
 import { FaSearch } from 'react-icons/fa'
+import QuestionButton from './QuestionButton'
 
 const NavRight = () => {
   const { data: session, status } = useSession()
@@ -16,7 +17,7 @@ const NavRight = () => {
         <Link className="text-gray text-xl px-2" href="/search">
           <FaSearch />
         </Link>
-        {session && <UserIcon session={session} />}
+        {session ? <UserIcon session={session} /> : <QuestionButton />}
         <Link
           href={session ? '/mypage/createPost' : '/login'}
           className="bg-primary text-[white] rounded-lg px-3 py-1  md:py-2 text-normal font-semibold md:text-lg"

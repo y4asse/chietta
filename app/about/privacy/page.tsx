@@ -3,7 +3,7 @@ import React from 'react'
 
 const Privacy = () => {
   return (
-    <div className=" bg-pink py-[60px]">
+    <div className=" bg-pink py-[60px] px-5">
       <WrapContainer>
         <div className="bg-[white] p-10 rounded-3xl shadow">
           <h1 className="text-2xl font-bold mb-6">プライバシーポリシー</h1>
