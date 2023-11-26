@@ -7,11 +7,11 @@ import React from 'react'
 
 const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser | null }) => {
   return (
-    <div className="max-w-[800px] w-full mx-auto flex flex-wrap p-3">
+    <div className="max-w-[800px] w-full mx-auto flex flex-wrap p-3 mb-5 gap-5">
       <img
         src={user.image!}
         alt="ユーザアイコン"
-        className="w-[70px] h-[70px] md:w-[150px] md:h-[150px] rounded-full mx-auto border border-[#afafaf]"
+        className="w-[70px] h-[70px] md:w-[100px] md:h-[100px] rounded-full mx-auto border border-[#afafaf]"
       />
       <div className="w-full md:w-1/2">
         <h1 className="text-2xl font-bold">{user.name}</h1>
