@@ -27,7 +27,7 @@ const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string
           className=" border-b-2 border-[#e6e6e6] mx-auto aspect-[16/9] w-full object-fill"
         />
       ) : (
-        <p className="underline text-center">{url}</p>
+        <p className="underline p-1 break-all">{url}</p>
       )}
     </a>
   )
