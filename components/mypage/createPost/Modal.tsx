@@ -5,7 +5,9 @@ import { FaXTwitter } from 'react-icons/fa6'
 const Modal = ({ closeDialog, url, content }: { closeDialog: () => void; url: string; content: string }) => {
   const handleX = () => {
     const text = content
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(
+      url
+    )}`
     window.open(twitterUrl, '_blank')
   }
   return (
