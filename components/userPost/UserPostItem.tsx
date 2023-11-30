@@ -27,9 +27,7 @@ const UserPostItem = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>>
   }
   const date = dayjs(userPost.createdAt).tz('Asia/Tokyo').format('YYYY/M/D/ HH:mm')
   return (
-    <article
-      className={`px-3 py-5 shadow bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}
-    >
+    <article className={`py-7 bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}>
       <div className="flex justify-center gap-3">
         <Link href={`/user/${userPost.user_id}`} className="min-w-[40px]">
           <img
