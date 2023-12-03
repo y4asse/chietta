@@ -3,6 +3,7 @@ import like from '@/public/lottie/like.json'
 import { useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
 import { Player } from '@lottiefiles/react-lottie-player'
+import { useRouter } from 'next/navigation'
 
 const LikeButton = ({
   userPostId,
@@ -17,6 +18,7 @@ const LikeButton = ({
   const user = session ? session.user : null
   const playerRef = useRef<Player>(null)
   const [isLiked, setIsLiked] = useState(false)
+  const router = useRouter()
   const [count, setCount] = useState(defaultCount)
 
   useEffect(() => {
@@ -27,7 +29,10 @@ const LikeButton = ({
   }, [defaultLiked])
 
   const handleClick = async () => {
-    if (!user) return
+    if (!user) {
+      router.push('/login')
+      return
+    }
     if (status === 'loading') return
     setIsLiked((prev) => !prev)
     try {
