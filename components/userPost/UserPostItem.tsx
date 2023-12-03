@@ -1,24 +1,21 @@
 'use client'
 
-import { WithImageUrl } from '@/server/addOgp'
-import { UserPost } from '@prisma/client'
 import React from 'react'
 import PostLink from '../tech/PostLink'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import { WithUser } from './UserPosts'
 import Link from 'next/link'
 import MoreButton from './MoreButton'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
-
-export type UserPostsWithImage = UserPost & { image: string }
+import LikeButton from './LikeButton'
+import { PostWithData } from '@/app/api/userPost/route'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const UserPostItem = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>> }) => {
+const UserPostItem = ({ userPost }: { userPost: PostWithData }) => {
   const { data: session } = useSession()
   const user = session ? session.user : null
   const isMine = userPost.user_id === user?.id

@@ -1,7 +1,6 @@
 import WrapContainer from '@/components/layout/WrapContainer'
-import UserPosts, { WithUser } from '@/components/userPost/UserPosts'
-import { WithImageUrl } from '@/server/addOgp'
-import { UserPost } from '@prisma/client'
+import UserPosts from '@/components/userPost/UserPosts'
+import { PostsWithData } from '../api/userPost/route'
 import React from 'react'
 
 const Post = async () => {
@@ -13,7 +12,7 @@ const Post = async () => {
     return null
   })
   if (!res) return <WrapContainer>error</WrapContainer>
-  const userPosts = (await res.json()) as WithImageUrl<WithUser<UserPost>>[]
+  const userPosts = (await res.json()) as PostsWithData
   return (
     // <ScrollDetect type="userPosts" q="">
     <UserPosts userPosts={userPosts} />
