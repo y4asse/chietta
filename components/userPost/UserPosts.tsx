@@ -9,9 +9,9 @@ const UserPosts = ({ userPosts }: { userPosts: PostsWithData }) => {
   const likes = useLikes()
   return (
     <div className="flex mx-auto flex-wrap max-w-[800px] px-3">
-      {/* {userPosts.map((item) => {
+      {userPosts.map((item) => {
         return <UserPostItem key={item.id} userPost={item} likes={likes} />
-      })} */}
+      })}
     </div>
   )
 }
