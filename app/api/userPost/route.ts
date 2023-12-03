@@ -9,7 +9,7 @@ const getPosts = async () => {
   const result = await db.userPost.findMany({
     where: { isPublic: true },
     orderBy: { createdAt: 'desc' },
-    include: { user: true }
+    include: { user: true, _count: { select: { like: true } } }
   })
   const userPosts = await addOgp(result, { allowNull: true })
   return userPosts
@@ -17,7 +17,6 @@ const getPosts = async () => {
 
 //　型用
 const getOnePostWithUserAndLike = async (id: string) => {
-  console.log('hello')
   const posts = await getPosts()
   return posts[0]
 }

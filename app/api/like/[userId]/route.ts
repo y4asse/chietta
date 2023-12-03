@@ -28,7 +28,6 @@ export const POST = async (req: NextRequest, { params }: { params: { userId: str
     const body = await req.json()
     const { user_post_id } = schema.parse(body)
     const { userId } = params
-    console.log('userId', userId)
     const like = await db.like.create({
       data: {
         user_id: userId,

@@ -11,17 +11,19 @@ import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
 import LikeButton from './LikeButton'
 import { PostWithData } from '@/app/api/userPost/route'
+import { Like } from '@prisma/client'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const UserPostItem = ({ userPost }: { userPost: PostWithData }) => {
+const UserPostItem = ({ userPost, likes }: { userPost: PostWithData; likes: Like[] }) => {
   const { data: session } = useSession()
   const user = session ? session.user : null
   const isMine = userPost.user_id === user?.id
   if (!userPost.isPublic && !isMine) {
     return
   }
+  const defaultLiked = likes.some((like) => like.user_post_id === userPost.id) // 認証前false、認証後trueになる
   const date = dayjs(userPost.createdAt).tz('Asia/Tokyo').format('YYYY/M/D/ HH:mm')
   return (
     <article className={`py-7 bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}>
@@ -48,9 +50,13 @@ const UserPostItem = ({ userPost }: { userPost: PostWithData }) => {
           <div className="max-w-[512px] rounded-xl overflow-hidden mt-3">
             <PostLink url={userPost.url} image_url={userPost.image_url} />
           </div>
-          <div className="text-gray mt-2 justify-end flex items-center gap-2">
-            {!userPost.isPublic && <span className="bg-gray text-[white] px-1 rounded-lg">非公開</span>}
-            <time dateTime={userPost.createdAt.toString()}>{date}</time>
+          <div></div>
+          <div className="text-gray mt-2 justify-between flex items-center gap-2">
+            <LikeButton userPostId={userPost.id} defaultLiked={defaultLiked} defaultCount={userPost._count.like} />
+            <div>
+              {!userPost.isPublic && <span className="bg-gray text-[white] px-1 rounded-lg">非公開</span>}
+              <time dateTime={userPost.createdAt.toString()}>{date}</time>
+            </div>
           </div>
         </div>
       </div>
