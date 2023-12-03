@@ -28,13 +28,15 @@ const UserPostItem = ({ userPost, likes }: { userPost: PostWithData; likes: Like
   return (
     <article className={`py-7 bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}>
       <div className="flex justify-center gap-3">
-        <Link href={`/user/${userPost.user_id}`} className="min-w-[40px]">
-          <img
-            className="w-[40px] h-[40px] rounded-full border-[#e2e2e2] border"
-            src={userPost.user.image!}
-            alt="ユーザアイコン"
-          />
-        </Link>
+        <div>
+          <Link href={`/user/${userPost.user_id}`} className="min-w-[40px]">
+            <img
+              className="w-[40px] h-[40px] rounded-full border-[#e2e2e2] border"
+              src={userPost.user.image!}
+              alt="ユーザアイコン"
+            />
+          </Link>
+        </div>
         <div className="max-w-[512px] w-[95%]">
           <div className="relative">
             <Link href={`/user/${userPost.user_id}`} className="mb-2 font-semibold">
