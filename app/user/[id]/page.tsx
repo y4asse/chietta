@@ -16,10 +16,17 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
     where: { id },
     include: {
       UserPost: {
+        include: {
+          _count: {
+            select: { like: true }
+          },
+          user: true
+        },
         orderBy: {
           createdAt: 'desc'
         }
-      }
+      },
+      like: true
     }
   })
   if (!user) return notFound()
@@ -36,11 +43,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
           </div>
         )}
         {postsWithOgp.map((post) => {
-          const userPost = {
-            user: user,
-            ...post
-          }
-          return <UserPostItem key={post.id} userPost={userPost} />
+          return <UserPostItem key={post.id} userPost={post} likes={user.like} />
         })}
       </div>
     </div>
