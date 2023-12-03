@@ -8,10 +8,10 @@ const Post = async () => {
   const revalidate = 60
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/userPost`, {
     next: { revalidate }
-  }).catch((err) => {
-    return null
   })
-  if (!res) return <WrapContainer>error</WrapContainer>
+  if (!res.ok) {
+    return <WrapContainer>error</WrapContainer>
+  }
   const userPosts = (await res.json()) as PostsWithData
   return (
     // <ScrollDetect type="userPosts" q="">
