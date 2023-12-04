@@ -15,7 +15,10 @@ const Post = async () => {
   const userPosts = (await res.json()) as PostsWithData
   return (
     // <ScrollDetect type="userPosts" q="">
-    <UserPosts userPosts={userPosts} />
+    <>
+      <h1 className="text-center text-3xl font-bold my-5">タイムライン</h1>
+      <UserPosts userPosts={userPosts} />
+    </>
     // </ScrollDetect>
   )
 }
