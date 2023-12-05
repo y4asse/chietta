@@ -10,9 +10,7 @@ const UserPosts = ({ userPosts }: { userPosts: PostsWithData }) => {
   return (
     <div className="flex mx-auto flex-wrap max-w-[800px] px-3">
       {userPosts.map((item) => {
-        const defaultLiked = false
-        console.log(likes)
-        // const defaultLiked = likes.some((like) => like && like.user_post_id === item.id)
+        const defaultLiked = likes.length > 0 ? likes.some((like) => like && like.user_post_id === item.id) : false
         return <UserPostItem key={item.id} userPost={item} defaultLiked={defaultLiked} />
       })}
     </div>
