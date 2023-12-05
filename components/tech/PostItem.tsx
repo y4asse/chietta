@@ -1,25 +1,19 @@
 'use client'
 
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
-import dayjs from 'dayjs'
 import Image from 'next/image'
 import { displayCompanyName } from '@/utils/displayCompanyName'
 import PostLink from './PostLink'
-import { PostItem } from '@/types/postItem'
+import { PostItemType } from '@/types/postItem'
 import { useAtom } from 'jotai'
 import { viewHistoryAtom } from '@/jotai/viewHistory'
+import { calcDiffTime } from '@/utils/calcDiffTime'
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
-
-const PostItem = ({ post, hiddenDate }: { post: PostItem; hiddenDate?: boolean }) => {
+const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boolean }) => {
   const { title, likedCount } = post
   const [viewHistory, setViewHistory] = useAtom(viewHistoryAtom)
   const isViewed = viewHistory.some((url) => url === post.url)
-  const createdAt = post.createdAt.toString()
-  const date = dayjs(createdAt).tz('Asia/Tokyo').format('YYYY/M/D/ HH:mm')
   const displayName = displayCompanyName(post.url)
+  const diffTime = calcDiffTime(post.createdAt)
   return (
     <article
       className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px]  overflow-hidden relative transition-all duration-300 ${
@@ -38,7 +32,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItem; hiddenDate?: boolean }
         )}
         {!hiddenDate && (
           <time dateTime={post.createdAt.toString()} className="absolute bottom-1 right-3 text-gray">
-            {date}
+            {diffTime}
           </time>
         )}
       </div>

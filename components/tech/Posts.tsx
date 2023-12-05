@@ -3,8 +3,9 @@
 import React from 'react'
 import PostItem from './PostItem'
 import { motion } from 'framer-motion'
+import { PostItemType } from '@/types/postItem'
 
-const Posts = ({ posts }: { posts: PostItem[] }) => {
+const Posts = ({ posts }: { posts: PostItemType[] }) => {
   if (posts.length === 0) return <></>
   return (
     <motion.div

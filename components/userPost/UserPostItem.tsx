@@ -2,19 +2,13 @@
 
 import React from 'react'
 import PostLink from '../tech/PostLink'
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
 import Link from 'next/link'
 import MoreButton from './MoreButton'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
 import LikeButton from './LikeButton'
 import { PostWithData } from '@/app/api/userPost/route'
-import { Like } from '@prisma/client'
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
+import { calcDiffTime } from '@/utils/calcDiffTime'
 
 const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defaultLiked: boolean }) => {
   const { data: session } = useSession()
@@ -23,7 +17,7 @@ const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defa
   if (!userPost.isPublic && !isMine) {
     return
   }
-  const date = dayjs(userPost.createdAt).tz('Asia/Tokyo').format('YYYY/M/D/ HH:mm')
+  const diffTime = calcDiffTime(userPost.createdAt.toString())
   return (
     <article className={`py-7 bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}>
       <div className="flex justify-center gap-3">
@@ -60,7 +54,7 @@ const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defa
             />
             <div>
               {!userPost.isPublic && <span className="bg-gray text-[white] px-1 rounded-lg">非公開</span>}
-              <time dateTime={userPost.createdAt.toString()}>{date}</time>
+              <time dateTime={userPost.createdAt.toString()}>{diffTime}</time>
             </div>
           </div>
         </div>
