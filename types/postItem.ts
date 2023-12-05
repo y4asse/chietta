@@ -2,7 +2,7 @@ export type PostItemType = {
   id?: string
   title: string
   url: string
-  createdAt: Date
+  createdAt: string
   image_url: string
   likedCount?: number
 }
