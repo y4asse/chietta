@@ -5,7 +5,7 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import Posts from '../tech/Posts'
 import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
-import { PostItem } from '@/types/postItem'
+import { PostItemType } from '@/types/postItem'
 import { Type, getPost } from '@/server/getPosts'
 import WrapContainer from '../layout/WrapContainer'
 const SkeltonContainer = dynamic(() => import('../skelton/SkeltonContainer'))
@@ -25,7 +25,7 @@ const ScrollDetect = ({
   const ref = useRef(null)
   const { viewportBottom } = useOffsetBottom(ref)
   const { data: session, status } = useSession()
-  const [posts, setPosts] = useState<PostItem[] | null>([])
+  const [posts, setPosts] = useState<PostItemType[] | null>([])
   const offset = posts ? posts.length + initialOffset : initialOffset
   const [isLoading, setIsLoading] = useState(false)
   const [isEnd, setIsEnd] = useState(false)
