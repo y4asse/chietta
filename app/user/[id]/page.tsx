@@ -43,7 +43,9 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
           </div>
         )}
         {postsWithOgp.map((post) => {
-          const defaultLiked = user.like.some((like) => like && like.user_post_id === post.id)
+          console.log(user.like)
+          const defaultLiked = false
+          // const defaultLiked = user.like.some((like) => like && like.user_post_id === post.id)
           return <UserPostItem key={post.id} userPost={post} defaultLiked={defaultLiked} />
         })}
       </div>
