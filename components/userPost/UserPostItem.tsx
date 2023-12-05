@@ -52,7 +52,7 @@ const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defa
               defaultLiked={defaultLiked}
               defaultCount={userPost._count ? userPost._count.like : 0}
             />
-            <div>
+            <div className="flex gap-1">
               {!userPost.isPublic && <span className="bg-gray text-[white] px-1 rounded-lg">非公開</span>}
               <time dateTime={userPost.createdAt.toString()}>{diffTime}</time>
             </div>
