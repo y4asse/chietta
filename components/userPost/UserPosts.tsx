@@ -6,13 +6,12 @@ import { PostsWithData } from '@/app/api/userPost/route'
 import { useLikes } from '@/hooks/useLikes'
 
 const UserPosts = ({ userPosts }: { userPosts: PostsWithData }) => {
-  const likes = useLikes()
+  const { likes } = useLikes()
   return (
     <div className="flex mx-auto flex-wrap max-w-[800px] px-3">
       {userPosts.map((item) => {
-        console.log(likes)
-        const defaultLiked = likes.length > 0 ? likes.some((like) => like && like.user_post_id === item.id) : false
-        console.log(defaultLiked)
+        const defaultLiked =
+          likes.length > 0 ? likes.some((like) => like != undefined && like.user_post_id === item.id) : false
         return <UserPostItem key={item.id} userPost={item} defaultLiked={defaultLiked} />
       })}
     </div>
