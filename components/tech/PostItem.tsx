@@ -6,14 +6,14 @@ import dayjs from 'dayjs'
 import Image from 'next/image'
 import { displayCompanyName } from '@/utils/displayCompanyName'
 import PostLink from './PostLink'
-import { PostItem } from '@/types/postItem'
+import { PostItemType } from '@/types/postItem'
 import { useAtom } from 'jotai'
 import { viewHistoryAtom } from '@/jotai/viewHistory'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const PostItem = ({ post, hiddenDate }: { post: PostItem; hiddenDate?: boolean }) => {
+const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boolean }) => {
   const { title, likedCount } = post
   const [viewHistory, setViewHistory] = useAtom(viewHistoryAtom)
   const isViewed = viewHistory.some((url) => url === post.url)

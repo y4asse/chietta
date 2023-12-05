@@ -1,4 +1,4 @@
-export type PostItem = {
+export type PostItemType = {
   id?: string
   title: string
   url: string
