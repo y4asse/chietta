@@ -87,7 +87,10 @@ model UserPost {
     createdAt DateTime @default(now())
     isPublic  Boolean  @default(true)
 
-    user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    user         User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    like         Like[]
+    Comment      Comment[]
+    Notification Notification[]
 
     @@index([user_id])
     @@index([createdAt])
@@ -137,4 +140,46 @@ model User {
     ViewHistory    ViewHistory[]
     UserPost       UserPost[]
     FollowCategory FollowCategory[]
+    like           Like[]
+    Comment        Comment[]
+    Notification   Notification[]
+}
+
+model Like {
+    id           String   @id @default(uuid())
+    user_id      String
+    user_post_id String
+    createdAt    DateTime @default(now())
+    user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    user_post    UserPost @relation(fields: [user_post_id], references: [id], onDelete: Cascade)
+
+    @@unique([user_id, user_post_id])
+    @@index([user_id])
+    @@index([user_post_id])
+}
+
+model Comment {
+    id           String   @id @default(uuid())
+    user_id      String
+    user_post_id String
+    content      String
+    createdAt    DateTime @default(now())
+    user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    user_post    UserPost @relation(fields: [user_post_id], references: [id], onDelete: Cascade)
+
+    @@index([user_id])
+    @@index([user_post_id])
+}
+
+model Notification {
+    id           String   @id @default(uuid())
+    user_id      String
+    content      String
+    createdAt    DateTime @default(now())
+    user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    user_post_id String
+    user_post    UserPost @relation(fields: [user_post_id], references: [id], onDelete: Cascade)
+
+    @@index([user_id])
+    @@index([user_post_id])
 }

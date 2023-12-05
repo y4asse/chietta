@@ -1,19 +1,18 @@
 import WrapContainer from '@/components/layout/WrapContainer'
-import UserPosts, { WithUser } from '@/components/userPost/UserPosts'
-import { WithImageUrl } from '@/server/addOgp'
-import { UserPost } from '@prisma/client'
+import UserPosts from '@/components/userPost/UserPosts'
+import { PostsWithData } from '../api/userPost/route'
 import React from 'react'
 
 const Post = async () => {
   // 規模が小さい間はSSRの方がむしろよさそう？
-  const revalidate = 60
+  const revalidate = 0
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/userPost`, {
     next: { revalidate }
-  }).catch((err) => {
-    return null
   })
-  if (!res) return <WrapContainer>error</WrapContainer>
-  const userPosts = (await res.json()) as WithImageUrl<WithUser<UserPost>>[]
+  if (!res.ok) {
+    return <WrapContainer>error</WrapContainer>
+  }
+  const userPosts = (await res.json()) as PostsWithData
   return (
     // <ScrollDetect type="userPosts" q="">
     <UserPosts userPosts={userPosts} />

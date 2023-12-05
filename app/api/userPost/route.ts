@@ -1,16 +1,31 @@
-import { addOgp } from '@/server/addOgp'
+import { WithImageUrl, addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
+import { Prisma } from '@prisma/client'
 import { getToken } from 'next-auth/jwt'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 
-export const GET = async () => {
+const getPosts = async () => {
   const result = await db.userPost.findMany({
     where: { isPublic: true },
     orderBy: { createdAt: 'desc' },
-    include: { user: true }
+    include: { user: true, _count: { select: { like: true } } }
   })
   const userPosts = await addOgp(result, { allowNull: true })
+  return userPosts
+}
+
+//　型用
+const getOnePostWithUserAndLike = async (id: string) => {
+  const posts = await getPosts()
+  return posts[0]
+}
+
+export type PostsWithData = Prisma.PromiseReturnType<typeof getPosts>
+export type PostWithData = Prisma.PromiseReturnType<WithImageUrl<typeof getOnePostWithUserAndLike>>
+
+export const GET = async () => {
+  const userPosts = await getPosts()
   return Response.json(userPosts)
 }
 

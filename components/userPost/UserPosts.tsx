@@ -1,15 +1,16 @@
+'use client'
+
 import React from 'react'
-import UserPostItem, { UserPostsWithImage } from './UserPostItem'
-import { WithImageUrl } from '@/server/addOgp'
-import { User, UserPost } from '@prisma/client'
+import UserPostItem from './UserPostItem'
+import { PostsWithData } from '@/app/api/userPost/route'
+import { useLikes } from '@/hooks/useLikes'
 
-export type WithUser<T> = T & { user: User }
-
-const UserPosts = ({ userPosts }: { userPosts: WithImageUrl<WithUser<UserPost>>[] }) => {
+const UserPosts = ({ userPosts }: { userPosts: PostsWithData }) => {
+  const likes = useLikes()
   return (
     <div className="flex mx-auto flex-wrap max-w-[800px] px-3">
       {userPosts.map((item) => {
-        return <UserPostItem key={item.id} userPost={item} />
+        return <UserPostItem key={item.id} userPost={item} likes={likes} />
       })}
     </div>
   )

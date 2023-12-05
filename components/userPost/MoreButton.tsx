@@ -1,13 +1,11 @@
 'use client'
 
-import { WithImageUrl } from '@/server/addOgp'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { MdDelete, MdEdit, MdMoreHoriz } from 'react-icons/md'
-import { WithUser } from './UserPosts'
-import { UserPost } from '@prisma/client'
+import { PostWithData } from '@/app/api/userPost/route'
 
-const MoreButton = ({ userPost }: { userPost: WithImageUrl<WithUser<UserPost>> }) => {
+const MoreButton = ({ userPost }: { userPost: PostWithData }) => {
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
   const deleteHandler = () => {
