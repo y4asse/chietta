@@ -1,6 +1,6 @@
-import { PostItem } from '@/types/postItem'
+import { PostItemType } from '@/types/postItem'
 
-const getLatestPosts = async (offset: number): Promise<PostItem[] | null> => {
+const getLatestPosts = async (offset: number): Promise<PostItemType[] | null> => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?offset=${offset}`, {
       headers: {
@@ -14,14 +14,14 @@ const getLatestPosts = async (offset: number): Promise<PostItem[] | null> => {
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as PostItem[]
+    const posts = (await res.json()) as PostItemType[]
     return posts
   } catch (error) {
     console.log(error)
     return null
   }
 }
-const getLatestCompanyPosts = async (offset: number): Promise<PostItem[] | null> => {
+const getLatestCompanyPosts = async (offset: number): Promise<PostItemType[] | null> => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/company?offset=${offset}`, {
       headers: {
@@ -35,7 +35,7 @@ const getLatestCompanyPosts = async (offset: number): Promise<PostItem[] | null>
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as PostItem[]
+    const posts = (await res.json()) as PostItemType[]
     return posts
   } catch (error) {
     console.log(error)
@@ -43,7 +43,7 @@ const getLatestCompanyPosts = async (offset: number): Promise<PostItem[] | null>
   }
 }
 
-const getSearchPosts = async (offset: number, q: string): Promise<PostItem[] | null> => {
+const getSearchPosts = async (offset: number, q: string): Promise<PostItemType[] | null> => {
   try {
     const queryURL = new URL(`${process.env.NEXT_PUBLIC_API_URL}/search?q=${q}&offset=${offset}`)
     const res = await fetch(queryURL, {
@@ -55,7 +55,7 @@ const getSearchPosts = async (offset: number, q: string): Promise<PostItem[] | n
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as PostItem[]
+    const posts = (await res.json()) as PostItemType[]
     return posts
   } catch (error) {
     console.log(error)
@@ -63,7 +63,7 @@ const getSearchPosts = async (offset: number, q: string): Promise<PostItem[] | n
   }
 }
 
-const getTrends = async (offset: number): Promise<PostItem[] | null> => {
+const getTrends = async (offset: number): Promise<PostItemType[] | null> => {
   try {
     const queryURL = new URL(`${process.env.NEXT_PUBLIC_API_URL}/trends?offset=${offset}`)
     const res = await fetch(queryURL, {
@@ -75,7 +75,7 @@ const getTrends = async (offset: number): Promise<PostItem[] | null> => {
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as PostItem[]
+    const posts = (await res.json()) as PostItemType[]
     return posts
   } catch (error) {
     console.log(error)
@@ -83,7 +83,7 @@ const getTrends = async (offset: number): Promise<PostItem[] | null> => {
   }
 }
 
-const getFollowingCategoryPosts = async (offset: number, userId: string): Promise<PostItem[] | null> => {
+const getFollowingCategoryPosts = async (offset: number, userId: string): Promise<PostItemType[] | null> => {
   try {
     const queryURL = new URL(
       `${process.env.NEXT_PUBLIC_API_URL}/post/followingCategory?user_id=${userId}&offset=${offset}`
@@ -96,7 +96,7 @@ const getFollowingCategoryPosts = async (offset: number, userId: string): Promis
       console.log('statusText: ' + res.statusText)
       throw new Error(`HTTP error! Status: ${res.statusText}`)
     }
-    const posts = (await res.json()) as PostItem[]
+    const posts = (await res.json()) as PostItemType[]
     return posts
   } catch (error) {
     console.log(error)
@@ -112,7 +112,7 @@ type Props = {
 
 export type Type = 'latest' | 'company' | 'search' | 'trends' | 'followingCategory'
 
-export const getPost = async (type: Type, { offset, q, userId }: Props): Promise<PostItem[] | null> => {
+export const getPost = async (type: Type, { offset, q, userId }: Props): Promise<PostItemType[] | null> => {
   switch (type) {
     case 'latest':
       return await getLatestPosts(offset)
