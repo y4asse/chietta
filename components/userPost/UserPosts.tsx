@@ -10,7 +10,8 @@ const UserPosts = ({ userPosts }: { userPosts: PostsWithData }) => {
   return (
     <div className="flex mx-auto flex-wrap max-w-[800px] px-3">
       {userPosts.map((item) => {
-        return <UserPostItem key={item.id} userPost={item} likes={likes} />
+        const defaultLiked = likes.some((like) => like && like.user_post_id === item.id)
+        return <UserPostItem key={item.id} userPost={item} defaultLiked={defaultLiked} />
       })}
     </div>
   )
