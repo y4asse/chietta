@@ -16,14 +16,13 @@ import { Like } from '@prisma/client'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const UserPostItem = ({ userPost, likes }: { userPost: PostWithData; likes: Like[] }) => {
+const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defaultLiked: boolean }) => {
   const { data: session } = useSession()
   const user = session ? session.user : null
   const isMine = userPost.user_id === user?.id
   if (!userPost.isPublic && !isMine) {
     return
   }
-  const defaultLiked = likes.some((like) => like && like.user_post_id === userPost.id) // 認証前false、認証後trueになる
   const date = dayjs(userPost.createdAt).tz('Asia/Tokyo').format('YYYY/M/D/ HH:mm')
   return (
     <article className={`py-7 bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}>
