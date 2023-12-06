@@ -26,7 +26,7 @@ model FeedArticle {
     createdAt DateTime @default(now())
     title     String
     feed_id   String
-    feed      Feed     @relation(fields: [feed_id], references: [id])
+    feed      Feed     @relation(fields: [feed_id], references: [id], onDelete: Cascade)
 
     @@index([createdAt])
     @@index([feed_id])
@@ -146,6 +146,7 @@ model User {
     like           Like[]
     Comment        Comment[]
     Notification   Notification[]
+    Feed           Feed[]
 }
 
 model Like {
@@ -192,4 +193,10 @@ model Feed {
     name        String
     feedUrl     String
     FeedArticle FeedArticle[]
+    createdAt   DateTime      @default(now())
+    user_id     String
+    user        User?         @relation(fields: [user_id], references: [id])
+
+    @@unique([feedUrl])
+    @@index([user_id])
 }
