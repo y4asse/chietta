@@ -3,7 +3,7 @@ import React from 'react'
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const list = [
     { name: 'Qiita/Zenn', path: '' },
-    { name: '企業ブログ', path: '/company' }
+    { name: 'フィード', path: '/feeds' }
   ]
   return (
     <main className="min-h-screen min-w-[300px] bg-main items-center py-10">

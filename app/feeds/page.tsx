@@ -3,9 +3,9 @@ import ScrollDetect from '@/components/scroll/ScrollDetect'
 import Posts from '@/components/tech/Posts'
 import { getPost } from '@/server/getPosts'
 
-const CompanyLatest = async () => {
+const Feeds = async () => {
   const offset = 0
-  const posts = await getPost('company', { offset })
+  const posts = await getPost('feeds', { offset })
   if (!posts)
     return (
       <WrapContainer>
@@ -13,10 +13,10 @@ const CompanyLatest = async () => {
       </WrapContainer>
     )
   return (
-    <ScrollDetect type="company" q="">
+    <ScrollDetect type="feeds" q="">
       <Posts posts={posts} />
     </ScrollDetect>
   )
 }
 
-export default CompanyLatest
+export default Feeds

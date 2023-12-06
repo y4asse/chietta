@@ -23,7 +23,7 @@ const getLatestPosts = async (offset: number): Promise<PostItemType[] | null> =>
 }
 const getLatestCompanyPosts = async (offset: number): Promise<PostItemType[] | null> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/company?offset=${offset}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/feeds?offset=${offset}`, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -110,13 +110,13 @@ type Props = {
   q?: string
 }
 
-export type Type = 'latest' | 'company' | 'search' | 'trends' | 'followingCategory'
+export type Type = 'latest' | 'feeds' | 'search' | 'trends' | 'followingCategory'
 
 export const getPost = async (type: Type, { offset, q, userId }: Props): Promise<PostItemType[] | null> => {
   switch (type) {
     case 'latest':
       return await getLatestPosts(offset)
-    case 'company':
+    case 'feeds':
       return await getLatestCompanyPosts(offset)
     case 'search':
       if (!q) throw new Error('q is not found')

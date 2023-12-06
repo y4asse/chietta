@@ -22,7 +22,7 @@ const Tab = () => {
     },
     {
       name: '企業ブログ',
-      path: '/company'
+      path: '/feeds'
     }
   ]
   return (
