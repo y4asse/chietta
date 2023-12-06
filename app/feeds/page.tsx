@@ -13,9 +13,13 @@ const Feeds = async () => {
       </WrapContainer>
     )
   return (
-    <ScrollDetect type="feeds" q="">
-      <Posts posts={posts} />
-    </ScrollDetect>
+    <>
+      <h1 className="text-center text-3xl font-bold my-5">新着の企業ブログ</h1>
+
+      <ScrollDetect type="feeds" q="">
+        <Posts posts={posts} />
+      </ScrollDetect>
+    </>
   )
 }
 
