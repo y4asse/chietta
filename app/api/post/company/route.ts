@@ -16,7 +16,8 @@ const getPostsFromDb = async ({ offset }: { offset: number }) => {
   const posts = await db.companyArticle.findMany({
     orderBy: { createdAt: 'desc' },
     take,
-    skip: offset
+    skip: offset,
+    include: { company: true }
   })
   const endTimeline = Date.now()
   console.log('[getPostsFromDb] get posts = ' + (endTimeline - startTimeline) + 'ms')
