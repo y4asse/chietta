@@ -1,6 +1,6 @@
 import { db } from '@/server/db'
 import { rssParser } from '@/utils/builder'
-import { CompanyArticle } from '@prisma/client'
+import { Feed, FeedArticle } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
@@ -9,9 +9,9 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     return Response.json({ error: 'invalid token' }, { status: 401 })
   }
 
-  const companies = await db.company.findMany({})
-  for (const company of companies) {
-    const { feedUrl, id } = company
+  const feeds = await db.feed.findMany({})
+  for (const feed of feeds) {
+    const { feedUrl, id } = feed
     const feedItem = await rssParser.parseURL(feedUrl)
     const { items } = feedItem as { items: { title: string; link: string; pubDate: string }[] }
     const insertData = items.map(
@@ -20,14 +20,14 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
           title: item.title,
           url: item.link,
           createdAt: new Date(item.pubDate),
-          company_id: id
-        } as CompanyArticle)
+          feed_id: id
+        } as FeedArticle)
     )
-    const { count } = await db.companyArticle.createMany({
+    const { count } = await db.feedArticle.createMany({
       data: insertData,
       skipDuplicates: true
     })
-    console.log(`${company.name}: ${count}`)
+    console.log(`${feed.name}: ${count}`)
   }
   return Response.json({})
 }

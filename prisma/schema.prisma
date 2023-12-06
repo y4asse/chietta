@@ -20,16 +20,16 @@ model Post {
     @@fulltext([title])
 }
 
-model CompanyArticle {
-    id         String   @id @default(uuid())
-    url        String   @unique
-    createdAt  DateTime @default(now())
-    title      String
-    company_id String
-    company    Company  @relation(fields: [company_id], references: [id])
+model FeedArticle {
+    id        String   @id @default(uuid())
+    url       String   @unique
+    createdAt DateTime @default(now())
+    title     String
+    feed_id   String
+    feed      Feed     @relation(fields: [feed_id], references: [id])
 
     @@index([createdAt])
-    @@index([company_id])
+    @@index([feed_id])
     @@fulltext([title])
 }
 
@@ -187,9 +187,9 @@ model Notification {
     @@index([user_post_id])
 }
 
-model Company {
-    id             String           @id @default(uuid())
-    name           String
-    feedUrl        String
-    CompanyArticle CompanyArticle[]
+model Feed {
+    id          String        @id @default(uuid())
+    name        String
+    feedUrl     String
+    FeedArticle FeedArticle[]
 }

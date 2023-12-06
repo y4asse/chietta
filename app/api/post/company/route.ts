@@ -13,11 +13,11 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 const getPostsFromDb = async ({ offset }: { offset: number }) => {
   const take = 10
   const startTimeline = Date.now()
-  const posts = await db.companyArticle.findMany({
+  const posts = await db.feedArticle.findMany({
     orderBy: { createdAt: 'desc' },
     take,
     skip: offset,
-    include: { company: true }
+    include: { feed: true }
   })
   const endTimeline = Date.now()
   console.log('[getPostsFromDb] get posts = ' + (endTimeline - startTimeline) + 'ms')

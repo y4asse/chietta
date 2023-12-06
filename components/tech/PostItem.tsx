@@ -11,7 +11,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
   const { title, likedCount } = post
   const [viewHistory, setViewHistory] = useAtom(viewHistoryAtom)
   const isViewed = viewHistory.some((url) => url === post.url)
-  const { company } = post
+  const { feed } = post
   const diffTime = calcDiffTime(post.createdAt)
   return (
     <article
@@ -22,7 +22,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
       <PostLink url={post.url} image_url={post.image_url} isViewed={isViewed} />
       <div className="px-[16px] py-[10px] mb-10">
         <h1 className="font-bold">{title}</h1>
-        {company && <p className="text-sm text-gray pt-3">{company.name}</p>}
+        {feed && <p className="text-sm text-gray pt-3">{feed.name}</p>}
         {likedCount && (
           <div className="absolute bottom-1 left-3 text-gray flex items-center justify-center gap-1">
             <Image src="/heart.svg" alt="ハートの画像" width={17} height={17} className=" opacity-70" />

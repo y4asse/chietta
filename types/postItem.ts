@@ -1,4 +1,4 @@
-import { Company } from '@prisma/client'
+import { Feed } from '@prisma/client'
 
 export type PostItemType = {
   id?: string
@@ -7,7 +7,7 @@ export type PostItemType = {
   createdAt: string
   image_url: string
   likedCount?: number
-  company?: Company
+  feed?: Feed
 }
 
 interface WithIsViewd<T> {
