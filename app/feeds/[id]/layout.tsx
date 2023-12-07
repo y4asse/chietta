@@ -17,7 +17,7 @@ const Layout = async ({ params, children }: { params: { id: string }; children: 
   const info = await getFeedInfo(id)
   if (!info) return notFound()
   return (
-    <div className="max-w-[1000px] mx-auto">
+    <div className="max-w-[1000px] mx-auto px-3">
       <div className="text-right">
         <FeedListLink />
       </div>
