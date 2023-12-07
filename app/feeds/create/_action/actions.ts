@@ -29,7 +29,7 @@ export const createFeed = async (prevState: any, formData: FormData) => {
       data: {
         name: title,
         feedUrl,
-        user_id: userId
+        user: { connect: { id: userId } }
       }
     })
     .catch((err) => {
