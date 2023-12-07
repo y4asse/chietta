@@ -3,6 +3,7 @@ import { getFeedInfo } from '@/server/getFeedInfo'
 import { notFound } from 'next/navigation'
 import React, { ReactNode } from 'react'
 import { Metadata } from 'next'
+import FollowFeedButton from '@/components/feeds/list/FollowFeedButton'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = params
@@ -26,6 +27,9 @@ const Layout = async ({ params, children }: { params: { id: string }; children: 
         <a href={info.feedUrl} className="text-gray hover:underline">
           {info.feedUrl}
         </a>
+      </div>
+      <div className="mt-5">
+        <FollowFeedButton feedId={id} />
       </div>
       <hr className="text-lightGray mt-5" />
       {children}
