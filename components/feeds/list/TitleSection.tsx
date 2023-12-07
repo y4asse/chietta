@@ -30,7 +30,7 @@ const TitleSection = () => {
           )
         })}
       </div>
-      {pathname === '/feeds/list' && (
+      {pathname === '/feeds/following' && (
         <div className="text-center mb-3">
           <Link href="/feeds/list/0" className="py-1 px-3 rounded-xl text-primary font-bold">
             フィード一覧を見る
