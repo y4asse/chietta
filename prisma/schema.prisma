@@ -147,6 +147,7 @@ model User {
     Comment        Comment[]
     Notification   Notification[]
     Feed           Feed[]
+    FollowFeed     FollowFeed[]
 }
 
 model Like {
@@ -196,7 +197,22 @@ model Feed {
     createdAt   DateTime      @default(now())
     user_id     String
     user        User?         @relation(fields: [user_id], references: [id])
+    FollowFeed  FollowFeed[]
 
     @@unique([feedUrl])
     @@index([user_id])
+}
+
+model FollowFeed {
+    id        String   @id @default(uuid())
+    user_id   String
+    feed_id   String
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    feed Feed @relation(fields: [feed_id], references: [id], onDelete: Cascade)
+
+    @@unique([user_id, feed_id])
+    @@index([user_id])
+    @@index([feed_id])
 }
