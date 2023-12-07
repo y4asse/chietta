@@ -1,3 +1,4 @@
+import FeedListLink from '@/components/LinkButton/FeedListLink'
 import { db } from '@/server/db'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -9,9 +10,11 @@ const Page = async ({ params }: { params: { id: string } }) => {
   })
   if (!feed) return notFound()
   return (
-    <div>
-      <Link href={'/feeds/list'}>フィード一覧</Link>
-      <h1>{feed.name}</h1>
+    <div className="max-w-[1000px] mx-auto">
+      <div className="text-right">
+        <FeedListLink />
+      </div>
+      <h1 className="text-xl font-bold">{feed.name}</h1>
     </div>
   )
 }
