@@ -12,7 +12,8 @@ const config: Config = {
       gray: '#65717b',
       pink: '#fff2f2',
       main: '#fffafa',
-      focus: '#fdcaca'
+      focus: '#fdcaca',
+      lightGray: '#d6d6d6'
     },
     extend: {
       backgroundImage: {

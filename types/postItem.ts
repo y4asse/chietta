@@ -1,3 +1,5 @@
+import { Feed } from '@prisma/client'
+
 export type PostItemType = {
   id?: string
   title: string
@@ -5,6 +7,7 @@ export type PostItemType = {
   createdAt: string
   image_url: string
   likedCount?: number
+  feed?: Feed
 }
 
 interface WithIsViewd<T> {

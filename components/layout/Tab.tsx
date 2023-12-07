@@ -19,11 +19,11 @@ const Tab = () => {
     {
       name: 'タイムライン',
       path: '/posts'
-    },
-    {
-      name: '企業ブログ',
-      path: '/company'
     }
+    // {
+    //   name: '企業ブログ',
+    //   path: '/feeds'
+    // }
   ]
   return (
     <nav className="sticky top-0 z-10 bg-[white] py-3 px-2">

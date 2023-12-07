@@ -20,13 +20,16 @@ model Post {
     @@fulltext([title])
 }
 
-model CompanyArticle {
+model FeedArticle {
     id        String   @id @default(uuid())
     url       String   @unique
     createdAt DateTime @default(now())
     title     String
+    feed_id   String
+    feed      Feed     @relation(fields: [feed_id], references: [id], onDelete: Cascade)
 
     @@index([createdAt])
+    @@index([feed_id])
     @@fulltext([title])
 }
 
@@ -143,6 +146,8 @@ model User {
     like           Like[]
     Comment        Comment[]
     Notification   Notification[]
+    Feed           Feed[]
+    FollowFeed     FollowFeed[]
 }
 
 model Like {
@@ -182,4 +187,32 @@ model Notification {
 
     @@index([user_id])
     @@index([user_post_id])
+}
+
+model Feed {
+    id          String        @id @default(uuid())
+    name        String
+    feedUrl     String
+    FeedArticle FeedArticle[]
+    createdAt   DateTime      @default(now())
+    user_id     String
+    user        User?         @relation(fields: [user_id], references: [id])
+    FollowFeed  FollowFeed[]
+
+    @@unique([feedUrl])
+    @@index([user_id])
+}
+
+model FollowFeed {
+    id        String   @id @default(uuid())
+    user_id   String
+    feed_id   String
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    feed Feed @relation(fields: [feed_id], references: [id], onDelete: Cascade)
+
+    @@unique([user_id, feed_id])
+    @@index([user_id])
+    @@index([feed_id])
 }

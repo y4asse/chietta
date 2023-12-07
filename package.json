@@ -35,6 +35,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
+    "rss-parser": "^3.13.0",
     "sharp": "^0.32.6",
     "ts-node": "^10.9.1",
     "xml2js": "^0.6.2",
