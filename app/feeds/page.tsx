@@ -1,3 +1,4 @@
+import TitleSection from '@/components/feeds/list/TitleSection'
 import WrapContainer from '@/components/layout/WrapContainer'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
 import Posts from '@/components/tech/Posts'
@@ -14,6 +15,7 @@ const Feeds = async () => {
     )
   return (
     <>
+      <TitleSection />
       <ScrollDetect type="feeds" q="">
         <Posts posts={posts} />
       </ScrollDetect>
