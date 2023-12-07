@@ -8,7 +8,7 @@ const Latest = async () => {
   const posts = await getPost('latest', { offset })
   if (!posts) return <WrapContainer>error</WrapContainer>
   return (
-    <ScrollDetect type="latest" q="">
+    <ScrollDetect type="latest">
       <Posts posts={posts} />
     </ScrollDetect>
   )

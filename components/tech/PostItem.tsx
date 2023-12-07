@@ -6,6 +6,7 @@ import { PostItemType } from '@/types/postItem'
 import { useAtom } from 'jotai'
 import { viewHistoryAtom } from '@/jotai/viewHistory'
 import { calcDiffTime } from '@/utils/calcDiffTime'
+import Link from 'next/link'
 
 const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boolean }) => {
   const { title, likedCount } = post
@@ -22,7 +23,11 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
       <PostLink url={post.url} image_url={post.image_url} isViewed={isViewed} />
       <div className="px-[16px] py-[10px] mb-10">
         <h1 className="font-bold">{title}</h1>
-        {feed && <p className="text-sm text-gray pt-3">{feed.name}</p>}
+        {feed && (
+          <Link href={`/feeds/${post.feed!.id}`} className="text-sm text-gray pt-3 hover:underline">
+            {feed.name}
+          </Link>
+        )}
         {likedCount && (
           <div className="absolute bottom-1 left-3 text-gray flex items-center justify-center gap-1">
             <Image src="/heart.svg" alt="ハートの画像" width={17} height={17} className=" opacity-70" />
