@@ -1,8 +1,10 @@
 'use client'
 
 import { followingAtom } from '@/jotai/followingAtom'
+import { followingFeedAtom } from '@/jotai/followingFeedAtom'
 import { viewHistoryAtom } from '@/jotai/viewHistory'
 import { getFollowingByUserId } from '@/server/category'
+import { Feed, FollowFeed } from '@prisma/client'
 import { useAtom } from 'jotai'
 import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
@@ -10,6 +12,7 @@ import React, { useEffect } from 'react'
 const HistoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [, setHistory] = useAtom(viewHistoryAtom)
   const [, setFollowing] = useAtom(followingAtom)
+  const [followingFeed, setFollowingFeed] = useAtom(followingFeedAtom)
   const { data: session, status } = useSession()
 
   const userId = session ? session.user.id : null
@@ -40,6 +43,19 @@ const HistoryProvider = ({ children }: { children: React.ReactNode }) => {
       }
     })
   }, [userId])
+
+  useEffect(() => {
+    if (!session) return
+    const fetchFeeds = async () => {
+      const res = await fetch(`/api/feeds/following/${session.user.id}`)
+      if (!res.ok) return
+      const data = (await res.json()) as { result: FollowFeed & { feed: Feed }[] }
+      const followingFeeds = data.result.map((item) => item.feed)
+      setFollowingFeed(followingFeeds)
+    }
+    fetchFeeds()
+  }, [session])
+
   return <>{children}</>
 }
 
