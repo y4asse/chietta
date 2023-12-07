@@ -1,3 +1,4 @@
+import TitleSection from '@/components/feeds/list/TitleSection'
 import WrapContainer from '@/components/layout/WrapContainer'
 import ScrollDetect from '@/components/scroll/ScrollDetect'
 import Posts from '@/components/tech/Posts'
@@ -14,8 +15,7 @@ const Feeds = async () => {
     )
   return (
     <>
-      <h1 className="text-center text-3xl font-bold my-5">新着のフィード記事</h1>
-
+      <TitleSection />
       <ScrollDetect type="feeds" q="">
         <Posts posts={posts} />
       </ScrollDetect>

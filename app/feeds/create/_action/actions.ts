@@ -2,7 +2,7 @@
 
 import { db } from '@/server/db'
 import { rssParser } from '@/utils/builder'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+import { FeedArticle } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
@@ -29,7 +29,7 @@ export const createFeed = async (prevState: any, formData: FormData) => {
       data: {
         name: title,
         feedUrl,
-        user_id: userId
+        user: { connect: { id: userId } }
       }
     })
     .catch((err) => {
@@ -37,6 +37,28 @@ export const createFeed = async (prevState: any, formData: FormData) => {
       return null
     })
   if (!result) return { message: '既に登録されています' }
+  try {
+    const { id } = result
+    const { items } = feedItem as { items: { title: string; link: string; pubDate: string; isoDate: string }[] }
+    const insertData = items.map((item) => {
+      const createdAt = item.pubDate ? new Date(item.pubDate) : new Date(item.isoDate)
+      return {
+        title: item.title,
+        url: item.link,
+        createdAt: createdAt,
+        feed_id: id
+      } as FeedArticle
+    })
+    const { count } = await db.feedArticle.createMany({
+      data: insertData,
+      skipDuplicates: true
+    })
+    console.log(`${title}: ${count}`)
+  } catch (err) {
+    console.log(err)
+    await db.feed.delete({ where: { id: result.id } })
+    return { message: 'エラーが発生しました' }
+  }
   redirect(`/feeds/${result.id}`)
 }
 

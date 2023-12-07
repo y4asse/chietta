@@ -3,6 +3,7 @@
 import { createFeed } from '@/app/feeds/create/_action/actions'
 import { useSession } from 'next-auth/react'
 import { useFormState } from 'react-dom'
+import SubmitButton from './SubmitButton'
 
 const initialState = {
   message: '',
@@ -29,14 +30,9 @@ const Input = () => {
           </p>
         )}
       </div>
-      <input type="hidden" name="userId" value={session?.user.id} />
+      {session && <input type="hidden" name="userId" value={session.user.id} />}
       <div className="mt-10 text-center">
-        <input
-          role="button"
-          type="submit"
-          value="フィードを登録"
-          className="bg-primary text-[white] rounded px-3 py-1"
-        />
+        <SubmitButton />
       </div>
     </form>
   )

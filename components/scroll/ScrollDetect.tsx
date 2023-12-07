@@ -15,12 +15,14 @@ const ScrollDetect = ({
   children,
   type,
   q,
-  initialOffset = 10
+  initialOffset = 10,
+  feedId
 }: {
   children?: ReactNode
   type: Type
   q?: string
   initialOffset?: number
+  feedId?: string
 }) => {
   const ref = useRef(null)
   const { viewportBottom } = useOffsetBottom(ref)
@@ -38,7 +40,7 @@ const ScrollDetect = ({
     if (!posts) return
 
     setIsLoading(true)
-    getPost(type, { offset, userId, q }).then((newPosts) => {
+    getPost(type, { offset, userId, q, feedId }).then((newPosts) => {
       //エラーが起きた時isLoadingはtrueのままになる
       if (!newPosts) return
       if (newPosts.length === 0) {
