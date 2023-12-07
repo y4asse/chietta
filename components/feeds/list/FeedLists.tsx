@@ -7,7 +7,15 @@ import { useSession } from 'next-auth/react'
 import { useAtom } from 'jotai'
 import { followingFeedAtom } from '@/jotai/followingFeedAtom'
 
-const FeedLists = ({ feeds }: { feeds: Feed[] }) => {
+const FeedLists = ({
+  feeds
+}: {
+  feeds: (Feed & {
+    _count: {
+      FollowFeed: number
+    }
+  })[]
+}) => {
   const { data: session, status } = useSession()
   const [followingFeed, setFollowingFeed] = useAtom(followingFeedAtom)
   useEffect(() => {

@@ -1,5 +1,5 @@
 'use client'
-
+import { FaUser } from 'react-icons/fa'
 import { createFollowFeed, deleteFollowFeed } from '@/app/feeds/list/_action/actions'
 import { followingFeedAtom } from '@/jotai/followingFeedAtom'
 import { Feed } from '@prisma/client'
@@ -9,7 +9,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-const FeedItem = ({ item }: { item: Feed }) => {
+const FeedItem = ({
+  item
+}: {
+  item: Feed & {
+    _count: {
+      FollowFeed: number
+    }
+  }
+}) => {
   const [isFollowed, setIsFollowed] = useState(false)
   const [followingFeed, setFollowingFeed] = useAtom(followingFeedAtom)
   const router = useRouter()
@@ -43,10 +51,16 @@ const FeedItem = ({ item }: { item: Feed }) => {
   }
   return (
     <div className="border border-[#afafaf] rounded p-3 bg-[white]">
-      <Link href={`/feeds/${item.id}`} className="hover:underline text-xl font-semibold">
-        {item.name}
-      </Link>
+      <div>
+        <Link href={`/feeds/${item.id}`} className="hover:underline text-xl font-semibold">
+          {item.name}
+        </Link>
+      </div>
       <p className="text-gray break-words">{item.feedUrl}</p>
+      <div className="flex items-center gap-1 mt-1">
+        <FaUser />
+        {item._count.FollowFeed}
+      </div>
       <div className="text-right">
         <button
           onClick={handleClick}

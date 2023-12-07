@@ -12,7 +12,19 @@ const Page = async ({ params }: { params: { page: string } }) => {
   const getFeeds = db.feed
     .findMany({
       take,
-      skip
+      skip,
+      orderBy: {
+        FollowFeed: {
+          _count: 'desc'
+        }
+      },
+      include: {
+        _count: {
+          select: {
+            FollowFeed: true
+          }
+        }
+      }
     })
     .catch(() => null)
   const getTotalCount = db.feed.count()
