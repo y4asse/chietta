@@ -17,12 +17,12 @@ const Tab = () => {
       path: '/latest'
     },
     {
-      name: 'タイムライン',
-      path: '/posts'
-    },
-    {
       name: 'フィード',
       path: '/feeds'
+    },
+    {
+      name: 'タイムライン',
+      path: '/posts'
     }
   ]
   return (

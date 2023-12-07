@@ -15,6 +15,6 @@ const getInfoFromDb = async ({ id }: { id: string }) => {
     where: { id }
   })
   const endTimeline = Date.now()
-  console.log('[getPostsFromDb] get posts = ' + (endTimeline - startTimeline) + 'ms')
+  console.log('[getInfoFromDb] get posts = ' + (endTimeline - startTimeline) + 'ms')
   return info
 }

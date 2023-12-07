@@ -1,6 +1,5 @@
 import Input from '@/components/feeds/create/Input'
 import React from 'react'
-import Link from 'next/link'
 import FeedListLink from '@/components/LinkButton/FeedListLink'
 
 const Page = () => {
