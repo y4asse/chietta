@@ -29,7 +29,7 @@ const Input = () => {
           </p>
         )}
       </div>
-      <input type="hidden" name="userId" value={session?.user.id} />
+      {session && <input type="hidden" name="userId" value={session.user.id} />}
       <div className="mt-10 text-center">
         <input
           role="button"
