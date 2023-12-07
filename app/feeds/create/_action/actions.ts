@@ -40,10 +40,6 @@ export const createFeed = async (prevState: any, formData: FormData) => {
   try {
     const { id } = result
     const { items } = feedItem as { items: { title: string; link: string; pubDate: string; isoDate: string }[] }
-    items.forEach((element) => {
-      console.log(element.isoDate)
-      console.log(element.pubDate)
-    })
     const insertData = items.map((item) => {
       const createdAt = item.pubDate ? new Date(item.pubDate) : new Date(item.isoDate)
       return {
