@@ -8,8 +8,6 @@ const About = () => {
     <div className="min-h-screen">
       <Hero />
       <Works />
-      {/* TODO  */}
-      {/* <Recruit /> */}
     </div>
   )
 }

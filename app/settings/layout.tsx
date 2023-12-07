@@ -1,4 +1,9 @@
 import SettingTab from '@/components/settings/SettingTab'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'ユーザ設定 | Chietta'
+}
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

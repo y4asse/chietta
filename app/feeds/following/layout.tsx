@@ -1,11 +1,11 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '新着のフィード | Chietta'
+  title: 'フォロー中のフィード | Chietta'
 }
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <main className="min-h-screen min-w-[300px] bg-main items-center py-10">{children}</main>
+  return <>{children}</>
 }
 
 export default Layout

@@ -1,11 +1,12 @@
 import { Metadata } from 'next'
+import React from 'react'
 
 export const metadata: Metadata = {
-  title: '新着のフィード | Chietta'
+  title: '記事を検索 | Chietta'
 }
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <main className="min-h-screen min-w-[300px] bg-main items-center py-10">{children}</main>
+  return <>{children}</>
 }
 
 export default Layout
