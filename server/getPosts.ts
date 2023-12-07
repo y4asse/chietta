@@ -123,6 +123,22 @@ export const getFeedDetail = async (offset: number, feedId: string): Promise<Pos
   }
 }
 
+const getFollowingFeedPosts = async (offset: number, userId: string): Promise<PostItemType[] | null> => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/followingFeed/${userId}?offset=${offset}`, {
+      cache: 'no-cache'
+    })
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.statusText}`)
+    }
+    const posts = (await res.json()) as PostItemType[]
+    return posts
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
 type Props = {
   offset: number
   userId?: string | null
@@ -130,7 +146,7 @@ type Props = {
   feedId?: string
 }
 
-export type Type = 'latest' | 'feeds' | 'search' | 'trends' | 'followingCategory' | 'feedDetail'
+export type Type = 'latest' | 'feeds' | 'search' | 'trends' | 'followingCategory' | 'feedDetail' | 'followingFeed'
 
 export const getPost = async (type: Type, { offset, q, userId, feedId }: Props): Promise<PostItemType[] | null> => {
   switch (type) {
@@ -149,6 +165,9 @@ export const getPost = async (type: Type, { offset, q, userId, feedId }: Props):
     case 'feedDetail':
       if (!feedId) throw new Error('feedId is not found')
       return await getFeedDetail(offset, feedId)
+    case 'followingFeed':
+      if (!userId) throw new Error('userId is not found')
+      return await getFollowingFeedPosts(offset, userId)
     default:
       throw new Error('type is not found')
   }
