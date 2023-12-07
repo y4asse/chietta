@@ -17,7 +17,6 @@ const FeedLists = ({ feeds }: { feeds: Feed[] }) => {
       if (!res.ok) return
       const data = (await res.json()) as { result: FollowFeed & { feed: Feed }[] }
       const followingFeeds = data.result.map((item) => item.feed)
-      console.log(followingFeeds)
       setFollowingFeed(followingFeeds)
     }
     fetchFeeds()
