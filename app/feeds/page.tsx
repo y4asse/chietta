@@ -14,7 +14,7 @@ const Feeds = async () => {
     )
   return (
     <>
-      <h1 className="text-center text-3xl font-bold my-5">新着の企業ブログ</h1>
+      <h1 className="text-center text-3xl font-bold my-5">新着のフィード記事</h1>
 
       <ScrollDetect type="feeds" q="">
         <Posts posts={posts} />
