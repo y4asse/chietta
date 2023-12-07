@@ -26,7 +26,7 @@ const FeedItem = ({
         {item._count.FollowFeed}
       </div>
       <div className="text-right">
-        <FollowFeedButton feedId={item.id} />
+        <FollowFeedButton feed={item} />
       </div>
     </div>
   )

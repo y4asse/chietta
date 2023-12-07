@@ -6,15 +6,16 @@ import { useSession } from 'next-auth/react'
 import { createFollowFeed, deleteFollowFeed } from '@/app/feeds/list/_action/actions'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Feed } from '@prisma/client'
 
-const FollowFeedButton = ({ feedId }: { feedId: string }) => {
+const FollowFeedButton = ({ feed }: { feed: Feed }) => {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [isFollowed, setIsFollowed] = useState(false)
   const [followingFeed, setFollowingFeed] = useAtom(followingFeedAtom)
   useEffect(() => {
     if (!session) return
-    const isFollowed = followingFeed.some((feed) => feed.id === feedId)
+    const isFollowed = followingFeed.some((item) => item.id === feed.id)
     setIsFollowed(isFollowed)
   }, [followingFeed])
 
@@ -25,14 +26,16 @@ const FollowFeedButton = ({ feedId }: { feedId: string }) => {
     }
     setIsFollowed(!isFollowed)
     if (isFollowed) {
-      const { result, error } = await deleteFollowFeed({ userId: session.user.id, feedId: feedId })
+      setFollowingFeed((prev) => prev.filter((item) => item.id !== feed.id))
+      const { result, error } = await deleteFollowFeed({ userId: session.user.id, feedId: feed.id })
       if (error) {
         alert('エラーが発生しました')
         return
       }
       return
     }
-    const { result, error } = await createFollowFeed({ userId: session.user.id, feedId: feedId })
+    setFollowingFeed((prev) => [...prev, feed])
+    const { result, error } = await createFollowFeed({ userId: session.user.id, feedId: feed.id })
     if (error) {
       alert('エラーが発生しました')
       return

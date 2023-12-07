@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const { id } = params
   const info = await getFeedInfo(id)
   return {
-    title: info?.name + ' | Chietta'
+    title: info ? info.name + ' | Chietta' : 'Chietta | 技術記事プラットフォーム'
   }
 }
 
@@ -29,7 +29,7 @@ const Layout = async ({ params, children }: { params: { id: string }; children: 
         </a>
       </div>
       <div className="mt-5">
-        <FollowFeedButton feedId={id} />
+        <FollowFeedButton feed={info} />
       </div>
       <hr className="text-lightGray mt-5" />
       {children}
