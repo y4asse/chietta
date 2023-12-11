@@ -1,8 +1,7 @@
 'use client'
 
-import { User } from '@prisma/client'
 import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import SubmitButton from './SubmitButton'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -14,6 +13,8 @@ import useUserInfo from '@/hooks/useUserInfo'
 type Inputs = {
   name: string
   introduction: string
+  github: string
+  x: string
 }
 const ProfileInput = () => {
   const { data: session, status } = useSession()
@@ -32,7 +33,9 @@ const ProfileInput = () => {
     const newUser = {
       userId: session!.user.id,
       name: data.name,
-      introduction: data.introduction
+      introduction: data.introduction,
+      github: data.github,
+      x: data.x
     }
     const res = await updateProfile(newUser)
     if (res.message === 'error') {
@@ -54,6 +57,7 @@ const ProfileInput = () => {
             <ImageInput />
           </div>
           <div className="w-full md:max-w-[700px]">
+            {/* 名前 */}
             <div>
               <label className="font-bold" htmlFor="name">
                 名前
@@ -71,6 +75,8 @@ const ProfileInput = () => {
                 <p className="text-primary">20文字以下で入力してください</p>
               )}
             </div>
+
+            {/*   自己紹介 */}
             <div className="mt-5">
               <label className="font-bold" htmlFor="introduction">
                 自己紹介
@@ -87,6 +93,41 @@ const ProfileInput = () => {
                 <p className="text-primary">100文字以下で入力してください</p>
               )}
             </div>
+
+            {/* SNS */}
+            <div className="mt-5">
+              <label className="font-bold" htmlFor="github">
+                GitHubのアカウント
+              </label>
+              <div>
+                <span className="text-lg mr-1">https://github.com/</span>
+                <input
+                  type="text"
+                  id="github"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.github ? user.github : ''}
+                  placeholder="GitHubのユーザ名のみを入力..."
+                  {...register('github')}
+                />
+              </div>
+            </div>
+            <div className="mt-5">
+              <label className="font-bold" htmlFor="github">
+                Xのアカウント
+              </label>
+              <div className="flex gap-1 items-center">
+                <span className="text-xl">@</span>
+                <input
+                  type="text"
+                  id="x"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.x ? user.x : ''}
+                  placeholder="Xのユーザ名のみを入力..."
+                  {...register('x')}
+                />
+              </div>
+            </div>
+
             <div className="mt-5 text-right">
               <SubmitButton pending={isLoading} />
             </div>

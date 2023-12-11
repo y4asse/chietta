@@ -4,6 +4,7 @@ import { User } from '@prisma/client'
 import { User as SessionUser } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'
+import { FaXTwitter, FaGithub } from 'react-icons/fa6'
 
 const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser | null }) => {
   return (
@@ -23,6 +24,18 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
             </Link>
           </div>
         )}
+        <div className="flex gap-5 mt-5 text-2xl text-gray">
+          {user.github && (
+            <a target="blank" href={`https://github.com/${user.github}`}>
+              <FaGithub />
+            </a>
+          )}
+          {user.x && (
+            <a target="blank" href={`https://x.com/${user.x}`}>
+              <FaXTwitter />
+            </a>
+          )}
+        </div>
       </div>
     </div>
   )
