@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { updateProfile } from '@/app/settings/profile/action'
 import Toast from '../utils/Toast'
 import ImageInput from './ImageInput'
+import useUserInfo from '@/hooks/useUserInfo'
 
 type Inputs = {
   name: string
@@ -16,18 +17,9 @@ type Inputs = {
 }
 const ProfileInput = () => {
   const { data: session, status } = useSession()
-  const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  useEffect(() => {
-    if (status === 'authenticated') {
-      fetch(`/api/user?user_id=${session.user.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setUser(data.user)
-        })
-    }
-  }, [status])
+  const { user, setUser } = useUserInfo()
   const {
     register,
     handleSubmit,
