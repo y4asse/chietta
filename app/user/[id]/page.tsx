@@ -35,7 +35,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="pt-10 min-h-screen">
       <Profile user={user} sessionUser={sessionUser} />
-      <div className="w-full">
+      <div className="w-full px-2">
         {postsWithOgp.length === 0 && (
           <div>
             <h2 className="text-center text-2xl font-bold mt-20">まだ記事の共有がありません</h2>
