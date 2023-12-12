@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import Image from 'next/image'
+import UserPosts from '@/components/userPost/UserPosts'
 
 const Mypage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
@@ -25,8 +26,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
         orderBy: {
           createdAt: 'desc'
         }
-      },
-      like: true
+      }
     }
   })
   if (!user) return notFound()
@@ -35,18 +35,14 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="pt-10 min-h-screen">
       <Profile user={user} sessionUser={sessionUser} />
-      <div className="w-full">
+      <div className="w-full px-2">
         {postsWithOgp.length === 0 && (
           <div>
             <h2 className="text-center text-2xl font-bold mt-20">まだ記事の共有がありません</h2>
             <Image src={'/img/cat.png'} width={300} height={300} alt="cat" className="mx-auto" />
           </div>
         )}
-        {postsWithOgp.map((post) => {
-          const defaultLiked =
-            user.like.length > 0 ? user.like.some((like) => like && like.user_post_id === post.id) : false
-          return <UserPostItem key={post.id} userPost={post} defaultLiked={defaultLiked} />
-        })}
+        <UserPosts userPosts={postsWithOgp} />
       </div>
     </div>
   )
