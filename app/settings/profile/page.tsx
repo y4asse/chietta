@@ -1,5 +1,3 @@
-'use client'
-
 import ProfileInput from '@/components/settings/ProfileInput'
 
 const Page = () => {

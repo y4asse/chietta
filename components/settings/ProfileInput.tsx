@@ -9,12 +9,18 @@ import { updateProfile } from '@/app/settings/profile/action'
 import Toast from '../utils/Toast'
 import ImageInput from './ImageInput'
 import useUserInfo from '@/hooks/useUserInfo'
+import { FaXTwitter, FaGithub } from 'react-icons/fa6'
+import Note from '../icons/Note'
+import Image from 'next/image'
 
 type Inputs = {
   name: string
   introduction: string
   github: string
   x: string
+  zenn: string
+  qiita: string
+  note: string
 }
 const ProfileInput = () => {
   const { data: session, status } = useSession()
@@ -35,7 +41,10 @@ const ProfileInput = () => {
       name: data.name,
       introduction: data.introduction,
       github: data.github,
-      x: data.x
+      x: data.x,
+      zenn: data.zenn,
+      qiita: data.qiita,
+      note: data.note
     }
     const res = await updateProfile(newUser)
     if (res.message === 'error') {
@@ -94,9 +103,29 @@ const ProfileInput = () => {
               )}
             </div>
 
-            {/* SNS */}
-            <div className="mt-5">
-              <label className="font-bold" htmlFor="github">
+            {/* X */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="x">
+                <FaXTwitter className="text-xl" />
+                Xのアカウント
+              </label>
+              <div className="flex gap-1 items-center">
+                <span className="text-xl">@</span>
+                <input
+                  type="text"
+                  id="x"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.x ? user.x : ''}
+                  placeholder="ユーザ名を入力..."
+                  {...register('x')}
+                />
+              </div>
+            </div>
+
+            {/* GitHub */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="github">
+                <FaGithub className="text-xl" />
                 GitHubのアカウント
               </label>
               <div>
@@ -111,19 +140,68 @@ const ProfileInput = () => {
                 />
               </div>
             </div>
-            <div className="mt-5">
-              <label className="font-bold" htmlFor="github">
-                Xのアカウント
+
+            {/* Zenn */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="zenn">
+                <img
+                  className="w-[20px] h-[20px]"
+                  src="https://static.zenn.studio/images/logo-transparent.png"
+                  alt="Qiitaのアイコン"
+                />
+                Zennのアカウント
               </label>
-              <div className="flex gap-1 items-center">
-                <span className="text-xl">@</span>
+              <div>
+                <span className="text-lg mr-1">https://zenn.dev/</span>
                 <input
                   type="text"
-                  id="x"
+                  id="zenn"
                   className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
-                  defaultValue={user.x ? user.x : ''}
+                  defaultValue={user.zenn ? user.zenn : ''}
                   placeholder="ユーザ名を入力..."
-                  {...register('x')}
+                  {...register('zenn')}
+                />
+              </div>
+            </div>
+
+            {/* Qiita */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="qiita">
+                <img
+                  className="w-[20px] h-[20px]"
+                  src="https://cdn.qiita.com/assets/favicons/public/apple-touch-icon-ec5ba42a24ae923f16825592efdc356f.png"
+                  alt="Zennのアイコン"
+                />
+                Qiitaのアカウント
+              </label>
+              <div>
+                <span className="text-lg mr-1">https://qiita.com/</span>
+                <input
+                  type="text"
+                  id="qiita"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.qiita ? user.qiita : ''}
+                  placeholder="ユーザ名を入力..."
+                  {...register('qiita')}
+                />
+              </div>
+            </div>
+
+            {/* note */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="note">
+                <Note />
+                noteのアカウント
+              </label>
+              <div>
+                <span className="text-lg mr-1">https://note.com/</span>
+                <input
+                  type="text"
+                  id="note"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.note ? user.note : ''}
+                  placeholder="ユーザ名を入力..."
+                  {...register('note')}
                 />
               </div>
             </div>

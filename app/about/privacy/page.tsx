@@ -29,7 +29,7 @@ const Privacy = () => {
           <h2 className="text-xl mt-4 mb-4 font-bold">5. 問い合わせ</h2>
           <p>
             プライバシーポリシーに関する質問や疑問については、開発者（
-            <a href="https://twitter.com/y4isse" className="underline" target="blank">
+            <a href="https://twitter.com/y4isse" className="underline" target="_blank">
               y4asse
             </a>
             ）へご連絡ください。
