@@ -8,7 +8,9 @@ const schema = z.object({
   name: z.string().min(1).max(20),
   introduction: z.string().max(100).nullable(),
   x: z.string().nullable(),
-  github: z.string().nullable()
+  github: z.string().nullable(),
+  zenn: z.string().nullable(),
+  qiita: z.string().nullable()
 })
 
 type Props = {
@@ -17,6 +19,8 @@ type Props = {
   introduction: string | null
   github: string | null
   x: string | null
+  zenn: string | null
+  qiita: string | null
 }
 
 export async function updateProfile(props: Props) {
@@ -26,19 +30,16 @@ export async function updateProfile(props: Props) {
       name: props.name,
       introduction: props.introduction,
       x: props.x,
-      github: props.github
+      github: props.github,
+      zenn: props.zenn,
+      qiita: props.qiita
     })
-    const { name, introduction, id, x, github } = parsed
+    const { id } = parsed
     const result = await db.user.update({
       where: {
         id
       },
-      data: {
-        name,
-        introduction,
-        x,
-        github
-      }
+      data: parsed
     })
     return { message: 'success' }
   } catch (err) {

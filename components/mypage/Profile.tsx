@@ -2,9 +2,11 @@
 
 import { User } from '@prisma/client'
 import { User as SessionUser } from 'next-auth'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { FaXTwitter, FaGithub } from 'react-icons/fa6'
+import Zenn from './Zenn'
 
 const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser | null }) => {
   return (
@@ -24,7 +26,7 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
             </Link>
           </div>
         )}
-        <div className="flex gap-5 mt-5 text-2xl text-gray">
+        <div className="flex items-center gap-5 mt-5 text-2xl text-[#9f9f9f]">
           {user.github && (
             <a target="blank" href={`https://github.com/${user.github}`}>
               <FaGithub />
@@ -33,6 +35,20 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
           {user.x && (
             <a target="blank" href={`https://x.com/${user.x}`}>
               <FaXTwitter />
+            </a>
+          )}
+          {user.zenn && (
+            <a target="blank" href={`https://zenn.dev/${user.zenn}`}>
+              <Zenn />
+            </a>
+          )}
+          {user.qiita && (
+            <a target="blank" href={`https://qiita.com/${user.qiita}`}>
+              <img
+                className="w-[30px] h-[30px] grayscale-[100%] "
+                src="https://cdn.qiita.com/assets/favicons/public/apple-touch-icon-ec5ba42a24ae923f16825592efdc356f.png"
+                alt="Qiitaのアイコン"
+              />
             </a>
           )}
         </div>

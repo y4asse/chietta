@@ -141,6 +141,8 @@ model User {
     introduction   String?
     github         String?
     x              String?
+    qiita          String?
+    zenn           String?
     accounts       Account[]
     ViewHistory    ViewHistory[]
     UserPost       UserPost[]
