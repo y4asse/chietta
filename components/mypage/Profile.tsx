@@ -6,7 +6,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { FaXTwitter, FaGithub } from 'react-icons/fa6'
-import Zenn from './Zenn'
+import Zenn from '../icons/Zenn'
+import Note from '../icons/Note'
+import Qiita from '../icons/Qiita'
 
 const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser | null }) => {
   return (
@@ -26,15 +28,15 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
             </Link>
           </div>
         )}
-        <div className="flex items-center gap-5 mt-5 text-2xl text-[#9f9f9f]">
-          {user.github && (
-            <a target="blank" href={`https://github.com/${user.github}`}>
-              <FaGithub />
-            </a>
-          )}
+        <div className="flex items-center gap-5 mt-5 text-2xl">
           {user.x && (
             <a target="blank" href={`https://x.com/${user.x}`}>
               <FaXTwitter />
+            </a>
+          )}
+          {user.github && (
+            <a target="blank" href={`https://github.com/${user.github}`}>
+              <FaGithub />
             </a>
           )}
           {user.zenn && (
@@ -44,11 +46,12 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
           )}
           {user.qiita && (
             <a target="blank" href={`https://qiita.com/${user.qiita}`}>
-              <img
-                className="w-[30px] h-[30px] grayscale-[100%] "
-                src="https://cdn.qiita.com/assets/favicons/public/apple-touch-icon-ec5ba42a24ae923f16825592efdc356f.png"
-                alt="Qiitaのアイコン"
-              />
+              <Qiita />
+            </a>
+          )}
+          {user.note && (
+            <a target="blank" href={`https://note.com/${user.note}`}>
+              <Note />
             </a>
           )}
         </div>

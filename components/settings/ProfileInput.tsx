@@ -10,6 +10,8 @@ import Toast from '../utils/Toast'
 import ImageInput from './ImageInput'
 import useUserInfo from '@/hooks/useUserInfo'
 import { FaXTwitter, FaGithub } from 'react-icons/fa6'
+import Note from '../icons/Note'
+import Image from 'next/image'
 
 type Inputs = {
   name: string
@@ -18,6 +20,7 @@ type Inputs = {
   x: string
   zenn: string
   qiita: string
+  note: string
 }
 const ProfileInput = () => {
   const { data: session, status } = useSession()
@@ -40,7 +43,8 @@ const ProfileInput = () => {
       github: data.github,
       x: data.x,
       zenn: data.zenn,
-      qiita: data.qiita
+      qiita: data.qiita,
+      note: data.note
     }
     const res = await updateProfile(newUser)
     if (res.message === 'error') {
@@ -99,24 +103,7 @@ const ProfileInput = () => {
               )}
             </div>
 
-            {/* SNS */}
-            <div className="mt-7">
-              <label className="font-bold flex items-center gap-3" htmlFor="github">
-                <FaGithub className="text-xl" />
-                GitHubのアカウント
-              </label>
-              <div>
-                <span className="text-lg mr-1">https://github.com/</span>
-                <input
-                  type="text"
-                  id="github"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
-                  defaultValue={user.github ? user.github : ''}
-                  placeholder="ユーザ名を入力..."
-                  {...register('github')}
-                />
-              </div>
-            </div>
+            {/* X */}
             <div className="mt-7">
               <label className="font-bold flex items-center gap-3" htmlFor="x">
                 <FaXTwitter className="text-xl" />
@@ -134,6 +121,27 @@ const ProfileInput = () => {
                 />
               </div>
             </div>
+
+            {/* GitHub */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="github">
+                <FaGithub className="text-xl" />
+                GitHubのアカウント
+              </label>
+              <div>
+                <span className="text-lg mr-1">https://github.com/</span>
+                <input
+                  type="text"
+                  id="github"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.github ? user.github : ''}
+                  placeholder="ユーザ名を入力..."
+                  {...register('github')}
+                />
+              </div>
+            </div>
+
+            {/* Zenn */}
             <div className="mt-7">
               <label className="font-bold flex items-center gap-3" htmlFor="zenn">
                 <img
@@ -155,6 +163,8 @@ const ProfileInput = () => {
                 />
               </div>
             </div>
+
+            {/* Qiita */}
             <div className="mt-7">
               <label className="font-bold flex items-center gap-3" htmlFor="qiita">
                 <img
@@ -173,6 +183,25 @@ const ProfileInput = () => {
                   defaultValue={user.qiita ? user.qiita : ''}
                   placeholder="ユーザ名を入力..."
                   {...register('qiita')}
+                />
+              </div>
+            </div>
+
+            {/* note */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="note">
+                <Note />
+                noteのアカウント
+              </label>
+              <div>
+                <span className="text-lg mr-1">https://note.com/</span>
+                <input
+                  type="text"
+                  id="note"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.note ? user.note : ''}
+                  placeholder="ユーザ名を入力..."
+                  {...register('note')}
                 />
               </div>
             </div>

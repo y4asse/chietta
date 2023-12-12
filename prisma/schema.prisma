@@ -143,6 +143,7 @@ model User {
     x              String?
     qiita          String?
     zenn           String?
+    note           String?
     accounts       Account[]
     ViewHistory    ViewHistory[]
     UserPost       UserPost[]
