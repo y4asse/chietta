@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import Image from 'next/image'
+import UserPosts from '@/components/userPost/UserPosts'
 
 const Mypage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions)
@@ -25,8 +26,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
         orderBy: {
           createdAt: 'desc'
         }
-      },
-      like: true
+      }
     }
   })
   if (!user) return notFound()
@@ -42,11 +42,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
             <Image src={'/img/cat.png'} width={300} height={300} alt="cat" className="mx-auto" />
           </div>
         )}
-        {postsWithOgp.map((post) => {
-          const defaultLiked =
-            user.like.length > 0 ? user.like.some((like) => like && like.user_post_id === post.id) : false
-          return <UserPostItem key={post.id} userPost={post} defaultLiked={defaultLiked} />
-        })}
+        <UserPosts userPosts={postsWithOgp} />
       </div>
     </div>
   )
