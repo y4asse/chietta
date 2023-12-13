@@ -62,6 +62,7 @@ const UserIcon = ({ session }: { session: Session }) => {
               className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
               key={item.name}
               href={item.path}
+              onClick={() => setIsShow(false)}
             >
               {item.icon}
               <span className="text-lg">{item.name}</span>
