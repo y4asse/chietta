@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from '@/server/db'
-import { rssParser } from '@/utils/builder'
+import { getFeedItem } from '@/server/getFeedItem'
 import { FeedArticle } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
@@ -16,10 +16,7 @@ export const createFeed = async (prevState: any, formData: FormData) => {
     userId: formData.get('userId'),
     feedUrl: formData.get('feedUrl')
   })
-  const feedItem = await rssParser.parseURL(parsed.feedUrl).catch((err) => {
-    console.log(err)
-    return null
-  })
+  const feedItem = await getFeedItem(parsed.feedUrl)
   if (!feedItem) return { message: 'URLが不正です' }
   const title = feedItem.title
   if (!title) return { message: '不正なURLです' }
@@ -39,7 +36,7 @@ export const createFeed = async (prevState: any, formData: FormData) => {
   if (!result) return { message: '既に登録されています' }
   try {
     const { id } = result
-    const { items } = feedItem as { items: { title: string; link: string; pubDate: string; isoDate: string }[] }
+    const { items } = feedItem
     const insertData = items.map((item) => {
       const createdAt = item.pubDate ? new Date(item.pubDate) : new Date(item.isoDate)
       return {
