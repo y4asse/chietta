@@ -55,16 +55,19 @@ const UserIcon = ({ session }: { session: Session }) => {
         />
       </button>
       {isShow && (
-        <ul className="shadow rounded-xl p-5 flex flex-col gap-3 absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
+        <div className="shadow rounded-xl flex flex-col absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
           {list.map((item) => (
-            <li className="flex items-center gap-3 text-xl" key={item.name}>
+            <Link
+              aria-label={item.name}
+              className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
+              key={item.name}
+              href={item.path}
+            >
               {item.icon}
-              <Link key={item.name} href={item.path} onClick={() => setIsShow(false)}>
-                <span className="text-lg">{item.name}</span>
-              </Link>
-            </li>
+              <span className="text-lg">{item.name}</span>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   )
