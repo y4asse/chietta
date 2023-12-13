@@ -27,7 +27,7 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
             </Link>
           </div>
         )}
-        <div className="flex items-center justify-end gap-5 mt-5 text-2xl">
+        <div className="flex items-center md:justify-end gap-5 mt-5 text-2xl">
           {user.x && (
             <a target="_blank" href={`https://x.com/${user.x}`}>
               <FaXTwitter />
