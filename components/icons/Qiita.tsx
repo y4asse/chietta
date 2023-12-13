@@ -4,7 +4,7 @@ const Qiita = () => {
       <g strokeWidth="2.00" fill="none" strokeLinecap="butt">
         <path
           stroke="#aae280"
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
           d="
   M 222.85 174.55
   C 240.99 140.26 240.31 98.65 222.11 65.07
@@ -43,7 +43,7 @@ const Qiita = () => {
         />
         <path
           stroke="#aae280"
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
           d="
   M 68.25 112.44
   C 68.90 132.67 81.32 143.53 101.06 145.26
