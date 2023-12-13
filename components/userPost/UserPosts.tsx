@@ -3,7 +3,6 @@
 import React from 'react'
 import UserPostItem from './UserPostItem'
 import { PostsWithData } from '@/app/api/userPost/route'
-import { useLikes } from '@/hooks/useLikes'
 import { useAtom } from 'jotai'
 import { likeAtom } from '@/jotai/likeAtom'
 
