@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 const Zenn = () => {
   return (
     <svg width={24} xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0.00 0.00 315.00 315.00">
