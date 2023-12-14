@@ -30,14 +30,14 @@ export const authOptions: AuthOptions = {
         where: { id: token.sub }
       })
       if (dbUser) {
-        token.user_id = dbUser.user_id
+        token.idCreatedByUser = dbUser.idCreatedByUser
       }
       return token
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub
-        session.user.user_id = token.user_id
+        session.user.idCreatedByUser = token.idCreatedByUser
       }
       return session
     }

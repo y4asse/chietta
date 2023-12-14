@@ -98,7 +98,6 @@ export const PUT = async (req: NextRequest) => {
       isPublic
     }
   })
-  console.log(result)
   return Response.json(result)
 }
 
