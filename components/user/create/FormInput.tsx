@@ -30,12 +30,17 @@ const FormInput = ({ user }: { user: User }) => {
       <input
         type="text"
         name="idCreatedByUser"
-        className="border border-[#b6b6b6] px-5 py-3 rounded-full cursor focus:outline-focus mt-3 w-1/2"
+        className="border border-[#b6b6b6] px-5 py-3 rounded-full cursor focus:outline-focus mt-5 md:w-1/2 w-full"
+        placeholder="https://chietta.com/あなたのユーザID"
       />
       {state?.errors?.idCreatedByUser && (
-        <p role="alert" className="text-[red] mt-1">
-          {state.errors.idCreatedByUser.join(',')}
-        </p>
+        <div>
+          {state.errors.idCreatedByUser.map((error) => (
+            <p key={error} role="alert" className="text-[red] mt-1">
+              {error}
+            </p>
+          ))}
+        </div>
       )}
       <input type="hidden" name="sub" value={user.id} />
       <div className="mt-5">

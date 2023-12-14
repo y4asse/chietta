@@ -3,14 +3,16 @@
 import { authOptions } from '@/server/auth'
 import { db } from '@/server/db'
 import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 const schema = z.object({
   idCreatedByUser: z
     .string({ invalid_type_error: '不正な入力です' })
     .min(1, '1文字以上で入力してください')
-    .max(20, '20文字以内で入力してください'), // TODO バリデーションを厳密にする
+    .max(20, '20文字以内で入力してください')
+    .regex(/^[A-Za-z0-9\-_\.]+$/, {
+      message: '英数字、ハイフン、アンダースコア、ドットのみ使用できます'
+    }),
   sub: z.string({ invalid_type_error: '不正な入力です' })
 })
 
@@ -31,6 +33,9 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
 
   // 認可
   if (session.user.id !== sub) return { errors: { idCreatedByUser: ['不正なアクセスです'] } }
+
+  // 既にidCreatedByUserが設定されている場合
+  if (session.user.idCreatedByUser) return { errors: { idCreatedByUser: ['既にIDが設定されています'] } }
 
   const result = await db.user
     .update({
