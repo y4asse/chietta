@@ -4,7 +4,7 @@ import { User } from '@prisma/client'
 import { User as SessionUser } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'
-import { FaXTwitter, FaGithub } from 'react-icons/fa6'
+import { FaXTwitter, FaGithub, FaPaperclip } from 'react-icons/fa6'
 import Zenn from '../icons/Zenn'
 import Note from '../icons/Note'
 import Qiita from '../icons/Qiita'
@@ -57,6 +57,11 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
           {user.hatena && (
             <a target="_blank" href={`https://${user.hatena}.hatenablog.com`}>
               <Hatena />
+            </a>
+          )}
+          {user.webSite && (
+            <a target="_blank" href={user.webSite}>
+              <FaPaperclip />
             </a>
           )}
         </div>

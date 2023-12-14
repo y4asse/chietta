@@ -146,6 +146,7 @@ model User {
     zenn            String?
     note            String?
     hatena          String?
+    webSite         String?
     accounts        Account[]
     ViewHistory     ViewHistory[]
     UserPost        UserPost[]
