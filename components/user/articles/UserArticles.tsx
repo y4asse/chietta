@@ -32,7 +32,7 @@ const UserArticles = async ({ id }: { id: string }) => {
   }
   const getHatenaFeed = (name: string | null) => {
     if (!name) return null
-    const url = `https://${name}.hatenablog.jp/rss`
+    const url = `https://${name}.hatenablog.com/rss`
     const feedItem = getFeedItem(url)
     return feedItem
   }

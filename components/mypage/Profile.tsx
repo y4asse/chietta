@@ -55,7 +55,7 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
             </a>
           )}
           {user.hatena && (
-            <a target="_blank" href={`https://${user.hatena}.hatenablog.jp`}>
+            <a target="_blank" href={`https://${user.hatena}.hatenablog.com`}>
               <Hatena />
             </a>
           )}
