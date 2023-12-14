@@ -3,6 +3,7 @@
 import { followingAtom } from '@/jotai/followingAtom'
 import { followingFeedAtom } from '@/jotai/followingFeedAtom'
 import { likeAtom } from '@/jotai/likeAtom'
+import { sessionAtom } from '@/jotai/sessionAtom'
 import { viewHistoryAtom } from '@/jotai/viewHistory'
 import { getFollowingByUserId } from '@/server/category'
 import { Feed, FollowFeed, Like } from '@prisma/client'
@@ -15,6 +16,7 @@ const ClientProvider = ({ children }: { children: React.ReactNode }) => {
   const [, setFollowing] = useAtom(followingAtom)
   const [followingFeed, setFollowingFeed] = useAtom(followingFeedAtom)
   const [, setLikes] = useAtom(likeAtom)
+  const [, setSession] = useAtom(sessionAtom)
   const { data: session, status } = useSession()
 
   const userId = session ? session.user.id : null
@@ -74,6 +76,10 @@ const ClientProvider = ({ children }: { children: React.ReactNode }) => {
     }
     fetchLikes()
   }, [userId])
+
+  useEffect(() => {
+    setSession({ data: session, status })
+  }, [session])
   return <>{children}</>
 }
 
