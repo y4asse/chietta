@@ -32,7 +32,7 @@ const Input = () => {
       </div>
       {session && <input type="hidden" name="userId" value={session.user.id} />}
       <div className="mt-10 text-center">
-        <SubmitButton />
+        <SubmitButton pendingText="登録中" text="フィードを登録" />
       </div>
     </form>
   )

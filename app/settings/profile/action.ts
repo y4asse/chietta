@@ -1,6 +1,8 @@
 'use server'
 
+import { authOptions } from '@/server/auth'
 import { db } from '@/server/db'
+import { getServerSession } from 'next-auth'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -25,8 +27,10 @@ type Props = {
   note: string | null
 }
 
+// TODO 認可
 export async function updateProfile(props: Props) {
   try {
+    const session = await getServerSession(authOptions)
     const parsed = schema.parse({
       id: props.userId,
       name: props.name,
@@ -38,7 +42,7 @@ export async function updateProfile(props: Props) {
       note: props.note
     })
     const { id } = parsed
-    console.log(parsed.note)
+    if (!session || session.user.id !== id) return { message: 'error' }
     const result = await db.user.update({
       where: {
         id
@@ -54,6 +58,8 @@ export async function updateProfile(props: Props) {
 
 export async function updateUserIcon({ userId, imageUrl }: { userId: string; imageUrl: string }) {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session || session.user.id !== userId) return { message: 'error' }
     const user = await db.user.update({
       where: {
         id: userId

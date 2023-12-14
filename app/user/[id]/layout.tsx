@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const user = await db.user.findUnique({
-    where: { id: params.id }
+    where: { idCreatedByUser: params.id }
   })
   return {
     title: user ? user.name + 'さんのページ | Chietta' : 'Chietta | 技術記事プラットフォーム',
@@ -23,7 +23,7 @@ const Layout = async ({ children, params }: { children: React.ReactNode; params:
   const sessionUser = session ? session.user : null
   const { id } = params
   const user = await db.user.findUnique({
-    where: { id },
+    where: { idCreatedByUser: id },
     include: {
       UserPost: {
         include: {

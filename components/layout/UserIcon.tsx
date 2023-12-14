@@ -15,9 +15,17 @@ const UserIcon = ({ session }: { session: Session }) => {
   const handleClick = () => {
     setIsShow(!isShow)
   }
-  const list = [
-    { name: 'マイページ', path: `/user/${session.user.id}`, icon: <FaHome /> },
+  const listForUser = [
+    {
+      name: 'マイページ',
+      path: session.user.idCreatedByUser ? `/user/${session.user.idCreatedByUser}` : `user/create/${session.user.id}`,
+      icon: <FaHome />
+    },
     { name: 'カテゴリ', path: '/mypage/category', icon: <BiSolidCategoryAlt /> },
+    { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
+  ]
+
+  const listForGuest = [
     {
       name: 'Chiettaとは',
       path: '/about',
@@ -27,8 +35,7 @@ const UserIcon = ({ session }: { session: Session }) => {
       name: 'プライバシー',
       path: '/about/privacy',
       icon: <MdSecurity />
-    },
-    { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
+    }
   ]
 
   useEffect(() => {
@@ -56,7 +63,20 @@ const UserIcon = ({ session }: { session: Session }) => {
       </button>
       {isShow && (
         <div className="shadow rounded-xl flex flex-col absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
-          {list.map((item) => (
+          {session.user.idCreatedByUser &&
+            listForUser.map((item) => (
+              <Link
+                aria-label={item.name}
+                className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
+                key={item.name}
+                href={item.path}
+                onClick={() => setIsShow(false)}
+              >
+                {item.icon}
+                <span className="text-lg">{item.name}</span>
+              </Link>
+            ))}
+          {listForGuest.map((item) => (
             <Link
               aria-label={item.name}
               className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
