@@ -2,6 +2,7 @@ import Posts from '@/components/tech/Posts'
 import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
 import { getFeedItem } from '@/server/getFeedItem'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 const UserArticles = async ({ id }: { id: string }) => {
@@ -50,7 +51,14 @@ const UserArticles = async ({ id }: { id: string }) => {
   const articlesWithOgp = await addOgp(userArticles)
   return (
     <div className="max-w-[1000px] mx-auto px-3">
-      <Posts posts={articlesWithOgp} />
+      {articlesWithOgp.length > 0 ? (
+        <Posts posts={articlesWithOgp} />
+      ) : (
+        <div>
+          <h2 className="text-center text-2xl font-bold mt-20">記事がありません</h2>
+          <Image src={'/img/cat.png'} width={300} height={300} alt="cat" className="mx-auto" />
+        </div>
+      )}
     </div>
   )
 }
