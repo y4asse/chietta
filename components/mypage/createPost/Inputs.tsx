@@ -72,7 +72,7 @@ const Inputs = () => {
     }
   }
   const closeDialog = () => {
-    router.push(`/${user.idCreatedByUser}`)
+    router.push(`/${user.idCreatedByUser}/posts`)
     router.refresh()
   }
 

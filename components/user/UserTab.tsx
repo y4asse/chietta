@@ -6,8 +6,8 @@ import { MdOutlineArticle } from 'react-icons/md'
 import { FaBookOpen } from 'react-icons/fa6'
 const UserTab = ({ idCreatedByUser }: { idCreatedByUser: string }) => {
   const list = [
-    { name: '投稿', path: `/${idCreatedByUser}`, icon: <MdOutlineArticle /> },
-    { name: '記事一覧', path: `/${idCreatedByUser}/articles`, icon: <FaBookOpen /> }
+    { name: '記事一覧', path: `/${idCreatedByUser}`, icon: <FaBookOpen /> },
+    { name: '投稿', path: `/${idCreatedByUser}/posts`, icon: <MdOutlineArticle /> }
   ]
   const pathname = usePathname()
   return (
