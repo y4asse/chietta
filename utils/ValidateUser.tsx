@@ -15,7 +15,7 @@ const ValidateUser = () => {
     if (session && !session.user.idCreatedByUser) {
       router.push(`/user/create/${session.user.id}`)
     }
-  }, [session])
+  }, [session, path])
   return null
 }
 
