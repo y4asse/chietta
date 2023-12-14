@@ -225,7 +225,7 @@ const ProfileInput = () => {
                   placeholder="ユーザ名を入力..."
                   {...register('hatena')}
                 />
-                .<span className="text-lg mr-1">hatenablog.jp</span>
+                .<span className="text-lg mr-1">hatenablog.com</span>
               </div>
             </div>
 
