@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MdOutlineArticle } from 'react-icons/md'
 import { FaBookOpen } from 'react-icons/fa6'
-const UserTab = ({ id }: { id: string }) => {
+const UserTab = ({ idCreatedByUser }: { idCreatedByUser: string }) => {
   const list = [
-    { name: '投稿', path: `/user/${id}`, icon: <MdOutlineArticle /> },
-    { name: '記事一覧', path: `/user/${id}/articles`, icon: <FaBookOpen /> }
+    { name: '投稿', path: `/${idCreatedByUser}`, icon: <MdOutlineArticle /> },
+    { name: '記事一覧', path: `/${idCreatedByUser}/articles`, icon: <FaBookOpen /> }
   ]
   const pathname = usePathname()
   return (

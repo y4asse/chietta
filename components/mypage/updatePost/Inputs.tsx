@@ -49,7 +49,7 @@ const Inputs = ({ sessionUser, post }: { sessionUser: User; post: UserPost }) =>
     })
       .then((res) => {
         if (!res.ok) throw new Error('エラーが発生しました')
-        router.push(`/user/${sessionUser.id}`)
+        router.push(`/${sessionUser.idCreatedByUser}`)
         router.refresh()
       })
       .catch((err) => {
@@ -126,8 +126,8 @@ const Inputs = ({ sessionUser, post }: { sessionUser: User; post: UserPost }) =>
           <textarea
             defaultValue={post.content ? post.content : ''}
             rows={5}
-            className={`font-bold py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full resize-none placeholder:font-normal`}
-            placeholder="この記事めっちゃ参考になった"
+            className={`py-1 px-2 border-[#d0d0d0] border rounded-lg focus:outline-focus w-full resize-none placeholder:font-normal`}
+            placeholder="コメントを入力..."
             {...register('content')}
           />
         </label>

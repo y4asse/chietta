@@ -20,7 +20,7 @@ const FormInput = ({ user }: { user: User }) => {
   useEffect(() => {
     if (state.errors === null) {
       update().then(() => {
-        router.push(`/user/${state.result.idCreatedByUser}`)
+        router.push(`/${state.result.idCreatedByUser}`)
       })
     }
   }, [state])

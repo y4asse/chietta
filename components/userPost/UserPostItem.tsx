@@ -22,7 +22,7 @@ const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defa
     <article className={`py-7 bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}>
       <div className="flex justify-center gap-3">
         <div>
-          <Link href={`/user/${userPost.user_id}`} className="min-w-[40px]">
+          <Link href={`/${userPost.user.idCreatedByUser}`} className="min-w-[40px]">
             <img
               className="w-[40px] h-[40px] rounded-full border-[#e2e2e2] border"
               src={userPost.user.image!}
@@ -32,7 +32,7 @@ const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defa
         </div>
         <div className="max-w-[512px] w-[95%]">
           <div className="relative">
-            <Link href={`/user/${userPost.user_id}`} className="mb-2 font-semibold">
+            <Link href={`/${userPost.user.idCreatedByUser}`} className="mb-2 font-semibold hover:underline">
               {userPost.user.name}
             </Link>
             {isMine && (

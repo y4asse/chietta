@@ -7,6 +7,11 @@ declare module 'next-auth' {
       idCreatedByUser: string | null // userが設定する
     }
   }
+
+  interface User {
+    id: string
+    idCreatedByUser: string | null
+  }
 }
 declare module 'next-auth/jwt' {
   interface JWT extends DefaultJWT {

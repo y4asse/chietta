@@ -18,7 +18,7 @@ const UserIcon = ({ session }: { session: Session }) => {
   const listForUser = [
     {
       name: 'マイページ',
-      path: session.user.idCreatedByUser ? `/user/${session.user.idCreatedByUser}` : `user/create/${session.user.id}`,
+      path: session.user.idCreatedByUser ? `/${session.user.idCreatedByUser}` : `user/create/${session.user.id}`,
       icon: <FaHome />
     },
     { name: 'カテゴリ', path: '/mypage/category', icon: <BiSolidCategoryAlt /> },
