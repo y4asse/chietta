@@ -3,14 +3,27 @@ import { createUserWithId } from '@/app/user/create/_actions/actions'
 
 import SubmitButton from '@/components/feeds/create/SubmitButton'
 import { User } from '@prisma/client'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
 const initialState = {
-  errors: { idCreatedByUser: undefined }
+  errors: { idCreatedByUser: undefined },
+  result: undefined
 }
 
 const FormInput = ({ user }: { user: User }) => {
   const [state, action] = useFormState(createUserWithId, initialState)
+  const router = useRouter()
+  const { update } = useSession()
+  useEffect(() => {
+    if (state.errors === null) {
+      update().then(() => {
+        router.push(`/user/${state.result.idCreatedByUser}`)
+      })
+    }
+  }, [state])
   return (
     <form className="flex flex-col justify-center items-center w-full" action={action}>
       <label className="text-xl font-bold mt-10">ユーザIDを入力してください</label>

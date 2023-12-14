@@ -6,6 +6,7 @@ import Gtag from '@/utils/gtag'
 import AuthProvider from '@/components/provider/authProvider'
 import JotaiProvider from '@/components/provider/jotaiProvider'
 import ClientProvider from '@/components/provider/ClientProvider'
+import ValidateUser from '@/utils/ValidateUser'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <JotaiProvider>
             <ClientProvider>
+              <ValidateUser />
               <LayoutComponent>{children}</LayoutComponent>
             </ClientProvider>
           </JotaiProvider>

@@ -4,12 +4,12 @@ declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: DefaultSession['user'] & {
       id: string
-      user_id: string | null // userが設定する
+      idCreatedByUser: string | null // userが設定する
     }
   }
 }
 declare module 'next-auth/jwt' {
   interface JWT extends DefaultJWT {
-    user_id: string | null
+    idCreatedByUser: string | null
   }
 }

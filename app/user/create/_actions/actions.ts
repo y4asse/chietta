@@ -42,5 +42,5 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
       return null
     })
   if (!result) return { errors: { idCreatedByUser: ['そのIDは既に使用されています。'] } }
-  redirect(`/user/${result.idCreatedByUser}`)
+  return { errors: null, result: result }
 }
