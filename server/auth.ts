@@ -1,30 +1,9 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { type GetServerSidePropsContext } from 'next'
-import { getServerSession, type DefaultSession } from 'next-auth'
-import  { AuthOptions } from 'next-auth'
+import { getServerSession } from 'next-auth'
+import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { db } from './db'
-
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
-declare module 'next-auth' {
-  interface Session extends DefaultSession {
-    user: DefaultSession['user'] & {
-      id: string
-      // ...other properties
-      // role: UserRole;
-    }
-  }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
-}
 
 export const authOptions: AuthOptions = {
   session: {
@@ -42,17 +21,23 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/login'
   },
-  callbacks: {
-    async session({ session,  token }) {
-      if (session.user != null && token.sub != null) {
-        session.user.id = token.sub
 
-        const dbUser = await db.user.findUnique({
-          where: { id: token.sub }
-        })
-        if (dbUser && dbUser.image) {
-          session.user.image = dbUser.image;
-        }
+  callbacks: {
+    // https://next-auth.js.org/configuration/callbacks#sign-in-callback
+    // callbackの前にjwt()が呼ばれる
+    async jwt({ token }) {
+      const dbUser = await db.user.findUnique({
+        where: { id: token.sub }
+      })
+      if (dbUser) {
+        token.user_id = dbUser.user_id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (session.user && token.sub) {
+        session.user.id = token.sub
+        session.user.user_id = token.user_id
       }
       return session
     }
