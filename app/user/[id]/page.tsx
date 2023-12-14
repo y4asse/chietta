@@ -8,7 +8,11 @@ import UserPosts from '@/components/userPost/UserPosts'
 const Mypage = async ({ params }: { params: { id: string } }) => {
   const { id } = params
   const posts = await db.userPost.findMany({
-    where: { user_id: id },
+    where: {
+      user: {
+        idCreatedByUser: id
+      }
+    },
     include: {
       _count: {
         select: { like: true }
@@ -19,7 +23,6 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
       createdAt: 'desc'
     }
   })
-
   if (!posts) return notFound()
   const postsWithOgp = await addOgp(posts, { allowNull: true })
   return (

@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 
 const UserArticles = async ({ id }: { id: string }) => {
   const user = await db.user.findUnique({
-    where: { id }
+    where: { idCreatedByUser: id }
   })
   if (!user) return notFound()
   const userArticles: { title: string; url: string; createdAt: string }[] = []
