@@ -8,6 +8,7 @@ import { FaXTwitter, FaGithub } from 'react-icons/fa6'
 import Zenn from '../icons/Zenn'
 import Note from '../icons/Note'
 import Qiita from '../icons/Qiita'
+import Hatena from '../icons/Hatena'
 
 const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser | null }) => {
   return (
@@ -51,6 +52,11 @@ const Profile = ({ user, sessionUser }: { user: User; sessionUser: SessionUser |
           {user.note && (
             <a target="_blank" href={`https://note.com/${user.note}`}>
               <Note />
+            </a>
+          )}
+          {user.hatena && (
+            <a target="_blank" href={`https://${user.hatena}.hatenablog.jp`}>
+              <Hatena />
             </a>
           )}
         </div>

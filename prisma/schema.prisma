@@ -145,6 +145,7 @@ model User {
     qiita           String?
     zenn            String?
     note            String?
+    hatena          String?
     accounts        Account[]
     ViewHistory     ViewHistory[]
     UserPost        UserPost[]

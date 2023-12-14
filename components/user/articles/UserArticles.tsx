@@ -11,7 +11,7 @@ const UserArticles = async ({ id }: { id: string }) => {
   })
   if (!user) return notFound()
   const userArticles: { title: string; url: string; createdAt: string }[] = []
-  const { qiita, zenn, note } = user
+  const { qiita, zenn, note, hatena } = user
   const getQiitaFeed = (name: string | null) => {
     if (!name) return null
     const url = `https://qiita.com/${name}/feed`
@@ -30,7 +30,13 @@ const UserArticles = async ({ id }: { id: string }) => {
     const feedItem = getFeedItem(url)
     return feedItem
   }
-  const feeds = await Promise.all([getQiitaFeed(qiita), getZennFeed(zenn), getNoteFeed(note)])
+  const getHatenaFeed = (name: string | null) => {
+    if (!name) return null
+    const url = `https://${name}.hatenablog.jp/rss`
+    const feedItem = getFeedItem(url)
+    return feedItem
+  }
+  const feeds = await Promise.all([getQiitaFeed(qiita), getZennFeed(zenn), getNoteFeed(note), getHatenaFeed(hatena)])
   feeds.map((feed) => {
     feed?.items.map((item) => {
       const createdAt = item.pubDate ? new Date(item.pubDate) : new Date(item.isoDate)

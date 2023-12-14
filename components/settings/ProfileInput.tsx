@@ -12,6 +12,7 @@ import useUserInfo from '@/hooks/useUserInfo'
 import { FaXTwitter, FaGithub } from 'react-icons/fa6'
 import Note from '../icons/Note'
 import Image from 'next/image'
+import Hatena from '../icons/Hatena'
 
 type Inputs = {
   name: string
@@ -21,6 +22,7 @@ type Inputs = {
   zenn: string
   qiita: string
   note: string
+  hatena: string
 }
 const ProfileInput = () => {
   const { data: session, status } = useSession()
@@ -44,7 +46,8 @@ const ProfileInput = () => {
       x: data.x,
       zenn: data.zenn,
       qiita: data.qiita,
-      note: data.note
+      note: data.note,
+      hatena: data.hatena
     }
     const res = await updateProfile(newUser)
     if (res.message === 'error') {
@@ -203,6 +206,26 @@ const ProfileInput = () => {
                   placeholder="ユーザ名を入力..."
                   {...register('note')}
                 />
+              </div>
+            </div>
+
+            {/* hatena */}
+            <div className="mt-7">
+              <label className="font-bold flex items-center gap-3" htmlFor="hatena">
+                <Hatena />
+                はてなブログのアカウント
+              </label>
+              <div>
+                <span className="text-lg mr-1">https://</span>
+                <input
+                  type="text"
+                  id="hatena"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  defaultValue={user.hatena ? user.hatena : ''}
+                  placeholder="ユーザ名を入力..."
+                  {...register('hatena')}
+                />
+                .<span className="text-lg mr-1">hatenablog.jp</span>
               </div>
             </div>
 

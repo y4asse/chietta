@@ -13,7 +13,8 @@ const schema = z.object({
   github: z.string().nullable(),
   zenn: z.string().nullable(),
   qiita: z.string().nullable(),
-  note: z.string().nullable()
+  note: z.string().nullable(),
+  hatena: z.string().nullable()
 })
 
 type Props = {
@@ -25,6 +26,7 @@ type Props = {
   zenn: string | null
   qiita: string | null
   note: string | null
+  hatena: string | null
 }
 
 // TODO 認可
@@ -39,7 +41,8 @@ export async function updateProfile(props: Props) {
       github: props.github,
       zenn: props.zenn,
       qiita: props.qiita,
-      note: props.note
+      note: props.note,
+      hatena: props.hatena
     })
     const { id } = parsed
     if (!session || session.user.id !== id) return { message: 'error' }
