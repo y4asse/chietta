@@ -38,8 +38,12 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
   if (session.user.idCreatedByUser) return { errors: { idCreatedByUser: ['既にIDが設定されています'] } }
 
   //すでに使われているとき
-  const res = await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/${idCreatedByUser}`)
-  if (res.ok) return { errors: { idCreatedByUser: ['そのIDは既に使用されています。'] } }
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/${idCreatedByUser}`)
+    if (res.ok) return { errors: { idCreatedByUser: ['そのIDは既に使用されています。'] } }
+  } catch (err) {
+    console.log(err)
+  }
   const result = await db.user
     .update({
       where: { id: sub },
