@@ -20,7 +20,6 @@ const LikeButton = ({
   const [isLiked, setIsLiked] = useState(false)
   const router = useRouter()
   const [count, setCount] = useState(defaultCount)
-  const path = usePathname()
   useEffect(() => {
     if (defaultLiked) {
       playerRef.current && playerRef.current.play()

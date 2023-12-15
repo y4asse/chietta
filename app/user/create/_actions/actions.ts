@@ -37,6 +37,24 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
   // 既にidCreatedByUserが設定されている場合
   if (session.user.idCreatedByUser) return { errors: { idCreatedByUser: ['既にIDが設定されています'] } }
 
+  //使用不可能なとき
+  const domains = [
+    'about',
+    'api',
+    'feeds',
+    'latest',
+    'login',
+    'logout',
+    'mypapge',
+    'posts',
+    'profile',
+    'settings',
+    'user',
+    'withdrawal'
+  ]
+  if (domains.includes(idCreatedByUser)) return { errors: { idCreatedByUser: ['そのIDは使用できません'] } }
+
+  //すでに使われているとき
   const result = await db.user
     .update({
       where: { id: sub },

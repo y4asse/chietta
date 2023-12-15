@@ -27,6 +27,7 @@ const FormInput = ({ user }: { user: User }) => {
   return (
     <form className="flex flex-col justify-center items-center w-full" action={action}>
       <label className="text-xl font-bold mt-10">ユーザIDを入力してください</label>
+      <p className="mt-3">※後から変更できません</p>
       <input
         type="text"
         name="idCreatedByUser"
