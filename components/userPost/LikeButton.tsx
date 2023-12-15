@@ -3,7 +3,7 @@ import like from '@/public/lottie/like.json'
 import { useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
 import { Player } from '@lottiefiles/react-lottie-player'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const LikeButton = ({
   userPostId,
@@ -20,7 +20,7 @@ const LikeButton = ({
   const [isLiked, setIsLiked] = useState(false)
   const router = useRouter()
   const [count, setCount] = useState(defaultCount)
-
+  const path = usePathname()
   useEffect(() => {
     if (defaultLiked) {
       playerRef.current && playerRef.current.play()
@@ -76,7 +76,7 @@ const LikeButton = ({
         className={`w-[30px] md:w-[40px] h-[30px] md:h-[40px] rounded-full flex justify-center items-center`}
         onClick={handleClick}
       >
-        <Player ref={playerRef} speed={1.8} keepLastFrame src={like} />
+        <Player ref={playerRef} speed={1.8} keepLastFrame={true} src={like} autoplay={defaultLiked} />
       </button>
       <span>{count}</span>
     </div>
