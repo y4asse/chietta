@@ -22,9 +22,7 @@ const LikeButton = ({
   const [count, setCount] = useState(defaultCount)
   const path = usePathname()
   useEffect(() => {
-    console.log('useEffect')
     if (defaultLiked) {
-      console.log('再生')
       playerRef.current && playerRef.current.play()
       setIsLiked(true)
     }
