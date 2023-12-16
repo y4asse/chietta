@@ -14,7 +14,10 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     title: user ? user.name + 'さんのページ | Chietta' : 'Chietta | 技術記事プラットフォーム',
     description: user
       ? user.introduction
-      : 'Chiettaはエンジニアのための技術記事をまとめたサービスです。様々な媒体の記事を見たり、検索することができます。'
+      : 'Chiettaはエンジニアのための技術記事をまとめたサービスです。様々な媒体の記事を見たり、検索することができます。',
+    openGraph: {
+      images: user ? (user.image ? user.image : undefined) : undefined
+    }
   }
 }
 

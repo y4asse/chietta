@@ -10,29 +10,36 @@ import ValidateUser from '@/utils/ValidateUser'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const title = 'Chietta | 技術記事プラットフォーム'
+const description =
+  'Chiettaはエンジニアのための技術記事プラットフォームです。複数の技術記事サイトや企業ブログなどをまとめた無料のサービスです。様々な媒体の記事を見たり、検索することができます。またアカウント連携することで、Qiita、Zenn、noteなどであなたがこれまで書いた記事をまとめて見ることができます。'
+const images =
+  'https://firebasestorage.googleapis.com/v0/b/cheeta-38f77.appspot.com/o/ogp.png?alt=media&token=872105da-5e76-41bb-b3b4-4cc4b0f96e29'
+const url = 'https://chietta.app'
+const type = 'website'
+const locale = 'ja_JP'
+
 export const metadata: Metadata = {
-  title: 'Chietta | 技術記事プラットフォーム',
-  description:
-    'Chiettaはエンジニアのための技術記事をまとめたサービスです。様々な媒体の記事を見たり、検索することができます。'
+  title,
+  description,
+  openGraph: {
+    type,
+    url,
+    title,
+    description,
+    images,
+    siteName: title,
+    locale
+  },
+  twitter: {
+    site: '@yAisse',
+    card: 'summary'
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content="Chietta | 技術記事プラットフォーム" />
-      <meta
-        property="og:description"
-        content="Chiettaはエンジニアのための技術記事をまとめたサービスです。様々な媒体の記事を見たり、検索することができます。"
-      />
-      <meta property="og:url" content="https://chietta.app" />
-      <meta property="og:site_name" content="Chietta | 技術記事プラットフォーム" />
-      <meta
-        property="og:image"
-        content="https://firebasestorage.googleapis.com/v0/b/cheeta-38f77.appspot.com/o/ogp.png?alt=media&token=872105da-5e76-41bb-b3b4-4cc4b0f96e29"
-      />
-      <meta name="twitter:card" content="summary" />
-      <meta name="twitter:site" content="@yAisse" />
       <Gtag />
       <body className={inter.className}>
         <AuthProvider>
