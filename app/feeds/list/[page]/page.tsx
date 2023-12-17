@@ -33,10 +33,10 @@ const Page = async ({ params }: { params: { page: string } }) => {
   if (!feeds || totalPageCount < page + 1) return notFound()
   return (
     <div className="max-w-[1000px] mx-auto px-1">
-      <h1 className="text-center text-3xl font-bold my-5">フィード一覧</h1>
+      <h1 className="text-center text-3xl font-bold my-5">企業ブログ一覧</h1>
       <div className="text-right">
         <Link href="/feeds/create" className="bg-primary px-3 py-1 text-[white] rounded font-bold">
-          フィードを新規登録
+          新規登録
         </Link>
       </div>
       <FeedLists feeds={feeds} />

@@ -13,7 +13,7 @@ const TitleSection = () => {
   const pathname = usePathname()
   return (
     <>
-      <h1 className="text-center text-3xl font-bold my-5">新着のフィード</h1>
+      <h1 className="text-center text-3xl font-bold my-5">新着の企業ブログ</h1>
       <div className="flex justify-center gap-3 items-center my-7">
         {list.map((item) => {
           const isActive = '/feeds' + item.path === pathname
@@ -32,7 +32,7 @@ const TitleSection = () => {
       </div>
       <div className="text-center mb-3">
         <Link href="/feeds/list/0" className="py-1 px-3 rounded-xl text-primary font-bold">
-          フィード一覧を見る
+          一覧を見る
           <BiSolidCategoryAlt className="inline ml-1" />
         </Link>
       </div>

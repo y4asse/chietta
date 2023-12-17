@@ -17,7 +17,7 @@ const Tab = () => {
       path: '/latest'
     },
     {
-      name: 'フィード',
+      name: '企業ブログ',
       path: '/feeds'
     },
     {
