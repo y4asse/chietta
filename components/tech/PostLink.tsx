@@ -19,7 +19,7 @@ const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string
     })
   }
   return (
-    <a href={url} onClick={handleClick} className="w-[95%]">
+    <a href={url} onClick={handleClick} className="w-[95%]" target="_blank">
       {image_url !== '' ? (
         <img src={image_url} alt="image" className="border-[#e6e6e6] mx-auto aspect-[16/9] w-full object-fill" />
       ) : (
