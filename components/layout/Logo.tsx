@@ -13,7 +13,7 @@ const Logo = () => {
           alt="Chiettaのロゴ画像"
           width={200}
           height={200}
-          className="w-[30px] inline ml-1 -translate-y-1"
+          className="absolute w-[30px] top-0 left-full"
         />
       </span>
     </div>
