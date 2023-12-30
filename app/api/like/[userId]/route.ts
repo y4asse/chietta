@@ -1,5 +1,6 @@
 import { db } from '@/server/db'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+import { getToken } from 'next-auth/jwt'
 import { NextRequest } from 'next/server'
 import z, { ZodError } from 'zod'
 
@@ -28,6 +29,12 @@ export const POST = async (req: NextRequest, { params }: { params: { userId: str
     const body = await req.json()
     const { user_post_id } = schema.parse(body)
     const { userId } = params
+    const token = await getToken({ req })
+
+    //認可
+    if (token === null || token.sub !== userId) {
+      return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+    }
     const like = await db.like.create({
       data: {
         user_id: userId,
@@ -52,6 +59,12 @@ export const DELETE = async (req: NextRequest, { params }: { params: { userId: s
     const body = await req.json()
     const { user_post_id } = schema.parse(body)
     const { userId } = params
+
+    //認可
+    const token = await getToken({ req })
+    if (token === null || token.sub !== userId) {
+      return Response.json({ message: '不正なリクエスト' }, { status: 400 })
+    }
     const like = await db.like.delete({
       where: {
         user_id_user_post_id: {

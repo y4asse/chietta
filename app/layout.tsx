@@ -45,10 +45,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthProvider>
           <JotaiProvider>
-            <ClientProvider>
-              <ValidateUser />
-              <LayoutComponent>{children}</LayoutComponent>
-            </ClientProvider>
+            <ClientProvider />
+            <ValidateUser />
+            <LayoutComponent>{children}</LayoutComponent>
           </JotaiProvider>
         </AuthProvider>
       </body>
