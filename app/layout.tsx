@@ -20,6 +20,7 @@ const type = 'website'
 const locale = 'ja_JP'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://chietta.app'),
   title,
   description,
   openGraph: {
