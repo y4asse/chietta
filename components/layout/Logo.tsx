@@ -7,14 +7,14 @@ const Logo = () => {
       <Image src={'/img/catCircle.png'} alt="Chiettaのロゴ画像" width={200} height={200} className="w-[30px]" />
 
       <span className="relative">
+        Chietta
         <Image
-          src={'/img/christmas.png'}
+          src={'/img/take.png'}
           alt="Chiettaのロゴ画像"
           width={200}
           height={200}
-          className="w-[30px] absolute -top-3 -left-3 rotate-[-15deg]"
+          className="w-[30px] inline ml-1 -translate-y-1"
         />
-        Chietta
       </span>
     </div>
   )
