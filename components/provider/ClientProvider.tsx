@@ -11,7 +11,7 @@ import { useAtom } from 'jotai'
 import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
 
-const ClientProvider = ({ children }: { children: React.ReactNode }) => {
+const ClientProvider = () => {
   const [, setHistory] = useAtom(viewHistoryAtom)
   const [, setFollowing] = useAtom(followingAtom)
   const [followingFeed, setFollowingFeed] = useAtom(followingFeedAtom)
@@ -80,7 +80,7 @@ const ClientProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setSession({ data: session, status })
   }, [session])
-  return <>{children}</>
+  return null
 }
 
 export default ClientProvider
