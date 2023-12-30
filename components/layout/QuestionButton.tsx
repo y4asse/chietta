@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { MdSecurity } from 'react-icons/md'
 import { MdOutlineQuestionMark } from 'react-icons/md'
-
+import { FaRegQuestionCircle } from 'react-icons/fa'
 const QuestionButton = () => {
   const [isShow, setIsShow] = React.useState(false)
   const handleClick = () => {
@@ -38,13 +38,9 @@ const QuestionButton = () => {
     }
   })
   return (
-    <div className="relative" id="modal">
-      <button
-        aria-label="タブを表示・非表示にする"
-        onClick={handleClick}
-        className="border rounded-full text-gray text-2xl"
-      >
-        <MdOutlineQuestionMark />
+    <div className="flex relative" id="modal">
+      <button aria-label="タブを表示・非表示にする" onClick={handleClick} className="text-gray text-2xl my-auto">
+        <FaRegQuestionCircle />
       </button>
       {isShow && (
         <ul className="shadow rounded-xl p-5 flex flex-col gap-3 absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
