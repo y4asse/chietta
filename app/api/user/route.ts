@@ -24,7 +24,7 @@ export const GET = async (req: NextRequest) => {
     return Response.json({ message: 'ユーザが見つかりません' }, { status: 404 })
   }
   const posts = user.UserPost
-  const postsWithOgp = await addOgp(posts, { allowNull: true })
+  const postsWithOgp = await addOgp(posts)
   return Response.json({ user, postsWithOgp })
 }
 

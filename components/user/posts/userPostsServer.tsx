@@ -23,7 +23,7 @@ const UserPostsServer = async ({ id }: { id: string }) => {
     }
   })
   if (!posts) return notFound()
-  const postsWithOgp = await addOgp(posts, { allowNull: true })
+  const postsWithOgp = await addOgp(posts)
   return (
     <>
       {postsWithOgp.length === 0 && (

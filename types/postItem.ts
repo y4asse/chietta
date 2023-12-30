@@ -5,7 +5,7 @@ export type PostItemType = {
   title: string
   url: string
   createdAt: string
-  image_url: string
+  image_url: string | null
   likedCount?: number
   feed?: Feed
 }

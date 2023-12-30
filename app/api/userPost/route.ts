@@ -11,7 +11,7 @@ const getPosts = async () => {
     orderBy: { createdAt: 'desc' },
     include: { user: true, _count: { select: { like: true } } }
   })
-  const userPosts = await addOgp(result, { allowNull: true })
+  const userPosts = await addOgp(result)
   return userPosts
 }
 
