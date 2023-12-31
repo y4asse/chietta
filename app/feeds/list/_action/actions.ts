@@ -1,9 +1,15 @@
 'use server'
 
+import { authOptions } from '@/server/auth'
 import { db } from '@/server/db'
+import { getServerSession } from 'next-auth'
 
 export const createFollowFeed = async ({ userId, feedId }: { userId: string; feedId: string }) => {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session || session.user.id !== userId) {
+      return { result: null, error: '不正なアクセスです' }
+    }
     const result = await db.followFeed
       .create({
         data: {
@@ -23,6 +29,10 @@ export const createFollowFeed = async ({ userId, feedId }: { userId: string; fee
 
 export const deleteFollowFeed = async ({ userId, feedId }: { userId: string; feedId: string }) => {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session || session.user.id !== userId) {
+      return { result: null, error: '不正なアクセスです' }
+    }
     const deleted = await db.followFeed.delete({
       where: {
         user_id_feed_id: {
