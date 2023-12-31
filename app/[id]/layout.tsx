@@ -38,7 +38,8 @@ const Layout = async ({ children, params }: { children: React.ReactNode; params:
         orderBy: {
           createdAt: 'desc'
         }
-      }
+      },
+      Followers: true
     }
   })
   if (!user) return notFound()
