@@ -7,7 +7,17 @@ export const getFollowingUserPosts = async (userId: string) => {
   try {
     const result = await db.userPost.findMany({
       orderBy: { createdAt: 'desc' },
-      include: { user: true, _count: { select: { like: true } } },
+      include: {
+        user: {
+          select: {
+            id: true,
+            idCreatedByUser: true,
+            name: true,
+            image: true
+          }
+        },
+        _count: { select: { like: true } }
+      },
       where: { isPublic: true, OR: [{ user: { Followers: { some: { user_id: userId } } } }, { user_id: userId }] }
     })
     const userPosts = await addOgp(result)

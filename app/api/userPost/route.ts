@@ -4,23 +4,6 @@ import { getToken } from 'next-auth/jwt'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 
-const getPosts = async () => {
-  const result = await db.userPost.findMany({
-    where: { isPublic: true },
-    orderBy: { createdAt: 'desc' },
-    include: { user: true, _count: { select: { like: true } } }
-  })
-  const userPosts = await addOgp(result)
-  return userPosts
-}
-
-export const GET = async () => {
-  const userPosts = await getPosts()
-  return Response.json(userPosts)
-}
-
-//TODO 認証されたユーザしかできないようにする
-
 export const POST = async (req: NextRequest) => {
   const schema = z.object({
     url: z.string(),
