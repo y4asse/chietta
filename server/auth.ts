@@ -27,16 +27,19 @@ export const authOptions: AuthOptions = {
     // callbackの前にjwt()が呼ばれる
     async jwt({ token }) {
       const dbUser = await db.user.findUnique({
-        where: { id: token.sub }
+        where: { id: token.sub },
+        select: { idCreatedByUser: true, image: true }
       })
       if (dbUser) {
         token.idCreatedByUser = dbUser.idCreatedByUser
+        token.picture = dbUser.image
       }
       return token
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub
+        session.user.image = token.picture
         session.user.idCreatedByUser = token.idCreatedByUser
       }
       return session
