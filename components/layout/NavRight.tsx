@@ -7,14 +7,16 @@ import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
 import { FaSearch } from 'react-icons/fa'
 import QuestionButton from './QuestionButton'
+import { usePathname } from 'next/navigation'
 
 const NavRight = () => {
   const { data: session, status } = useSession()
+  const pathName = usePathname()
   if (status === 'loading') return
   return (
     <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
       <div className="flex gap-1 md:gap-3 items-center">
-        <Link className="text-gray text-xl" href="/search">
+        <Link className={`text-xl ${pathName === '/search' ? 'text-[black]' : 'text-gray'}`} href="/search">
           <FaSearch />
         </Link>
         {session ? <UserIcon session={session} /> : <QuestionButton />}
