@@ -21,7 +21,7 @@ const FollowList = async ({ type, userName }: { type: 'following' | 'followers';
   return (
     <div className="max-w-[1000px] px-3 mx-auto">
       <h1 className="text-center font-bold text-xl mt-5">{type === 'following' ? 'フォロー中' : 'フォロワー'}</h1>
-      <div className="mt-10">
+      <div className="mt-5">
         {data.users.map((user, i) => {
           const defaultFollow = sessionUserFollows
             ? sessionUserFollows.users.some((item) => item.id === user.id)
