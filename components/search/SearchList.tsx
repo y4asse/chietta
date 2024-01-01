@@ -11,7 +11,6 @@ const SearchList = async ({ q }: { q: string }) => {
   const data = await getServerSession(authOptions)
   const userId = data ? data.user.id : null
   const filteredPosts = q ? await getPost('search', { offset, q, userId }) : null
-  await new Promise((resolve) => setTimeout(resolve, 10000))
   return (
     <div>
       {filteredPosts ? (
