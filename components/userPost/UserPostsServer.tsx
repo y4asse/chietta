@@ -10,7 +10,6 @@ const UserPostsServer = async () => {
   const { userPosts, error } = await getFollowingUserPosts(session!.user.id) //　エラー時nullが返る
   if (error || !userPosts) return <WrapContainer>エラーが発生しました</WrapContainer>
   if (userPosts.length === 0) return <NoContent text="フォローしているユーザの投稿がありません" />
-  console.log(userPosts)
   return <UserPosts userPosts={userPosts} />
 }
 
