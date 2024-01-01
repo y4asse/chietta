@@ -22,7 +22,7 @@ const SearchList = async ({ q }: { q: string }) => {
           </ScrollDetect>
         )
       ) : (
-        <ErrorComponent />
+        q && <ErrorComponent />
       )}
     </div>
   )

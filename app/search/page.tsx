@@ -7,10 +7,13 @@ const Search = ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = searchParams
   return (
     <div className="py-10 border-b border-[#cacaca] min-h-screen bg-main">
-      <Input q={q} />
-      <Suspense fallback={<Spinner />}>
-        <SearchList q={q} />
-      </Suspense>
+      <div className="max-w-[1000px] mx-auto">
+        <Input q={q} />
+        {!q && <h1 className="text-2xl font-bold text-center mt-5">検索してみましょう</h1>}
+        <Suspense fallback={<Spinner />}>
+          <SearchList q={q} />
+        </Suspense>
+      </div>
     </div>
   )
 }
