@@ -30,7 +30,7 @@ const Layout = async ({ children, params }: { children: React.ReactNode; params:
   console.log(user)
   if (!user) return notFound()
   return (
-    <div className="pt-10 min-h-screen">
+    <div className="pt-5 min-h-screen">
       <Profile user={user} sessionUser={sessionUser} />
       <hr className="max-w-[1000px] mx-auto text-lightGray px-5 w-[95%]" />
       <UserTab idCreatedByUser={user.idCreatedByUser || ''} />

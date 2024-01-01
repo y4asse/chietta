@@ -16,7 +16,7 @@ const Profile = ({ user, sessionUser }: Props) => {
   const defaultFollow = sessionUser ? user.Followers.some((follower) => follower.user_id === sessionUser.id) : false
   if (!user.idCreatedByUser) return
   return (
-    <div className="max-w-[1000px] w-full mx-auto flex flex-wrap p-3 mb-5 gap-5">
+    <div className="max-w-[1000px] w-full mx-auto flex flex-wrap p-3 mb-5 gap-1 md:gap-5">
       <img
         src={user.image!}
         alt="ユーザアイコン"
