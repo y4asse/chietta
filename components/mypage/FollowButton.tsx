@@ -13,6 +13,7 @@ const FollowButton = ({
   defaultFollow: boolean
 }) => {
   const [isFollow, setIsFollow] = useState(defaultFollow)
+  if (userId === sessionUserId) return
   const handleClick = async () => {
     if (isFollow) {
       setIsFollow(false)
@@ -35,7 +36,7 @@ const FollowButton = ({
         isFollow ? 'bg-[white] border-lightGray hover:bg-lightGray ' : 'bg-primary text-[white]'
       }`}
     >
-      {isFollow ? 'フォロー中' : 'フォロー'}
+      {isFollow ? 'フォロー中' : 'フォローする'}
     </button>
   )
 }
