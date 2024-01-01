@@ -2,11 +2,11 @@
 
 import React from 'react'
 import UserPostItem from './UserPostItem'
-import { PostsWithData } from '@/app/api/userPost/route'
 import { useAtom } from 'jotai'
 import { likeAtom } from '@/jotai/likeAtom'
+import { UserPostsType } from '@/server/userPost/getUserPosts'
 
-const UserPosts = ({ userPosts }: { userPosts: PostsWithData }) => {
+const UserPosts = ({ userPosts }: { userPosts: NonNullable<UserPostsType> }) => {
   const [likes] = useAtom(likeAtom)
   return (
     <div className="flex mx-auto flex-wrap max-w-[800px] px-3">

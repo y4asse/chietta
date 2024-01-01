@@ -7,7 +7,7 @@ import { getServerSession } from 'next-auth'
 import React from 'react'
 
 const UpdatePost = async ({ params }: { params: { id: string } }) => {
-  const post = await db.userPost.findUnique({ where: { id: params.id }, include: { user: true } })
+  const post = await db.userPost.findUnique({ where: { id: params.id } })
   if (!post) {
     return NotFound()
   }

@@ -7,10 +7,15 @@ import MoreButton from './MoreButton'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
 import LikeButton from './LikeButton'
-import { PostWithData } from '@/app/api/userPost/route'
 import { calcDiffTime } from '@/utils/calcDiffTime'
+import { UserPostsType } from '@/server/userPost/getUserPosts'
 
-const UserPostItem = ({ userPost, defaultLiked }: { userPost: PostWithData; defaultLiked: boolean }) => {
+type Props = {
+  userPost: NonNullable<UserPostsType>[number]
+  defaultLiked: boolean
+}
+
+const UserPostItem = ({ userPost, defaultLiked }: Props) => {
   const { data: session } = useSession()
   const user = session ? session.user : null
   const isMine = userPost.user_id === user?.id

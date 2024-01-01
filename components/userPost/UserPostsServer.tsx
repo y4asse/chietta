@@ -7,7 +7,7 @@ import NoContent from '../error/NoContent'
 
 const UserPostsServer = async () => {
   const session = await getServerSession(authOptions)
-  const { userPosts, error } = await getFollowingUserPosts(session!.user.id) //　エラー時nullが返る
+  const { userPosts, error } = await getFollowingUserPosts(session!.user.id)
   if (error || !userPosts) return <WrapContainer>エラーが発生しました</WrapContainer>
   if (userPosts.length === 0) return <NoContent text="フォローしているユーザの投稿がありません" />
   return <UserPosts userPosts={userPosts} />
