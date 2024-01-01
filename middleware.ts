@@ -10,6 +10,6 @@ export const config = {
     '/feeds/create',
     '/feeds/following',
     '/user/create/:id*',
-    '/posts'
+    '/timeline'
   ]
 }
