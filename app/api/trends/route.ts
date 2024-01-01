@@ -15,14 +15,19 @@ export const GET = async (req: NextRequest) => {
   }
   const startTime = Date.now()
   const take = 10
-  const articles = await db.trends.findMany({
-    orderBy: { likedCount: 'desc' },
-    take,
-    skip: offset
+  const articles = await db.trends.findMany({})
+  const now = Date.now()
+  const articlesWithLikesPerHour = articles.map((trend) => {
+    const date = new Date(trend.createdAt.toString()).getTime()
+    const durationInHours = Math.round((now - date) / 3600000) // ミリ秒を時間に変換
+    const likesPerHour = trend.likedCount / durationInHours
+    return { ...trend, likesPerHour }
   })
+  const sortedArticles = articlesWithLikesPerHour.sort((a, b) => b.likesPerHour - a.likesPerHour)
+  console.log(sortedArticles)
   const endTime = Date.now()
   console.log('[getPostsFromDB] get trends from DB = ' + (endTime - startTime) + 'ms')
-  const returnPosts = await addOgp(articles)
+  const returnPosts = await addOgp(sortedArticles.slice(offset, offset + take))
   cache.set(cacheKey, returnPosts)
   return Response.json(returnPosts)
 }
