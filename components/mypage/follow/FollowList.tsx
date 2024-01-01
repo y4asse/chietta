@@ -19,7 +19,7 @@ const FollowList = async ({ type, userName }: { type: 'following' | 'followers';
   if (data.users.length === 0)
     return <NoContent text={type === 'following' ? 'フォロー中のユーザがいません' : 'フォロワーがいません'} />
   return (
-    <div className="max-w-[1000px] px-3 mx-auto">
+    <div className="max-w-[1000px] px-3 mx-auto pb-10">
       <h1 className="text-center font-bold text-xl mt-5">{type === 'following' ? 'フォロー中' : 'フォロワー'}</h1>
       <div className="mt-5">
         {data.users.map((user, i) => {

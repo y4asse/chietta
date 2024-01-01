@@ -18,7 +18,7 @@ const FollowItem = async ({ user, defaultFollow }: Props) => {
   if (!session) return
   return (
     <div className="flex mt-3 px-3 py-5 shadow rounded">
-      <div className="min-w-[50px] md:min-w-[100px] mr-1">
+      <div className="min-w-[50px] md:min-w-[100px] mr-2">
         <Link href={`/${user.idCreatedByUser}`} className="hover:opacity-70">
           <img
             src={user.image ? user.image : ''}
@@ -32,9 +32,9 @@ const FollowItem = async ({ user, defaultFollow }: Props) => {
           {user.name}
         </Link>
         <p className="text-gray">{user.introduction}</p>
-      </div>
-      <div className="min-w-[100px] text-end ml-1">
-        <FollowButton userId={user.id} sessionUserId={session.user.id} defaultFollow={defaultFollow} />
+        <div className="min-w-[100px] text-end mt-1">
+          <FollowButton userId={user.id} sessionUserId={session.user.id} defaultFollow={defaultFollow} />
+        </div>
       </div>
     </div>
   )
