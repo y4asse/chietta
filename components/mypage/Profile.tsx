@@ -5,14 +5,14 @@ import SnsList from './SnsList'
 import SettingProfileLink from '../LinkButton/SettingProfileLink'
 import FollowButton from './FollowButton'
 import Following from './Following'
+import { UserType } from '@/server/userPage/getUser'
 
-const Profile = ({
-  user,
-  sessionUser
-}: {
-  user: User & { Followers: Follow[]; Follow: Follow[] }
+type Props = {
+  user: NonNullable<UserType>
   sessionUser: SessionUser | null
-}) => {
+}
+
+const Profile = ({ user, sessionUser }: Props) => {
   const defaultFollow = sessionUser ? user.Followers.some((follower) => follower.user_id === sessionUser.id) : false
   if (!user.idCreatedByUser) return
   return (

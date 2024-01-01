@@ -1,11 +1,15 @@
-import { User } from '@prisma/client'
 import { FaXTwitter, FaGithub, FaPaperclip } from 'react-icons/fa6'
 import Zenn from '../icons/Zenn'
 import Note from '../icons/Note'
 import Qiita from '../icons/Qiita'
 import Hatena from '../icons/Hatena'
+import { UserType } from '@/server/userPage/getUser'
 
-const SnsList = ({ user }: { user: User }) => {
+type Props = {
+  user: NonNullable<UserType>
+}
+
+const SnsList = ({ user }: Props) => {
   return (
     <div className="flex items-center md:justify-end gap-5 mt-5 text-2xl">
       {user.x && (

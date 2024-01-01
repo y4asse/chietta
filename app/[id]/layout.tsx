@@ -2,6 +2,7 @@ import Profile from '@/components/mypage/Profile'
 import UserTab from '@/components/user/UserTab'
 import { authOptions } from '@/server/auth'
 import { db } from '@/server/db'
+import { getUser } from '@/server/userPage/getUser'
 import { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
@@ -25,24 +26,8 @@ const Layout = async ({ children, params }: { children: React.ReactNode; params:
   const session = await getServerSession(authOptions)
   const sessionUser = session ? session.user : null
   const { id } = params
-  const user = await db.user.findUnique({
-    where: { idCreatedByUser: id },
-    include: {
-      UserPost: {
-        include: {
-          _count: {
-            select: { like: true }
-          },
-          user: true
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      },
-      Followers: true,
-      Follow: true
-    }
-  })
+  const user = await getUser(id)
+  console.log(user)
   if (!user) return notFound()
   return (
     <div className="pt-10 min-h-screen">
