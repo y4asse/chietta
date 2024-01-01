@@ -10,7 +10,6 @@ const UserTab = ({ idCreatedByUser }: { idCreatedByUser: string }) => {
     { name: '投稿', path: `/${idCreatedByUser}/posts`, icon: <MdOutlineArticle /> }
   ]
   const pathname = usePathname()
-  if (!list.some((item) => item.path === pathname)) return
   return (
     <div className="max-w-[1000px] mx-auto my-5 px-3 flex gap-3">
       {list.map((item, i) => {
