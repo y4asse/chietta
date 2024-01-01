@@ -49,7 +49,7 @@ const Inputs = ({ sessionUser, post }: { sessionUser: User; post: UserPost }) =>
     })
       .then((res) => {
         if (!res.ok) throw new Error('エラーが発生しました')
-        router.push(`/${sessionUser.idCreatedByUser}/posts`)
+        router.push(`/${sessionUser.idCreatedByUser}/timeline`)
         router.refresh()
       })
       .catch((err) => {

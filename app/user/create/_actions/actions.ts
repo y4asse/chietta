@@ -46,7 +46,7 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
     'login',
     'logout',
     'mypapge',
-    'posts',
+    'timeline',
     'profile',
     'settings',
     'user',

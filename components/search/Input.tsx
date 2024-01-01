@@ -28,7 +28,7 @@ const Input = ({ q }: { q: string }) => {
     stopIsLoading()
   }, [q])
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="px-3">
       <input
         ref={inputRef}
         type="text"

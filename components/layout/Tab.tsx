@@ -22,7 +22,7 @@ const Tab = () => {
     },
     {
       name: 'タイムライン',
-      path: '/posts'
+      path: '/timeline'
     }
   ]
   return (

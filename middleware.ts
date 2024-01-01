@@ -9,6 +9,7 @@ export const config = {
     '/settings/:path*',
     '/feeds/create',
     '/feeds/following',
-    '/user/create/:id*'
+    '/user/create/:id*',
+    '/posts'
   ]
 }

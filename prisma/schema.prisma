@@ -90,10 +90,9 @@ model UserPost {
     createdAt DateTime @default(now())
     isPublic  Boolean  @default(true)
 
-    user         User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    like         Like[]
-    Comment      Comment[]
-    Notification Notification[]
+    user    User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    like    Like[]
+    Comment Comment[]
 
     @@index([user_id])
     @@index([createdAt])
@@ -156,6 +155,8 @@ model User {
     Notification    Notification[]
     Feed            Feed[]
     FollowFeed      FollowFeed[]
+    Follow          Follow[]         @relation("UserFollowers")
+    Followers       Follow[]         @relation("UserFoolows")
 }
 
 model Like {
@@ -185,16 +186,13 @@ model Comment {
 }
 
 model Notification {
-    id           String   @id @default(uuid())
-    user_id      String
-    content      String
-    createdAt    DateTime @default(now())
-    user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    user_post_id String
-    user_post    UserPost @relation(fields: [user_post_id], references: [id], onDelete: Cascade)
+    id        String   @id @default(uuid())
+    user_id   String
+    content   String
+    createdAt DateTime @default(now())
+    user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
     @@index([user_id])
-    @@index([user_post_id])
 }
 
 model Feed {
@@ -223,4 +221,18 @@ model FollowFeed {
     @@unique([user_id, feed_id])
     @@index([user_id])
     @@index([feed_id])
+}
+
+model Follow {
+    id                String   @id @default(uuid())
+    user_id           String
+    following_user_id String
+    createdAt         DateTime @default(now())
+
+    user           User @relation("UserFollowers", fields: [user_id], references: [id], onDelete: Cascade)
+    following_user User @relation("UserFoolows", fields: [following_user_id], references: [id], onDelete: Cascade)
+
+    @@unique([user_id, following_user_id])
+    @@index([user_id])
+    @@index([following_user_id])
 }
