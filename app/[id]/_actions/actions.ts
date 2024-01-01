@@ -8,7 +8,6 @@ export const followUser = async ({ userId, followingUserId }: { userId: string; 
   try {
     const session = await getServerSession(authOptions)
     if (!session || session.user.id !== userId) {
-      console.log(session?.user.id, userId)
       return { result: null, error: '不正なアクセスです' }
     }
     const result = await db.follow

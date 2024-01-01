@@ -27,7 +27,6 @@ const Layout = async ({ children, params }: { children: React.ReactNode; params:
   const sessionUser = session ? session.user : null
   const { id } = params
   const user = await getUser(id)
-  console.log(user)
   if (!user) return notFound()
   return (
     <div className="pt-5 min-h-screen">
