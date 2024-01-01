@@ -1,4 +1,4 @@
-import { getFollowingUserPosts } from '@/app/posts/_actions/actions'
+import { getFollowingUserPosts } from '@/app/timeline/_actions/actions'
 import WrapContainer from '@/components/layout/WrapContainer'
 import UserPosts from '@/components/userPost/UserPosts'
 import { authOptions } from '@/server/auth'
