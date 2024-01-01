@@ -28,7 +28,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
             {feed.name}
           </Link>
         )}
-        {likedCount && (
+        {likedCount != undefined && (
           <div className="absolute bottom-1 left-3 text-gray flex items-center justify-center gap-1">
             <Image src="/heart.svg" alt="ハートの画像" width={17} height={17} className=" opacity-70" />
             <span>{likedCount}</span>
