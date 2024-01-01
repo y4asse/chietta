@@ -50,7 +50,6 @@ export const createFeed = async (prevState: any, formData: FormData) => {
       data: insertData,
       skipDuplicates: true
     })
-    console.log(`${title}: ${count}`)
   } catch (err) {
     console.log(err)
     await db.feed.delete({ where: { id: result.id } })
