@@ -3,7 +3,7 @@ import WrapContainer from '@/components/layout/WrapContainer'
 import UserPosts from '@/components/userPost/UserPosts'
 import { authOptions } from '@/server/auth'
 import { getServerSession } from 'next-auth'
-import NoContent from '../noContent/NoContent'
+import NoContent from '../error/NoContent'
 
 const UserPostsServer = async () => {
   const session = await getServerSession(authOptions)
