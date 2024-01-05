@@ -9,8 +9,7 @@ import { MdOpenInNew } from 'react-icons/md'
 
 const EntryItem = async ({ entry }: { entry: NonNullable<EntryType> }) => {
   const session = await getServerSession(authOptions)
-  if (!session) return
-  const defaultIsBookmark = entry.Bookmark.some((item) => item.user_id === session.user.id)
+  const defaultIsBookmark = entry.Bookmark.some((item) => item.user_id === session?.user.id)
   return (
     <div>
       <div className="flex flex-wrap gap-5">

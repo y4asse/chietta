@@ -108,3 +108,21 @@ export const addComment = async ({ content, entryId }: { content: string; entryI
     return { result: null, error: 'エラーが発生しました' }
   }
 }
+
+export const deleteComment = async ({ commentId }: { commentId: string }) => {
+  try {
+    const session = await getServerSession(authOptions)
+    if (!session) throw new Error('権限がありません')
+    const user_id = session.user.id
+    await db.entryComment.delete({
+      where: {
+        id: commentId,
+        user_id
+      }
+    })
+    return { error: null }
+  } catch (error) {
+    console.log(error)
+    return { error: 'エラーが発生しました' }
+  }
+}

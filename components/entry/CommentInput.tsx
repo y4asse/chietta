@@ -2,11 +2,11 @@
 
 import { addComment } from '@/app/entry/[url]/_actions/actions'
 import { Entry } from '@prisma/client'
-import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-const CommentInput = ({ entry }: { entry: Entry }) => {
+const CommentInput = ({ entry, session }: { entry: Entry; session: Session | null }) => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const handleClick = async () => {
@@ -19,11 +19,10 @@ const CommentInput = ({ entry }: { entry: Entry }) => {
     setComment('')
     router.refresh()
   }
-  const { data: session } = useSession()
   const [comment, setComment] = useState('')
   return (
     <div className="p-3">
-      {session ? (
+      {session && (
         <div>
           <img
             className="rounded-full"
@@ -33,8 +32,6 @@ const CommentInput = ({ entry }: { entry: Entry }) => {
             height={50}
           />
         </div>
-      ) : (
-        <div className="h-[50px]" />
       )}
       <textarea
         onChange={(e) => setComment(e.target.value)}
@@ -48,13 +45,26 @@ const CommentInput = ({ entry }: { entry: Entry }) => {
       />
       <hr className="text-lightGray" />
       <div className="text-end">
-        <button
-          onClick={handleClick}
-          className={`mt-3 bg-primary text-[white] px-3 py-1 rounded ${loading && 'cursor-not-allowed'}`}
-          disabled={loading}
-        >
-          {loading ? '追加中' : 'コメントを追加'}
-        </button>
+        {session ? (
+          <button
+            onClick={handleClick}
+            className={`mt-3 bg-primary text-[white] px-3 py-1 rounded ${loading && 'cursor-not-allowed'}`}
+            disabled={loading}
+          >
+            {loading ? '追加中' : 'コメントを追加'}
+          </button>
+        ) : (
+          <button
+            onClick={() =>
+              router.push(
+                `/login?callbackUrl=${process.env.NEXT_PUBLIC_FRONT_URL}/entry/${encodeURIComponent(entry.url)}`
+              )
+            }
+            className="mt-3 bg-primary text-[white] px-3 py-1 rounded"
+          >
+            ログイン
+          </button>
+        )}
       </div>
     </div>
   )
