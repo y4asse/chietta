@@ -9,6 +9,7 @@ const BookmarkButton = ({ entryId, defaultIsBookmark }: { entryId: string; defau
   const [isBookmark, setIsBookmark] = useState(defaultIsBookmark)
   const router = useRouter()
   const handleClick = async () => {
+    if (isBookmark && !confirm('ブックマークを解除しますか？')) return
     setIsBookmark((prev) => !prev)
     const { error } = isBookmark ? await deleteBookmark({ entryId }) : await bookmarkEntry({ entryId })
     if (error) {

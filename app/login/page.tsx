@@ -12,7 +12,6 @@ const Login = ({ searchParams }: { searchParams: { callbackUrl: string } }) => {
         encodeURIComponent(searchParams.callbackUrl.replace(`${process.env.NEXT_PUBLIC_FRONT_URL}/entry/`, ''))
       : searchParams.callbackUrl
     : '/'
-  console.log(callbackUrl)
   return (
     <div className="min-h-screen bg-pink pt-16">
       <WrapContainer>
