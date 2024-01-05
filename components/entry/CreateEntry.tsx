@@ -2,6 +2,7 @@ import { getOgp } from '@/server/getOgp'
 import Link from 'next/link'
 import PostLink from '../tech/PostLink'
 import CreateEntryButton from './CreateEntryButton'
+import { MdOpenInNew } from 'react-icons/md'
 
 const CreateEntry = async ({ url }: { url: string }) => {
   const ogp = await getOgp(url)
@@ -14,6 +15,7 @@ const CreateEntry = async ({ url }: { url: string }) => {
           <h1 className="text-xl font-bold">
             <Link href={url} className="hover:underline" target="_blank">
               {title ? title : url}
+              <MdOpenInNew className="inline ml-1" />
             </Link>
           </h1>
           <p className="text-sm text-gray pt-1">{url}</p>
