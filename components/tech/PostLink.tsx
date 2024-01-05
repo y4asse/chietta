@@ -19,7 +19,7 @@ const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string
     })
   }
   return (
-    <a href={url} onClick={handleClick} className="w-[95%]" target="_blank">
+    <a href={url} onClick={handleClick} className="w-[95%] hover:opacity-90" target="_blank">
       <img
         src={
           image_url
