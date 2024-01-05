@@ -20,12 +20,14 @@ const NavRight = () => {
           <FaSearch />
         </Link>
         {session ? <UserIcon session={session} /> : <QuestionButton />}
-        <Link
-          href={session ? '/mypage/createPost' : '/login'}
-          className="bg-primary text-[white] rounded-lg px-3 py-1 md:py-2 text-normal font-semibold md:text-lg"
-        >
-          {session ? '記事を共有' : 'ログイン'}
-        </Link>
+        {!session && (
+          <Link
+            href={session ? '/mypage/createPost' : '/login'}
+            className="bg-primary text-[white] rounded-lg px-3 py-1 md:py-2 text-normal font-semibold md:text-lg"
+          >
+            {session ? '記事を共有' : 'ログイン'}
+          </Link>
+        )}
       </div>
     </motion.div>
   )
