@@ -1,11 +1,13 @@
 'use client'
 
 import { bookmarkEntry, deleteBookmark } from '@/app/entry/_actions/actions'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FaBook } from 'react-icons/fa'
 
 const BookmarkButton = ({ entryId, defaultIsBookmark }: { entryId: string; defaultIsBookmark: boolean }) => {
   const [isBookmark, setIsBookmark] = useState(defaultIsBookmark)
+  const router = useRouter()
   const handleClick = async () => {
     setIsBookmark((prev) => !prev)
     const { error } = isBookmark ? await deleteBookmark({ entryId }) : await bookmarkEntry({ entryId })
@@ -13,6 +15,7 @@ const BookmarkButton = ({ entryId, defaultIsBookmark }: { entryId: string; defau
       setIsBookmark((prev) => !prev)
       return alert('エラーが発生しました')
     }
+    router.refresh()
   }
   return (
     <button
