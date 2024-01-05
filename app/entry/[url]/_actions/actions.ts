@@ -82,4 +82,29 @@ export const deleteBookmark = async ({ entryId }: { entryId: string }) => {
   }
 }
 
-export const addComment = async ({ entryId }: { entryId: string }) => {}
+export const addComment = async ({ content, entryId }: { content: string; entryId: string }) => {
+  try {
+    const session = await getServerSession(authOptions)
+    if (!session) throw new Error('権限がありません')
+    const user_id = session.user.id
+    const result = await db.entryComment.create({
+      data: {
+        content,
+        entry: {
+          connect: {
+            id: entryId
+          }
+        },
+        user: {
+          connect: {
+            id: user_id
+          }
+        }
+      }
+    })
+    return { result, error: null }
+  } catch (err) {
+    console.error(err)
+    return { result: null, error: 'エラーが発生しました' }
+  }
+}
