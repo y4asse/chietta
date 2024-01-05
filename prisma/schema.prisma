@@ -157,6 +157,8 @@ model User {
     FollowFeed      FollowFeed[]
     Follow          Follow[]         @relation("UserFollowers")
     Followers       Follow[]         @relation("UserFoolows")
+    Entry           Entry[]
+    Bookmark        Bookmark[]
 }
 
 model Like {
@@ -235,4 +237,33 @@ model Follow {
     @@unique([user_id, following_user_id])
     @@index([user_id])
     @@index([following_user_id])
+}
+
+model Entry {
+    id        String     @id @default(uuid())
+    url       String
+    title     String?
+    image     String?    @db.Text
+    createdAt DateTime   @default(now())
+    user_id   String
+    user      User?      @relation(fields: [user_id], references: [id])
+    Bookmark  Bookmark[]
+
+    @@unique([url])
+    @@index([url])
+    @@index([user_id])
+}
+
+model Bookmark {
+    id        String   @id @default(uuid())
+    entry_id  String
+    user_id   String
+    createdAt DateTime @default(now())
+
+    entry Entry @relation(fields: [entry_id], references: [id], onDelete: Cascade)
+    user  User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+    @@unique([entry_id, user_id])
+    @@index([entry_id])
+    @@index([user_id])
 }
