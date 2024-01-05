@@ -1,6 +1,6 @@
 'use client'
 
-import { bookmarkEntry, deleteBookmark } from '@/app/entry/_actions/actions'
+import { bookmarkEntry, deleteBookmark } from '@/app/entry/[url]/_actions/actions'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FaBook } from 'react-icons/fa'

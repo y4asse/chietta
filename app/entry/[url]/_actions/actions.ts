@@ -81,3 +81,5 @@ export const deleteBookmark = async ({ entryId }: { entryId: string }) => {
     return { error: 'エラーが発生しました' }
   }
 }
+
+export const addComment = async ({ entryId }: { entryId: string }) => {}

@@ -1,6 +1,6 @@
 'use client'
 
-import { createEntry } from '@/app/entry/_actions/actions'
+import { createEntry } from '@/app/entry/[url]/_actions/actions'
 import { useRouter } from 'next/navigation'
 
 const CreateEntryButton = ({ url, title, image }: { url: string; title: string | null; image: string | null }) => {

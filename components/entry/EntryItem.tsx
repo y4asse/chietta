@@ -1,4 +1,3 @@
-import { Bookmark, Entry } from '@prisma/client'
 import Link from 'next/link'
 import PostLink from '../tech/PostLink'
 import BookmarkButton from './BookmarkButton'
