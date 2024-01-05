@@ -27,7 +27,7 @@ const EntryItem = async ({ entry }: { entry: NonNullable<EntryType> }) => {
         </div>
       </div>
       <div className="mt-5 flex items-center gap-5">
-        <BookmarkButton entryId={entry.id} defaultIsBookmark={defaultIsBookmark} />
+        <BookmarkButton session={session} entryId={entry.id} defaultIsBookmark={defaultIsBookmark} url={entry.url} />
         <div className="flex items-center gap-1 text-xl">
           <FaUserLarge /> {entry.Bookmark.length}
         </div>
