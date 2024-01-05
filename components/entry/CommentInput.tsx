@@ -25,7 +25,13 @@ const CommentInput = ({ entry }: { entry: Entry }) => {
     <div className="p-3">
       {session ? (
         <div>
-          <img src={session.user.image ? session.user.image : ''} alt="ユーザアイコン" width={50} height={50} />
+          <img
+            className="rounded-full"
+            src={session.user.image ? session.user.image : ''}
+            alt="ユーザアイコン"
+            width={50}
+            height={50}
+          />
         </div>
       ) : (
         <div className="h-[50px]" />
