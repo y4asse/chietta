@@ -2,8 +2,8 @@ import CreateEntry from '@/components/entry/CreateEntry'
 import EntryItem from '@/components/entry/EntryItem'
 import { getEntry } from '@/server/entry/getEntry'
 
-const Entry = async ({ searchParams }: { searchParams: { url: string } }) => {
-  const { url } = searchParams
+const Entry = async ({ params }: { params: { url: string } }) => {
+  const url = decodeURIComponent(params.url)
   const entry = await getEntry({ url })
   if (!entry) return <CreateEntry url={url} />
 
