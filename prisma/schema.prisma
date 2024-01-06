@@ -279,4 +279,6 @@ model Activity {
 
     @@unique([user_id, target_id, type])
     @@index([user_id])
+    @@index([target_id])
+    @@index([type])
 }
