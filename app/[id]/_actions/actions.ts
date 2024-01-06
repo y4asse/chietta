@@ -4,16 +4,16 @@ import { authOptions } from '@/server/auth'
 import { db } from '@/server/db'
 import { getServerSession } from 'next-auth'
 
-export const followUser = async ({ userId, followingUserId }: { userId: string; followingUserId: string }) => {
+export const followUser = async ({ followingUserId }: { followingUserId: string }) => {
   try {
     const session = await getServerSession(authOptions)
-    if (!session || session.user.id !== userId) {
+    if (!session) {
       return { result: null, error: '不正なアクセスです' }
     }
     const result = await db.follow
       .create({
         data: {
-          user_id: userId,
+          user_id: session.user.id,
           following_user_id: followingUserId
         }
       })
@@ -27,17 +27,17 @@ export const followUser = async ({ userId, followingUserId }: { userId: string; 
   }
 }
 
-export const unfollowUser = async ({ userId, followingUserId }: { userId: string; followingUserId: string }) => {
+export const unfollowUser = async ({ followingUserId }: { followingUserId: string }) => {
   try {
     const session = await getServerSession(authOptions)
-    if (!session || session.user.id !== userId) {
+    if (!session) {
       return { result: null, error: '不正なアクセスです' }
     }
     const deleted = await db.follow.delete({
       where: {
         user_id_following_user_id: {
           following_user_id: followingUserId,
-          user_id: userId
+          user_id: session.user.id
         }
       }
     })

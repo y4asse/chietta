@@ -17,13 +17,13 @@ const FollowButton = ({
   const handleClick = async () => {
     if (isFollow) {
       setIsFollow(false)
-      const { result, error } = await unfollowUser({ userId: sessionUserId, followingUserId: userId })
+      const { result, error } = await unfollowUser({ followingUserId: userId })
       if (error) {
         setIsFollow(true)
       }
     } else {
       setIsFollow(true)
-      const { result, error } = await followUser({ userId: sessionUserId, followingUserId: userId })
+      const { result, error } = await followUser({ followingUserId: userId })
       if (error) {
         setIsFollow(false)
       }
