@@ -14,7 +14,7 @@ const UserTab = ({ idCreatedByUser }: { idCreatedByUser: string }) => {
   ]
   const pathname = usePathname()
   return (
-    <div className="max-w-[1000px] mx-auto my-5 px-3 flex gap-3">
+    <div className="max-w-[1000px] text-sm md:text-base mx-auto my-5 px-3 flex gap-3 flex-wrap">
       {list.map((item, i) => {
         return (
           <Link

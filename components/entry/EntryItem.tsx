@@ -16,7 +16,7 @@ const EntryItem = async ({ entry }: { entry: NonNullable<EntryType> }) => {
           <h1 className="text-xl font-bold">
             <EntryLink entry={entry} session={session} />
           </h1>
-          <p className="text-sm text-gray pt-1">{entry.url}</p>
+          <p className="text-sm text-gray pt-1 break-words">{entry.url}</p>
         </div>
         <div className="w-[300px] mx-auto overflow-hidden rounded-xl">
           {entry.image && <PostLink url={entry.url} image={entry.image} />}
