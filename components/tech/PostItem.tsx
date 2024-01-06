@@ -21,7 +21,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
         isViewed && 'brightness-[0.9]'
       }`}
     >
-      <PostLink url={post.url} image_url={post.image_url} isViewed={isViewed} />
+      <PostLink url={post.url} image={post.image} isViewed={isViewed} />
       <div className="px-[16px] py-[10px] mb-10">
         <h1>
           <Link href={`/entry/${encodeURIComponent(post.url)}`} className="font-bold hover:underline">

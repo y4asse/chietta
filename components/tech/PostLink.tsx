@@ -5,7 +5,7 @@ import { useAtom } from 'jotai'
 import { useSession } from 'next-auth/react'
 import React from 'react'
 
-const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string | null; isViewed?: boolean }) => {
+const PostLink = ({ url, image, isViewed }: { url: string; image: string | null; isViewed?: boolean }) => {
   const { data: session } = useSession()
   const [, setViewHistory] = useAtom(viewHistoryAtom)
 
@@ -21,8 +21,8 @@ const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string
     <a href={url} onClick={handleClick} className="w-[95%] hover:opacity-90" target="_blank">
       <img
         src={
-          image_url
-            ? image_url
+          image
+            ? image
             : 'https://firebasestorage.googleapis.com/v0/b/cheeta-38f77.appspot.com/o/no-image.png?alt=media&token=d7bcb383-25c7-4ab9-8d67-aadf4d14b9ad'
         }
         alt="image"

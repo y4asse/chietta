@@ -19,7 +19,7 @@ const EntryItem = async ({ entry }: { entry: NonNullable<EntryType> }) => {
           <p className="text-sm text-gray pt-1">{entry.url}</p>
         </div>
         <div className="w-[300px] mx-auto overflow-hidden rounded-xl">
-          {entry.image && <PostLink url={entry.url} image_url={entry.image} />}
+          {entry.image && <PostLink url={entry.url} image={entry.image} />}
         </div>
       </div>
       <div className="mt-5 flex items-center gap-5">

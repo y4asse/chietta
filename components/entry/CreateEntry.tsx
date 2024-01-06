@@ -21,7 +21,7 @@ const CreateEntry = async ({ url }: { url: string }) => {
           <p className="text-sm text-gray pt-1">{url}</p>
         </div>
         <div className="w-[300px] mx-auto overflow-hidden rounded-xl">
-          {image && <PostLink url={url} image_url={image} />}
+          {image && <PostLink url={url} image={image} />}
         </div>
       </div>
       <hr className="text-lightGray mt-5" />

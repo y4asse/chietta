@@ -48,7 +48,7 @@ const UserPostItem = ({ userPost, defaultLiked }: Props) => {
           </div>
           <span className=" font-normal">{userPost.content}</span>
           <div className="max-w-[512px] rounded-xl overflow-hidden mt-3">
-            <PostLink url={userPost.url} image_url={userPost.image_url} />
+            <PostLink url={userPost.url} image={userPost.image} />
           </div>
           <div></div>
           <div className="text-gray mt-2 justify-between flex items-center gap-2">
