@@ -7,14 +7,13 @@ import React from 'react'
 
 const PostLink = ({ url, image_url, isViewed }: { url: string; image_url: string | null; isViewed?: boolean }) => {
   const { data: session } = useSession()
-  const user = session ? session.user : null
   const [, setViewHistory] = useAtom(viewHistoryAtom)
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     if (isViewed) return
     setViewHistory((prev) => [...prev, url])
-    if (!user) return
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/view?user_id=${user.id}&post_url=${url}`, {
+    if (!session) return
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/view?post_url=${url}`, {
       method: 'POST'
     })
   }
