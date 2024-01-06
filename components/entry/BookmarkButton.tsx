@@ -43,7 +43,7 @@ const BookmarkButton = ({
   return (
     <button
       onClick={handleClick}
-      className={`flex items-center gap-1 px-3 py-1 rounded font-bold border transition-all duration-200${
+      className={`flex items-center gap-1 px-3 py-1 rounded font-bold border transition-all duration-200 ${
         isBookmark ? 'border-lightGray hover:bg-lightGray' : 'bg-primary text-[white]'
       }`}
     >
