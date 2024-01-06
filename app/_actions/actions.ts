@@ -13,7 +13,7 @@ export const createBookmarkByUrl = async ({ url }: { url: string }) => {
     const session = await getServerSession(authOptions)
     if (!session) throw new Error('権限がありません')
     const user_id = session.user.id
-    await db.bookmark.create({
+    const bookmark = await db.bookmark.create({
       data: {
         user: {
           connect: {
@@ -28,6 +28,22 @@ export const createBookmarkByUrl = async ({ url }: { url: string }) => {
         }
       }
     })
+    if (bookmark) {
+      await db.activity
+        .create({
+          data: {
+            user_id: user_id,
+            type: 'bookmark',
+            target_id: bookmark.id
+          }
+        })
+        .catch((err) => {
+          //エラーを無視
+          console.log('Activityへの登録に失敗しました')
+          console.log(err)
+        })
+    }
+
     return { error: null }
   } catch (error) {
     console.error(error)
@@ -46,7 +62,7 @@ export const deleteBookmarkByUrl = async ({ url }: { url: string }) => {
       }
     })
     if (!entry) throw new Error('エントリーが見つかりません')
-    await db.bookmark.delete({
+    const deleted = await db.bookmark.delete({
       where: {
         entry_id_user_id: {
           entry_id: entry.id,
@@ -54,6 +70,23 @@ export const deleteBookmarkByUrl = async ({ url }: { url: string }) => {
         }
       }
     })
+    if (deleted) {
+      await db.activity
+        .delete({
+          where: {
+            user_id_target_id_type: {
+              user_id: user_id,
+              target_id: deleted.id,
+              type: 'bookmark'
+            }
+          }
+        })
+        .catch((err) => {
+          //エラーを無視
+          console.log('Activityの削除に失敗しました')
+          console.log(err)
+        })
+    }
     return { error: null }
   } catch (error) {
     console.error(error)
