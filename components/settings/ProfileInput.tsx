@@ -65,7 +65,7 @@ const ProfileInput = () => {
   return (
     <>
       <Toast content="保存しました" setIsOpen={setIsOpen} isOpen={isOpen} />
-      <form className="bg-[white] p-10" onSubmit={handleSubmit(onSubmit)}>
+      <form className="bg-[white] py-10" onSubmit={handleSubmit(onSubmit)}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-between flex-wrap gap-3 ">
           <div className="w-full md:w-auto">
             <ImageInput />
