@@ -9,7 +9,7 @@ const Home = async () => {
   const posts = await getPost('trends', { offset })
   if (!posts) return <WrapContainer>error</WrapContainer>
   return (
-    <main className="min-h-screen min-w-[300px] bg-main items-center py-10">
+    <main className="min-h-screen min-w-[300px] bg-main items-center py-5">
       <LayoutTitle text="トレンド記事" />
       <ScrollDetect type="trends" q="">
         <Posts posts={posts} />
