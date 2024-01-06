@@ -1,5 +1,6 @@
 'use client'
 
+import LayoutTitle from '@/components/layout/LayoutTitle'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
@@ -13,7 +14,7 @@ const TitleSection = () => {
   const pathname = usePathname()
   return (
     <>
-      <h1 className="text-center text-3xl font-bold my-5">新着の企業ブログ</h1>
+      <LayoutTitle text="新着の企業ブログ" />
       <div className="flex justify-center gap-3 items-center my-7">
         {list.map((item) => {
           const isActive = '/feeds' + item.path === pathname

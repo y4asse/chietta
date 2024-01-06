@@ -1,5 +1,6 @@
 import FeedLists from '@/components/feeds/list/FeedLists'
 import PageNation from '@/components/feeds/list/PageNation'
+import LayoutTitle from '@/components/layout/LayoutTitle'
 import { db } from '@/server/db'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -33,11 +34,12 @@ const Page = async ({ params }: { params: { page: string } }) => {
   if (!feeds || totalPageCount < page + 1) return notFound()
   return (
     <div className="max-w-[1000px] mx-auto px-1">
-      <h1 className="text-center text-3xl font-bold my-5">企業ブログ一覧</h1>
+      <LayoutTitle text="企業ブログ一覧" />
       <div className="text-right">
         <Link href="/feeds/create" className="bg-primary px-3 py-1 text-[white] rounded font-bold">
           新規登録
         </Link>
+        L
       </div>
       <FeedLists feeds={feeds} />
       <PageNation totalCount={totalCount} page={page} countPerPage={take} />
