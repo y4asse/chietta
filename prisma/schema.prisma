@@ -158,6 +158,7 @@ model User {
     Entry           Entry[]
     Bookmark        Bookmark[]
     EntryComment    EntryComment[]
+    Activity        Activity[]
 }
 
 model Like {
@@ -266,4 +267,16 @@ model EntryComment {
 
     @@index([user_id])
     @@index([entry_id])
+}
+
+model Activity {
+    id        String   @id @default(uuid())
+    user_id   String
+    user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    type      String
+    target_id String?
+    createdAt DateTime @default(now())
+
+    @@unique([user_id, target_id, type])
+    @@index([user_id])
 }
