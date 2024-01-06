@@ -1,11 +1,10 @@
-import Link from 'next/link'
 import PostLink from '../tech/PostLink'
 import BookmarkButton from './BookmarkButton'
 import { authOptions } from '@/server/auth'
 import { getServerSession } from 'next-auth'
 import { EntryType } from '@/server/entry/getEntry'
 import { FaUserLarge } from 'react-icons/fa6'
-import { MdOpenInNew } from 'react-icons/md'
+import EntryLink from './EntryLink'
 
 const EntryItem = async ({ entry }: { entry: NonNullable<EntryType> }) => {
   const session = await getServerSession(authOptions)
@@ -15,10 +14,7 @@ const EntryItem = async ({ entry }: { entry: NonNullable<EntryType> }) => {
       <div className="flex flex-wrap gap-5">
         <div className="w-full md:w-[calc(100%_-_320px)]">
           <h1 className="text-xl font-bold">
-            <Link href={entry.url} className="hover:underline" target="_blank">
-              {entry.title ? entry.title : entry.url}
-              <MdOpenInNew className="inline ml-1" />
-            </Link>
+            <EntryLink entry={entry} session={session} />
           </h1>
           <p className="text-sm text-gray pt-1">{entry.url}</p>
         </div>
