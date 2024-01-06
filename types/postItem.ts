@@ -2,12 +2,13 @@ import { Feed } from '@prisma/client'
 
 export type PostItemType = {
   id?: string
-  title: string
+  title: string | null
   url: string
-  createdAt: string
-  image_url: string | null
+  createdAt: Date
+  image: string | null
   likedCount?: number
   feed?: Feed
+  user_id?: string
 }
 
 interface WithIsViewd<T> {

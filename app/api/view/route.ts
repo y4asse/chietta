@@ -4,8 +4,10 @@ import { NextRequest } from 'next/server'
 import { authOptions } from '@/server/auth'
 
 export const POST = async (req: NextRequest) => {
-  const userId = req.nextUrl.searchParams.get('user_id')
   const postUrl = req.nextUrl.searchParams.get('post_url')
+  const session = await getServerSession(authOptions)
+  if (!session) return Response.json({ message: 'ログインしてください' }, { status: 403 })
+  const userId = session?.user.id
   if (!userId || !postUrl) return Response.json({ message: 'userIdとpost_urlを入力してください' }, { status: 400 })
   const result = await db.viewHistory
     .create({

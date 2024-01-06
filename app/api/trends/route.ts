@@ -24,7 +24,6 @@ export const GET = async (req: NextRequest) => {
     return { ...trend, likesPerHour }
   })
   const sortedArticles = articlesWithLikesPerHour.sort((a, b) => b.likesPerHour - a.likesPerHour)
-  console.log(sortedArticles)
   const endTime = Date.now()
   console.log('[getPostsFromDB] get trends from DB = ' + (endTime - startTime) + 'ms')
   const returnPosts = await addOgp(sortedArticles.slice(offset, offset + take))

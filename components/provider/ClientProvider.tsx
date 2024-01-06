@@ -1,5 +1,6 @@
 'use client'
 
+import { bookmarkAtom } from '@/jotai/bookmarkAtom'
 import { followingAtom } from '@/jotai/followingAtom'
 import { followingFeedAtom } from '@/jotai/followingFeedAtom'
 import { likeAtom } from '@/jotai/likeAtom'
@@ -9,16 +10,18 @@ import { getFollowingByUserId } from '@/server/category'
 import { Feed, FollowFeed, Like } from '@prisma/client'
 import { useAtom } from 'jotai'
 import { useSession } from 'next-auth/react'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import { getBookmarkings } from './actions/actions'
 
 const ClientProvider = () => {
-  const [, setHistory] = useAtom(viewHistoryAtom)
-  const [, setFollowing] = useAtom(followingAtom)
-  const [followingFeed, setFollowingFeed] = useAtom(followingFeedAtom)
   const [, setLikes] = useAtom(likeAtom)
   const [, setSession] = useAtom(sessionAtom)
-  const { data: session, status } = useSession()
+  const [, setHistory] = useAtom(viewHistoryAtom)
+  const [, setFollowing] = useAtom(followingAtom)
+  const [, setBookmarking] = useAtom(bookmarkAtom)
+  const [, setFollowingFeed] = useAtom(followingFeedAtom)
 
+  const { data: session, status } = useSession()
   const userId = session ? session.user.id : null
   useEffect(() => {
     if (status === 'loading') return
@@ -75,6 +78,16 @@ const ClientProvider = () => {
       }
     }
     fetchLikes()
+  }, [userId])
+
+  useEffect(() => {
+    if (!userId) return
+    const fetchBookmarking = async () => {
+      const { bookmarks, error } = await getBookmarkings()
+      if (error || !bookmarks) return
+      setBookmarking(bookmarks.map((item) => ({ url: item.entry.url })))
+    }
+    fetchBookmarking()
   }, [userId])
 
   useEffect(() => {

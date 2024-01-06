@@ -4,14 +4,17 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MdOutlineArticle } from 'react-icons/md'
 import { FaBookOpen } from 'react-icons/fa6'
+import { FaBookmark } from 'react-icons/fa'
+
 const UserTab = ({ idCreatedByUser }: { idCreatedByUser: string }) => {
   const list = [
     { name: '記事一覧', path: `/${idCreatedByUser}`, icon: <FaBookOpen /> },
-    { name: '投稿', path: `/${idCreatedByUser}/posts`, icon: <MdOutlineArticle /> }
+    { name: '投稿', path: `/${idCreatedByUser}/posts`, icon: <MdOutlineArticle /> },
+    { name: 'ブックマーク', path: `/${idCreatedByUser}/bookmark`, icon: <FaBookmark /> }
   ]
   const pathname = usePathname()
   return (
-    <div className="max-w-[1000px] mx-auto my-5 px-3 flex gap-3">
+    <div className="max-w-[1000px] text-sm md:text-base mx-auto my-5 px-3 flex gap-3 flex-wrap">
       {list.map((item, i) => {
         return (
           <Link

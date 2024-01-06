@@ -10,7 +10,7 @@ const UserArticles = async ({ id }: { id: string }) => {
     where: { idCreatedByUser: id }
   })
   if (!user) return notFound()
-  const userArticles: { title: string; url: string; createdAt: string }[] = []
+  const userArticles: { title: string; url: string; createdAt: Date }[] = []
   const { qiita, zenn, note, hatena } = user
   const getQiitaFeed = (name: string | null) => {
     if (!name) return null
@@ -43,15 +43,13 @@ const UserArticles = async ({ id }: { id: string }) => {
       userArticles.push({
         title: item.title,
         url: item.link,
-        createdAt: createdAt.toString()
+        createdAt: createdAt
       })
     })
   })
   userArticles.sort((a, b) => {
-    const aDate = new Date(a.createdAt)
-    const bDate = new Date(b.createdAt)
-    if (aDate > bDate) return -1
-    if (aDate < bDate) return 1
+    if (a.createdAt > b.createdAt) return -1
+    if (a.createdAt < b.createdAt) return 1
     return 0
   })
   const articlesWithOgp = await addOgp(userArticles)

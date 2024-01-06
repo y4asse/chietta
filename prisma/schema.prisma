@@ -90,9 +90,8 @@ model UserPost {
     createdAt DateTime @default(now())
     isPublic  Boolean  @default(true)
 
-    user    User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    like    Like[]
-    Comment Comment[]
+    user User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    like Like[]
 
     @@index([user_id])
     @@index([createdAt])
@@ -151,12 +150,14 @@ model User {
     UserPost        UserPost[]
     FollowCategory  FollowCategory[]
     like            Like[]
-    Comment         Comment[]
     Notification    Notification[]
     Feed            Feed[]
     FollowFeed      FollowFeed[]
     Follow          Follow[]         @relation("UserFollowers")
     Followers       Follow[]         @relation("UserFoolows")
+    Entry           Entry[]
+    Bookmark        Bookmark[]
+    EntryComment    EntryComment[]
 }
 
 model Like {
@@ -168,19 +169,6 @@ model Like {
     user_post    UserPost @relation(fields: [user_post_id], references: [id], onDelete: Cascade)
 
     @@unique([user_id, user_post_id])
-    @@index([user_id])
-    @@index([user_post_id])
-}
-
-model Comment {
-    id           String   @id @default(uuid())
-    user_id      String
-    user_post_id String
-    content      String
-    createdAt    DateTime @default(now())
-    user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    user_post    UserPost @relation(fields: [user_post_id], references: [id], onDelete: Cascade)
-
     @@index([user_id])
     @@index([user_post_id])
 }
@@ -235,4 +223,47 @@ model Follow {
     @@unique([user_id, following_user_id])
     @@index([user_id])
     @@index([following_user_id])
+}
+
+model Entry {
+    id           String         @id @default(uuid())
+    url          String
+    title        String?
+    image        String?        @db.Text
+    createdAt    DateTime       @default(now())
+    user_id      String
+    user         User?          @relation(fields: [user_id], references: [id])
+    Bookmark     Bookmark[]
+    EntryComment EntryComment[]
+
+    @@unique([url])
+    @@index([url])
+    @@index([user_id])
+}
+
+model Bookmark {
+    id        String   @id @default(uuid())
+    entry_id  String
+    user_id   String
+    createdAt DateTime @default(now())
+
+    entry Entry @relation(fields: [entry_id], references: [id], onDelete: Restrict)
+    user  User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+    @@unique([entry_id, user_id])
+    @@index([entry_id])
+    @@index([user_id])
+}
+
+model EntryComment {
+    id        String   @id @default(uuid())
+    user_id   String
+    user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    entry_id  String
+    entry     Entry    @relation(fields: [entry_id], references: [id], onDelete: Restrict)
+    createdAt DateTime @default(now())
+    content   String
+
+    @@index([user_id])
+    @@index([entry_id])
 }

@@ -37,7 +37,7 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
   // 既にidCreatedByUserが設定されている場合
   if (session.user.idCreatedByUser) return { errors: { idCreatedByUser: ['既にIDが設定されています'] } }
 
-  //使用不可能なとき
+  //使用不可能なドメイン
   const domains = [
     'about',
     'api',
@@ -50,7 +50,8 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
     'profile',
     'settings',
     'user',
-    'withdrawal'
+    'withdrawal',
+    'entry'
   ]
   if (domains.includes(idCreatedByUser)) return { errors: { idCreatedByUser: ['そのIDは使用できません'] } }
 

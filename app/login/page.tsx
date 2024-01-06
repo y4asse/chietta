@@ -1,14 +1,17 @@
-'use client'
 import Logo from '@/components/layout/Logo'
 import WrapContainer from '@/components/layout/WrapContainer'
 import LoginButton from '@/components/auth/LoginButton'
 import Link from 'next/link'
 import React from 'react'
-import { useSearchParams } from 'next/navigation'
 
-const Login = () => {
-  const params = useSearchParams()
-  const callbackUrl = params.get('callbackUrl') || '/'
+const Login = ({ searchParams }: { searchParams: { callbackUrl: string } }) => {
+  const callbackUrl = searchParams.callbackUrl
+    ? searchParams.callbackUrl.startsWith(`${process.env.NEXT_PUBLIC_FRONT_URL}/entry/`)
+      ? process.env.NEXT_PUBLIC_FRONT_URL +
+        '/entry/' +
+        encodeURIComponent(searchParams.callbackUrl.replace(`${process.env.NEXT_PUBLIC_FRONT_URL}/entry/`, ''))
+      : searchParams.callbackUrl
+    : '/'
   return (
     <div className="min-h-screen bg-pink pt-16">
       <WrapContainer>
@@ -18,7 +21,7 @@ const Login = () => {
           </div>
           <p className="text-gray mt-10">ログインすると記事の共有などの様々な機能が使えるようになります。</p>
           <LoginButton callbackUrl={callbackUrl} />
-          <hr className="mt-10 text-[#c2c2c2]" />
+          <hr className="mt-10 text-[#e69191]" />
           <p className="text-gray mt-5">
             プライバシーポリシーについては
             <Link className="underline" href={'/about/privacy'}>
