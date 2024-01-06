@@ -10,7 +10,7 @@ const UserArticles = async ({ id }: { id: string }) => {
     where: { idCreatedByUser: id }
   })
   if (!user) return notFound()
-  const userArticles: { title: string; url: string; createdAt: string }[] = []
+  const userArticles: { title: string; url: string; createdAt: Date }[] = []
   const { qiita, zenn, note, hatena } = user
   const getQiitaFeed = (name: string | null) => {
     if (!name) return null
@@ -43,7 +43,7 @@ const UserArticles = async ({ id }: { id: string }) => {
       userArticles.push({
         title: item.title,
         url: item.link,
-        createdAt: createdAt.toString()
+        createdAt: createdAt
       })
     })
   })
