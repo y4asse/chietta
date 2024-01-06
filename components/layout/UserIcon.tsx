@@ -7,7 +7,7 @@ import { MdLogout } from 'react-icons/md'
 import { MdSecurity } from 'react-icons/md'
 import { MdOutlineQuestionMark } from 'react-icons/md'
 
-import { FaHome } from 'react-icons/fa'
+import { FaRegBookmark, FaHome } from 'react-icons/fa'
 import { BiSolidCategoryAlt } from 'react-icons/bi'
 
 const UserIcon = ({ session }: { session: Session }) => {
@@ -22,6 +22,11 @@ const UserIcon = ({ session }: { session: Session }) => {
       icon: <FaHome />
     },
     { name: 'カテゴリ', path: '/mypage/category', icon: <BiSolidCategoryAlt /> },
+    {
+      name: 'ブックマーク',
+      path: `/${session.user.idCreatedByUser}/bookmark`,
+      icon: <FaRegBookmark />
+    },
     { name: 'ログアウト', path: '/logout', icon: <MdLogout /> }
   ]
 
@@ -63,19 +68,25 @@ const UserIcon = ({ session }: { session: Session }) => {
       </button>
       {isShow && (
         <div className="shadow rounded-xl flex flex-col absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
-          {session.user.idCreatedByUser &&
-            listForUser.map((item) => (
-              <Link
-                aria-label={item.name}
-                className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
-                key={item.name}
-                href={item.path}
-                onClick={() => setIsShow(false)}
-              >
-                {item.icon}
-                <span className="text-lg">{item.name}</span>
-              </Link>
-            ))}
+          {session.user.idCreatedByUser && (
+            <>
+              {listForUser.map((item) => (
+                <Link
+                  aria-label={item.name}
+                  className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
+                  key={item.name}
+                  href={item.path}
+                  onClick={() => setIsShow(false)}
+                >
+                  {item.icon}
+                  <span className="text-lg">{item.name}</span>
+                </Link>
+              ))}
+              <div>
+                <hr className="text-lightGray mx-1" />
+              </div>
+            </>
+          )}
           {listForGuest.map((item) => (
             <Link
               aria-label={item.name}
