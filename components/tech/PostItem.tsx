@@ -14,7 +14,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
   const [viewHistory] = useAtom(viewHistoryAtom)
   const isViewed = viewHistory.some((url) => url === post.url)
   const { feed } = post
-  const diffTime = calcDiffTime(post.createdAt)
+  const diffTime = calcDiffTime(post.createdAt.toString())
   return (
     <article
       className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px] overflow-hidden relative transition-all duration-300 ${
@@ -25,7 +25,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
       <div className="px-[16px] py-[10px] mb-10">
         <h1>
           <Link href={`/entry/${encodeURIComponent(post.url)}`} className="font-bold hover:underline">
-            {title}
+            {title ? title : post.url}
           </Link>
         </h1>
         {feed && (
