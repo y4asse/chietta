@@ -134,6 +134,21 @@ export const addComment = async ({ content, entryId }: { content: string; entryI
         }
       }
     })
+    if (result) {
+      await db.activity
+        .create({
+          data: {
+            user_id: user_id,
+            type: 'entryComment',
+            target_id: result.id
+          }
+        })
+        .catch((err) => {
+          //エラーを無視
+          console.log('Activityへの登録に失敗しました')
+          console.log(err)
+        })
+    }
     return { result, error: null }
   } catch (err) {
     console.error(err)
@@ -146,12 +161,29 @@ export const deleteComment = async ({ commentId }: { commentId: string }) => {
     const session = await getServerSession(authOptions)
     if (!session) throw new Error('権限がありません')
     const user_id = session.user.id
-    await db.entryComment.delete({
+    const deleted = await db.entryComment.delete({
       where: {
         id: commentId,
         user_id
       }
     })
+    if (deleted) {
+      await db.activity
+        .delete({
+          where: {
+            user_id_target_id_type: {
+              user_id: user_id,
+              target_id: deleted.id,
+              type: 'entryComment'
+            }
+          }
+        })
+        .catch((err) => {
+          //エラーを無視
+          console.log('Activityの削除に失敗しました')
+          console.log(err)
+        })
+    }
     return { error: null }
   } catch (error) {
     console.log(error)
