@@ -39,7 +39,6 @@ const Page = async ({ params }: { params: { page: string } }) => {
         <Link href="/feeds/create" className="bg-primary px-3 py-1 text-[white] rounded font-bold">
           新規登録
         </Link>
-        L
       </div>
       <FeedLists feeds={feeds} />
       <PageNation totalCount={totalCount} page={page} countPerPage={take} />
