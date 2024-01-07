@@ -218,8 +218,9 @@ model Follow {
     following_user_id String
     createdAt         DateTime @default(now())
 
-    user           User @relation("UserFollowers", fields: [user_id], references: [id], onDelete: Cascade)
-    following_user User @relation("UserFoolows", fields: [following_user_id], references: [id], onDelete: Cascade)
+    user           User       @relation("UserFollowers", fields: [user_id], references: [id], onDelete: Cascade)
+    following_user User       @relation("UserFoolows", fields: [following_user_id], references: [id], onDelete: Cascade)
+    Activity       Activity[]
 
     @@unique([user_id, following_user_id])
     @@index([user_id])
@@ -248,8 +249,9 @@ model Bookmark {
     user_id   String
     createdAt DateTime @default(now())
 
-    entry Entry @relation(fields: [entry_id], references: [id], onDelete: Restrict)
-    user  User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    entry    Entry      @relation(fields: [entry_id], references: [id], onDelete: Restrict)
+    user     User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    Activity Activity[]
 
     @@unique([entry_id, user_id])
     @@index([entry_id])
@@ -257,28 +259,37 @@ model Bookmark {
 }
 
 model EntryComment {
-    id        String   @id @default(uuid())
+    id        String     @id @default(uuid())
     user_id   String
-    user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    user      User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
     entry_id  String
-    entry     Entry    @relation(fields: [entry_id], references: [id], onDelete: Restrict)
-    createdAt DateTime @default(now())
+    entry     Entry      @relation(fields: [entry_id], references: [id], onDelete: Restrict)
+    createdAt DateTime   @default(now())
     content   String
+    Activity  Activity[]
 
     @@index([user_id])
     @@index([entry_id])
 }
 
 model Activity {
-    id        String   @id @default(uuid())
-    user_id   String
-    user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    type      String
-    target_id String?
-    createdAt DateTime @default(now())
+    id               String        @id @default(uuid())
+    user_id          String
+    createdAt        DateTime      @default(now())
+    entry_comment_id String?
+    follow_id        String?
+    bookmark_id      String?
+    user             User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    follow           Follow?       @relation(fields: [follow_id], references: [id], onDelete: Cascade)
+    bookmark         Bookmark?     @relation(fields: [bookmark_id], references: [id], onDelete: Cascade)
+    entryComment     EntryComment? @relation(fields: [entry_comment_id], references: [id], onDelete: Cascade)
 
-    @@unique([user_id, target_id, type])
+    @@unique([user_id, follow_id])
+    @@unique([user_id, entry_comment_id])
+    @@unique([user_id, bookmark_id])
     @@index([user_id])
-    @@index([target_id])
-    @@index([type])
+    @@index([entry_comment_id])
+    @@index([follow_id])
+    @@index([bookmark_id])
+    @@index([createdAt])
 }
