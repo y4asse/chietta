@@ -23,7 +23,7 @@ export const getUserActivities = async () => {
     const activities = await db.activity.findMany({
       where: {
         user_id: {
-          in: [...following.map((f) => f.following_user_id), session.user.id]
+          in: following.map((f) => f.following_user_id)
         }
       },
       take,
