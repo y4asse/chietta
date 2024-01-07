@@ -1,6 +1,6 @@
 import LayoutTitle from '@/components/layout/LayoutTitle'
 import Spinner from '@/components/search/Spinner'
-import UserPostsServer from '@/components/userPost/UserPostsServer'
+import FollowingUserActivityList from '@/components/timeline/FollowingActivityList'
 import { Suspense } from 'react'
 
 const Post = async () => {
@@ -8,7 +8,7 @@ const Post = async () => {
     <>
       <LayoutTitle text="タイムライン" />
       <Suspense fallback={<Spinner />}>
-        <UserPostsServer />
+        <FollowingUserActivityList />
       </Suspense>
     </>
   )

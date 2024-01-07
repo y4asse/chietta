@@ -5,11 +5,9 @@ import { Suspense } from 'react'
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params
   return (
-    <>
-      <Suspense fallback={<Spinner />}>
-        <UserArticles id={id} />
-      </Suspense>
-    </>
+    <Suspense fallback={<Spinner />}>
+      <UserArticles id={id} />
+    </Suspense>
   )
 }
 

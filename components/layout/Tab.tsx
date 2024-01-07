@@ -17,12 +17,12 @@ const Tab = () => {
       path: '/latest'
     },
     {
-      name: '企業ブログ',
-      path: '/feeds'
-    },
-    {
       name: 'タイムライン',
       path: '/timeline'
+    },
+    {
+      name: '企業ブログ',
+      path: '/feeds'
     }
   ]
   return (

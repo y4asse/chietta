@@ -13,7 +13,8 @@ const config: Config = {
       pink: '#fff2f2',
       main: '#fffafa',
       focus: '#fdcaca',
-      lightGray: '#d6d6d6'
+      lightGray: '#d6d6d6',
+      bookmark: '#FFC800'
     },
     extend: {
       backgroundImage: {

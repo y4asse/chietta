@@ -34,7 +34,7 @@ const BookmarkButton = ({ url }: { url: string }) => {
   return (
     <button
       onClick={handleClick}
-      className={`text-2xl transition-all duration-200 ${isBookmarked ? 'text-[#FFC800]' : ''}`}
+      className={`text-2xl transition-all duration-200 ${isBookmarked ? 'text-bookmark' : ''}`}
     >
       {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
     </button>
