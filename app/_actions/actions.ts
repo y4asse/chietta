@@ -29,12 +29,11 @@ export const createBookmarkByUrl = async ({ url }: { url: string }) => {
       }
     })
     if (bookmark) {
-      await db.activity
+      db.activity
         .create({
           data: {
             user_id: user_id,
-            type: 'bookmark',
-            target_id: bookmark.id
+            bookmark_id: bookmark.id
           }
         })
         .catch((err) => {
@@ -71,13 +70,12 @@ export const deleteBookmarkByUrl = async ({ url }: { url: string }) => {
       }
     })
     if (deleted) {
-      await db.activity
+      db.activity
         .delete({
           where: {
-            user_id_target_id_type: {
-              user_id: user_id,
-              target_id: deleted.id,
-              type: 'bookmark'
+            user_id_bookmark_id: {
+              bookmark_id: deleted.id,
+              user_id: user_id
             }
           }
         })

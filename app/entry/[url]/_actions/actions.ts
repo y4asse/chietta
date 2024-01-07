@@ -56,12 +56,11 @@ export const bookmarkEntry = async ({ entryId }: { entryId: string }) => {
       }
     })
     if (bookmark) {
-      await db.activity
+      db.activity
         .create({
           data: {
             user_id: user_id,
-            type: 'bookmark',
-            target_id: bookmark.id
+            bookmark_id: bookmark.id
           }
         })
         .catch((err) => {
@@ -91,13 +90,12 @@ export const deleteBookmark = async ({ entryId }: { entryId: string }) => {
       }
     })
     if (deleted) {
-      await db.activity
+      db.activity
         .delete({
           where: {
-            user_id_target_id_type: {
+            user_id_bookmark_id: {
               user_id: user_id,
-              target_id: deleted.id,
-              type: 'bookmark'
+              bookmark_id: deleted.id
             }
           }
         })
@@ -135,12 +133,11 @@ export const addComment = async ({ content, entryId }: { content: string; entryI
       }
     })
     if (result) {
-      await db.activity
+      db.activity
         .create({
           data: {
             user_id: user_id,
-            type: 'entryComment',
-            target_id: result.id
+            entry_comment_id: result.id
           }
         })
         .catch((err) => {
@@ -168,13 +165,12 @@ export const deleteComment = async ({ commentId }: { commentId: string }) => {
       }
     })
     if (deleted) {
-      await db.activity
+      db.activity
         .delete({
           where: {
-            user_id_target_id_type: {
+            user_id_entry_comment_id: {
               user_id: user_id,
-              target_id: deleted.id,
-              type: 'entryComment'
+              entry_comment_id: deleted.id
             }
           }
         })

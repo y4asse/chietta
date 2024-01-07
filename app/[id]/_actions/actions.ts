@@ -23,12 +23,11 @@ export const followUser = async ({ followingUserId }: { followingUserId: string 
       })
 
     if (result) {
-      await db.activity
+      db.activity
         .create({
           data: {
             user_id: session.user.id,
-            type: 'follow',
-            target_id: followingUserId
+            follow_id: result.id
           }
         })
         .catch((err) => {
@@ -59,13 +58,12 @@ export const unfollowUser = async ({ followingUserId }: { followingUserId: strin
     })
 
     if (deleted) {
-      await db.activity
+      db.activity
         .delete({
           where: {
-            user_id_target_id_type: {
-              user_id: session.user.id,
-              target_id: followingUserId,
-              type: 'follow'
+            user_id_follow_id: {
+              follow_id: deleted.id,
+              user_id: session.user.id
             }
           }
         })
