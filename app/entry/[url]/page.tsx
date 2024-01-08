@@ -1,10 +1,16 @@
 import Comment from '@/components/entry/Comment'
 import CreateEntry from '@/components/entry/CreateEntry'
 import EntryItem from '@/components/entry/EntryItem'
+import NoContent from '@/components/error/NoContent'
 import { getEntry } from '@/server/entry/getEntry'
 
 const Entry = async ({ params }: { params: { url: string } }) => {
   const url = decodeURIComponent(params.url)
+  try {
+    new URL(url)
+  } catch (e) {
+    return <NoContent text="不正なURLです" />
+  }
   const entry = await getEntry({ url })
   if (!entry) return <CreateEntry url={url} />
 
