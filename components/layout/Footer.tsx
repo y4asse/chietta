@@ -17,6 +17,11 @@ const Footer = () => {
               <Link href={`/${list.link}`}>{list.text}</Link>
             </li>
           ))}
+          <li>
+            <a href="https://twitter.com/y4isse" target="_blank">
+              開発者
+            </a>
+          </li>
         </ul>
       </WrapContainer>
     </div>
