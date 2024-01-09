@@ -30,6 +30,5 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     return Response.json({ error: 'internal server error' }, { status: 404 })
   }
   const data = bookmark
-  console.log(data)
   return Response.json(data)
 }
