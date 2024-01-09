@@ -6,7 +6,7 @@ import { useAtom } from 'jotai'
 import { Session } from 'next-auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { FaBook } from 'react-icons/fa'
+import { FaBookmark } from 'react-icons/fa'
 
 const BookmarkButton = ({
   entryId,
@@ -46,7 +46,7 @@ const BookmarkButton = ({
         isBookmark ? 'border-lightGray hover:bg-lightGray' : 'bg-primary text-[white]'
       }`}
     >
-      <FaBook />
+      <FaBookmark />
       {isBookmark ? 'ブックマーク中' : 'Chie ブックマークに追加'}
     </button>
   )
