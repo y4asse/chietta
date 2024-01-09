@@ -32,7 +32,7 @@ const ScrollDetection = ({ props, children, noContentText }: ScrollDetectionProp
   return (
     <div ref={ref}>
       {children}
-      {noContentText && posts.length === 0 ? <NoContent text={noContentText} /> : <Posts posts={posts} />}
+      {isEnd && noContentText && posts.length === 0 ? <NoContent text={noContentText} /> : <Posts posts={posts} />}
       {isLoading && !isEnd && <SkeltonContainer />}
     </div>
   )
