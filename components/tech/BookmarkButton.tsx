@@ -28,7 +28,6 @@ const BookmarkButton = ({ url }: { url: string }) => {
       setBookmarking((prev) => prev.filter((item) => item.url !== url))
       return alert(error)
     }
-    router.refresh()
   }
   return (
     <button
