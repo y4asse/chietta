@@ -18,7 +18,6 @@ const BookmarkButton = ({ url }: { url: string }) => {
     if (!session) {
       return router.push(`/login?callbackUrl=${process.env.NEXT_PUBLIC_FRONT_URL}/entry/${encodeURIComponent(url)}`)
     }
-    if (isBookmarked && !confirm('ブックマークを解除しますか？')) return
     if (isBookmarked) {
       setBookmarking((prev) => prev.filter((item) => item.url !== url))
     } else {

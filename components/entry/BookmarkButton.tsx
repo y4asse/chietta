@@ -25,7 +25,6 @@ const BookmarkButton = ({
   const handleClick = async () => {
     if (!session)
       return router.push(`/login?callbackUrl=${process.env.NEXT_PUBLIC_FRONT_URL}/entry/${encodeURIComponent(url)}`)
-    if (isBookmark && !confirm('ブックマークを解除しますか？')) return
     setIsBookmark((prev) => !prev)
     if (isBookmark) {
       setBookmarking((prev) => prev.filter((item) => item.url !== url))
