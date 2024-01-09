@@ -3,7 +3,6 @@ import UserIcon from '../utils/UserIcon'
 import Link from 'next/link'
 import PostLink from '../tech/PostLink'
 import { calcDiffTime } from '@/utils/calcDiffTime'
-import PostItem from '../tech/PostItem'
 import { FaRegBookmark } from 'react-icons/fa'
 
 type Props = {

@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { PostItemType } from '@/types/postItem'
 import ErrorComponent from '../error/ErrorComponent'
 import { useScrollDetection } from '@/hooks/useScrollDetection'
+import NoContent from '../error/NoContent'
 const SkeltonContainer = dynamic(() => import('../skelton/SkeltonContainer'))
 
 type Args = {
@@ -21,16 +22,17 @@ type Props = {
 export type ScrollDetectionProps = {
   children?: ReactNode
   props: Props
+  noContentText?: string
 }
 
 //ScrollDetectのリファクタリング後のコンポーネント
-const ScrollDetection = ({ props, children }: ScrollDetectionProps) => {
+const ScrollDetection = ({ props, children, noContentText }: ScrollDetectionProps) => {
   const { ref, posts, isLoading, isEnd } = useScrollDetection({ props })
   if (!posts) return <ErrorComponent />
   return (
     <div ref={ref}>
       {children}
-      <Posts posts={posts} />
+      {isEnd && noContentText && posts.length === 0 ? <NoContent text={noContentText} /> : <Posts posts={posts} />}
       {isLoading && !isEnd && <SkeltonContainer />}
     </div>
   )

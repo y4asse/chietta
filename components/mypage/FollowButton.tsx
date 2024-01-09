@@ -1,6 +1,7 @@
 'use client'
 
 import { followUser, unfollowUser } from '@/app/[id]/_actions/actions'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const FollowButton = ({
@@ -13,6 +14,7 @@ const FollowButton = ({
   defaultFollow: boolean
 }) => {
   const [isFollow, setIsFollow] = useState(defaultFollow)
+  const router = useRouter()
   if (userId === sessionUserId) return
   const handleClick = async () => {
     if (isFollow) {
@@ -28,6 +30,7 @@ const FollowButton = ({
         setIsFollow(false)
       }
     }
+    router.refresh()
   }
   return (
     <button

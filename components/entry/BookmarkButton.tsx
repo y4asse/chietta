@@ -6,7 +6,7 @@ import { useAtom } from 'jotai'
 import { Session } from 'next-auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { FaBook } from 'react-icons/fa'
+import { FaBookmark } from 'react-icons/fa'
 
 const BookmarkButton = ({
   entryId,
@@ -25,7 +25,6 @@ const BookmarkButton = ({
   const handleClick = async () => {
     if (!session)
       return router.push(`/login?callbackUrl=${process.env.NEXT_PUBLIC_FRONT_URL}/entry/${encodeURIComponent(url)}`)
-    if (isBookmark && !confirm('ブックマークを解除しますか？')) return
     setIsBookmark((prev) => !prev)
     if (isBookmark) {
       setBookmarking((prev) => prev.filter((item) => item.url !== url))
@@ -47,7 +46,7 @@ const BookmarkButton = ({
         isBookmark ? 'border-lightGray hover:bg-lightGray' : 'bg-primary text-[white]'
       }`}
     >
-      <FaBook />
+      <FaBookmark />
       {isBookmark ? 'ブックマーク中' : 'Chie ブックマークに追加'}
     </button>
   )
