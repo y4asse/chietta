@@ -4,6 +4,7 @@ import Link from 'next/link'
 import PostLink from '../tech/PostLink'
 import { calcDiffTime } from '@/utils/calcDiffTime'
 import { FaRegBookmark } from 'react-icons/fa'
+import Article from './Article'
 
 type Props = {
   bookmark: NonNullable<NonNullable<UserActivitis>[number]['bookmark']>
@@ -25,15 +26,7 @@ const BookmarkActivity = ({ bookmark, user }: Props) => {
           <FaRegBookmark className="inline ml-2" />
           <div className="text-gray">{calcDiffTime(bookmark.createdAt.toString())}</div>
         </div>
-        <div className="mt-2 border border-lightGray rounded-xl p-3 ">
-          <Link href={`/entry/${encodeURIComponent(bookmark.entry.url)}`} className="font-bold hover:underline">
-            {bookmark.entry.title}
-          </Link>
-          <p className="text-gray break-all">{bookmark.entry.url}</p>
-          <div className="w-full max-w-[500px] mx-auto rounded-xl overflow-hidden my-3">
-            <PostLink url={bookmark.entry.url} image={bookmark.entry.image} />
-          </div>
-        </div>
+        <Article url={bookmark.entry.url} image={bookmark.entry.image} title={bookmark.entry.title} />
       </div>
     </>
   )
