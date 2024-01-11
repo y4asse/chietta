@@ -4,6 +4,7 @@ import Link from 'next/link'
 import PostLink from '../tech/PostLink'
 import { calcDiffTime } from '@/utils/calcDiffTime'
 import { FaRegComment } from 'react-icons/fa'
+import Article from './Article'
 
 type Props = {
   entryComment: NonNullable<NonNullable<UserActivitis>[number]['entryComment']>
@@ -31,15 +32,7 @@ const CommentActivity = ({ entryComment, user }: Props) => {
           <p>{entryComment.content}</p>
           <div className="text-gray mt-1">{calcDiffTime(entryComment.createdAt.toString())}</div>
         </Link>
-        <div className="mt-2 border border-lightGray rounded-xl p-3 ">
-          <Link href={`/entry/${encodeURIComponent(entryComment.entry.url)}`} className="font-bold hover:underline">
-            {entryComment.entry.title}
-          </Link>
-          <p className="text-gray break-all">{entryComment.entry.url}</p>
-          <div className="w-full max-w-[500px] mx-auto rounded-xl overflow-hidden my-3">
-            <PostLink url={entryComment.entry.url} image={entryComment.entry.image} />
-          </div>
-        </div>
+        <Article url={entryComment.entry.url} image={entryComment.entry.image} title={entryComment.entry.title} />
       </div>
     </>
   )
