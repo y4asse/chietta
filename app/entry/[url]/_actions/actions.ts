@@ -2,6 +2,7 @@
 
 import { authOptions } from '@/server/auth'
 import { db } from '@/server/db'
+import { getHashedUrl } from '@/utils/getHashedUrl'
 import { getServerSession } from 'next-auth'
 
 export const createEntry = async ({
@@ -19,15 +20,10 @@ export const createEntry = async ({
     const user_id = session.user.id
 
     //urlのハッシュ化
-    const encoder = new TextEncoder()
-    const data = encoder.encode(url)
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-    const hashArray = Array.from(new Uint8Array(hashBuffer))
-    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
-    console.log(hashHex)
+    const hashedUrl = await getHashedUrl(url)
     await db.entry.create({
       data: {
-        hashed_url: hashHex,
+        hashed_url: hashedUrl,
         title,
         image,
         url,
