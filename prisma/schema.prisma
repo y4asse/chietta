@@ -229,8 +229,8 @@ model Follow {
 
 model Entry {
     id           String         @id @default(uuid())
-    url          String
-    hashed_url   String?
+    url          String         @db.Text
+    hashed_url   String         @unique
     title        String?
     image        String?        @db.Text
     createdAt    DateTime       @default(now())
@@ -239,8 +239,7 @@ model Entry {
     Bookmark     Bookmark[]
     EntryComment EntryComment[]
 
-    @@unique([url])
-    @@index([url])
+    @@index([hashed_url])
     @@index([user_id])
 }
 
