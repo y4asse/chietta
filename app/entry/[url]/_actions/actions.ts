@@ -17,8 +17,17 @@ export const createEntry = async ({
     const session = await getServerSession(authOptions)
     if (!session) throw new Error('権限がありません')
     const user_id = session.user.id
+
+    //urlのハッシュ化
+    const encoder = new TextEncoder()
+    const data = encoder.encode(url)
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+    const hashArray = Array.from(new Uint8Array(hashBuffer))
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+    console.log(hashHex)
     await db.entry.create({
       data: {
+        hashed_url: hashHex,
         title,
         image,
         url,
