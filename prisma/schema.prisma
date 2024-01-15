@@ -230,6 +230,7 @@ model Follow {
 model Entry {
     id           String         @id @default(uuid())
     url          String
+    hashed_url   String?
     title        String?
     image        String?        @db.Text
     createdAt    DateTime       @default(now())
