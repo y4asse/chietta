@@ -12,7 +12,7 @@ const CreateEntry = async ({ url }: { url: string }) => {
     <div className="mx-auto max-w-[1000px] px-3 mt-5 pb-10 min-h-[calc(100vh-320px)]">
       <div className="flex flex-wrap gap-5">
         <div className="w-full md:w-[calc(100%_-_320px)]">
-          <h1 className="text-xl font-bold">
+          <h1 className="text-xl font-bold break-all">
             <Link href={url} className="hover:underline" target="_blank">
               {title ? title : url}
               <MdOpenInNew className="inline ml-1" />

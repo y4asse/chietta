@@ -13,7 +13,7 @@ const EntryItem = async ({ entry }: { entry: NonNullable<EntryType> }) => {
     <div>
       <div className="flex flex-wrap gap-5">
         <div className="w-full md:w-[calc(100%_-_320px)]">
-          <h1 className="text-xl font-bold">
+          <h1 className="text-xl font-bold break-all">
             <EntryLink entry={entry} session={session} />
           </h1>
           <p className="text-sm text-gray pt-1 break-words">{entry.url}</p>
