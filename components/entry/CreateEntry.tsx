@@ -1,8 +1,6 @@
 import { getOgp } from '@/server/getOgp'
-import Link from 'next/link'
-import PostLink from '../tech/PostLink'
 import CreateEntryButton from './CreateEntryButton'
-import { MdOpenInNew } from 'react-icons/md'
+import EntryInfo from './EntryInfo'
 
 const CreateEntry = async ({ url }: { url: string }) => {
   const ogp = await getOgp(url)
@@ -10,20 +8,7 @@ const CreateEntry = async ({ url }: { url: string }) => {
   const image = ogp ? (ogp.ogImage ? ogp.ogImage[0].url : null) : null
   return (
     <div className="mx-auto max-w-[1000px] px-3 mt-5 pb-10 min-h-[calc(100vh-320px)]">
-      <div className="flex flex-wrap gap-5">
-        <div className="w-full md:w-[calc(100%_-_320px)]">
-          <h1 className="text-xl font-bold break-all">
-            <Link href={url} className="hover:underline" target="_blank">
-              {title ? title : url}
-              <MdOpenInNew className="inline ml-1" />
-            </Link>
-          </h1>
-          <p className="text-sm text-gray pt-1">{url}</p>
-        </div>
-        <div className="w-[300px] mx-auto overflow-hidden rounded-xl">
-          {image && <PostLink url={url} image={image} />}
-        </div>
-      </div>
+      <EntryInfo url={url} title={title} image={image} />
       <hr className="text-lightGray mt-5" />
       <div className="text-center mt-5">
         <p className="text-gray">このURLはまだ登録されていません。登録しますか？</p>
