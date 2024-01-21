@@ -26,7 +26,7 @@ const PostLink = ({ url, image, isViewed }: { url: string; image: string | null;
             : 'https://firebasestorage.googleapis.com/v0/b/cheeta-38f77.appspot.com/o/no-image.png?alt=media&token=d7bcb383-25c7-4ab9-8d67-aadf4d14b9ad'
         }
         alt="image"
-        className="border-[#e6e6e6] mx-auto aspect-[16/9] w-full object-fill"
+        className="border-[#e6e6e6] mx-auto w-full max-h-[178.5px] object-contain"
       />
     </a>
   )

@@ -17,7 +17,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
   const diffTime = calcDiffTime(post.createdAt.toString())
   return (
     <article
-      className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[340px] overflow-hidden relative transition-all duration-300 ${
+      className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[344px] overflow-hidden relative transition-all duration-300 ${
         isViewed && 'brightness-[0.9]'
       }`}
     >
