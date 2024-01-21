@@ -2,6 +2,7 @@ import Posts from '@/components/tech/Posts'
 import { addOgp } from '@/server/addOgp'
 import { db } from '@/server/db'
 import { getFeedItem } from '@/server/getFeedItem'
+import { getFeedLink } from '@/server/userPage/getFeedLink'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
@@ -11,7 +12,7 @@ const UserArticles = async ({ id }: { id: string }) => {
   })
   if (!user) return notFound()
   const userArticles: { title: string; url: string; createdAt: Date }[] = []
-  const { qiita, zenn, note, hatena } = user
+  const { qiita, zenn, note, hatena, webSite } = user
   const getQiitaFeed = (name: string | null) => {
     if (!name) return null
     const url = `https://qiita.com/${name}/feed`
@@ -36,7 +37,22 @@ const UserArticles = async ({ id }: { id: string }) => {
     const feedItem = getFeedItem(url)
     return feedItem
   }
-  const feeds = await Promise.all([getQiitaFeed(qiita), getZennFeed(zenn), getNoteFeed(note), getHatenaFeed(hatena)])
+  const getWebsiteFeed = (name: string | null) => {
+    if (!name) return null
+    const url = name
+    const feedItem = getFeedLink(url).then((link) => {
+      if (!link) return null
+      return getFeedItem(link)
+    })
+    return feedItem
+  }
+  const feeds = await Promise.all([
+    getQiitaFeed(qiita),
+    getZennFeed(zenn),
+    getNoteFeed(note),
+    getHatenaFeed(hatena),
+    getWebsiteFeed(webSite)
+  ])
   feeds.map((feed) => {
     feed?.items.map((item) => {
       const createdAt = item.pubDate ? new Date(item.pubDate) : new Date(item.isoDate)

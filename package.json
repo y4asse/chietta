@@ -16,13 +16,13 @@
     "@types/xml2js": "^0.4.12",
     "@upstash/redis": "^1.22.1",
     "axios": "^1.5.1",
-    "cheerio": "^1.0.0-rc.12",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
     "dayjs": "^1.11.10",
     "firebase": "^10.4.0",
     "framer-motion": "^10.16.4",
     "jotai": "^2.4.3",
+    "jsdom": "^23.2.0",
     "lottie-react": "^2.4.0",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
@@ -43,6 +43,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/jsdom": "^21.1.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
