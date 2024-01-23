@@ -1,4 +1,11 @@
 {
+    "share_target": {
+        "action": "/entry",
+        "method": "GET",
+        "params": {
+            "url": "url"
+        }
+    },
     "theme_color": "#FFFAFA",
     "background_color": "#ffffff",
     "display": "standalone",
