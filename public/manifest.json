@@ -4,7 +4,8 @@
         "method": "GET",
         "params": {
             "url": "url"
-        }
+        },
+        "enctype": "application/x-www-form-urlencoded"
     },
     "theme_color": "#FFFAFA",
     "background_color": "#ffffff",
