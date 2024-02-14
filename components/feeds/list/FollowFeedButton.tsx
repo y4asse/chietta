@@ -44,8 +44,8 @@ const FollowFeedButton = ({ feed }: { feed: Feed }) => {
   return (
     <button
       onClick={handleClick}
-      className={` px-3 py-1 rounded-xl duration-200 border border-[#afafaf] transition-all bg-white dark:bg-lightDark ${
-        isFollowed ? 'bg-primary text-white' : 'hover:bg-lightGray dark:hover:bg-gray'
+      className={` px-3 py-1 rounded-xl duration-200 border border-[#afafaf] transition-all dark:bg-lightDark ${
+        isFollowed ? 'bg-primary text-white' : 'hover:bg-lightGray dark:hover:bg-gray bg-white'
       }`}
     >
       {isFollowed ? 'フォロー中' : 'フォロー'}
