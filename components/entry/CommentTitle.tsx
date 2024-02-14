@@ -8,7 +8,7 @@ const CommentTitle = ({ exist }: { exist: boolean }) => {
         <FaRegComment />
       </div>
       {!exist && (
-        <div className="dark:bg-lightGray pb-3">
+        <div className="dark:bg-white pb-3">
           <Image
             src="/img/discussion.png"
             width={300}
