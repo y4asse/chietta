@@ -234,8 +234,8 @@ model Entry {
     title        String?
     image        String?        @db.Text
     createdAt    DateTime       @default(now())
-    user_id      String
-    user         User?          @relation(fields: [user_id], references: [id])
+    user_id      String?
+    user         User?          @relation(fields: [user_id], references: [id], onDelete: SetNull)
     Bookmark     Bookmark[]
     EntryComment EntryComment[]
 
