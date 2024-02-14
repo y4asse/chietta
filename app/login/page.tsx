@@ -15,14 +15,16 @@ const Login = ({ searchParams }: { searchParams: { callbackUrl: string } }) => {
   return (
     <div className="min-h-screen bg-pink dark:bg-lightDark pt-16">
       <WrapContainer>
-        <div className="bg-white py-10 px-5 rounded-xl max-w-[400px] mx-auto">
+        <div className="bg-white dark:bg-lightDark border border-lightGray dark:border-gray dark:text-white py-10 px-5 rounded-xl max-w-[400px] mx-auto">
           <div className="flex justify-center">
             <Logo />
           </div>
-          <p className="text-gray mt-10">ログインすると記事の共有などの様々な機能が使えるようになります。</p>
+          <p className="text-gray dark:text-lightGray mt-10">
+            ログインすると記事の共有などの様々な機能が使えるようになります。
+          </p>
           <LoginButton callbackUrl={callbackUrl} />
           <hr className="mt-10 text-[#e69191]" />
-          <p className="text-gray mt-5">
+          <p className="text-gray dark:text-lightGray mt-5">
             プライバシーポリシーについては
             <Link className="underline" href={'/about/privacy'}>
               こちら

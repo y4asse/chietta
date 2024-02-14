@@ -8,15 +8,15 @@ const CommentTitle = ({ exist }: { exist: boolean }) => {
         <FaRegComment />
       </div>
       {!exist && (
-        <div className="dark:bg-white pb-3">
+        <div className="pb-3">
           <Image
             src="/img/discussion.png"
             width={300}
             height={300}
             alt={'discussionの画像'}
-            className="mx-auto rounded-2xl my-3"
+            className="mx-auto rounded-full my-3 bg-white"
           />
-          <p className="text-gray dark:text-black text-center mt-1">
+          <p className="text-gray dark:text-lightGray text-center mt-3">
             まだコメントがありません。 最初のコメントをしてみましょう！
           </p>
         </div>
