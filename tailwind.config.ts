@@ -14,7 +14,11 @@ const config: Config = {
       main: '#fffafa',
       focus: '#fdcaca',
       lightGray: '#d6d6d6',
-      bookmark: '#FFC800'
+      bookmark: '#FFC800',
+      dark: '#0f0f0f',
+      lightDark: '#272727',
+      white: '#fff',
+      black: '#000'
     },
     extend: {
       backgroundImage: {

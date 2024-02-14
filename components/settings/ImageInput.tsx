@@ -69,17 +69,17 @@ const ImageInput = () => {
       <div className="text-center">
         <img
           src={session.user.image ? session.user.image : ''}
-          className="w-[120px] h-[120px] rounded-full border border-[#afafaf] overflow-hidden hover:opacity-80 duration-200 transition-all mx-auto"
+          className="w-[120px] h-[120px] rounded-full border border-[#afafaf] dark:border-gray overflow-hidden hover:opacity-80 duration-200 transition-all mx-auto"
           role="button"
           onClick={handleImageClick}
         />
-        <button type="button" className="mt-3 text-gray font-bold" onClick={handleImageClick}>
+        <button type="button" className="mt-3 text-gray font-bold dark:text-lightGray" onClick={handleImageClick}>
           変更する
         </button>
       </div>
 
       <dialog
-        className="relative backdrop:bg-[black] backdrop:bg-opacity-70 rounded-lg"
+        className="relative backdrop:bg-black backdrop:bg-opacity-70 rounded-lg"
         ref={dialogRef}
         onClick={() => {
           closeDialog()
@@ -115,11 +115,7 @@ const ImageInput = () => {
             className="w-[200px] h-[200px] rounded-full m-auto border border-[#afafaf]"
           />
           <div className="text-center mt-10">
-            <button
-              type="button"
-              onClick={handleUpdate}
-              className="text-[white] font-bold bg-primary px-3 py-1 rounded"
-            >
+            <button type="button" onClick={handleUpdate} className="text-white font-bold bg-primary px-3 py-1 rounded">
               画像を更新
             </button>
           </div>

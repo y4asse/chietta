@@ -36,7 +36,7 @@ const Page = async ({ params }: { params: { page: string } }) => {
     <div className="max-w-[1000px] mx-auto px-1">
       <LayoutTitle text="企業ブログ一覧" />
       <div className="text-right">
-        <Link href="/feeds/create" className="bg-primary px-3 py-1 text-[white] rounded font-bold">
+        <Link href="/feeds/create" className="bg-primary px-3 py-1 text-white rounded font-bold">
           新規登録
         </Link>
       </div>

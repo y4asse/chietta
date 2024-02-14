@@ -20,11 +20,11 @@ const Profile = ({ user, sessionUser }: Props) => {
       <img
         src={user.image!}
         alt="ユーザアイコン"
-        className="w-[70px] h-[70px] md:w-[100px] md:h-[100px] rounded-full mx-auto border border-[#afafaf]"
+        className="w-[70px] h-[70px] md:w-[100px] md:h-[100px] rounded-full mx-auto border border-[#afafaf] dark:border-gray"
       />
       <div className="w-full md:w-2/3">
         <h1 className="text-2xl font-bold">{user.name}</h1>
-        <p className="mt-5 text-gray">{user.introduction ?? '自己紹介がありません'}</p>
+        <p className="mt-5 text-gray dark:text-lightGray">{user.introduction ?? '自己紹介がありません'}</p>
         <Following
           followersCount={user.Followers.length}
           followingCount={user.Follow.length}

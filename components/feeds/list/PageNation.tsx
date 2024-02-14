@@ -7,7 +7,10 @@ const PageNation = ({ totalCount, page, countPerPage }: { totalCount: number; pa
   return (
     <div className="mt-3 flex justify-center gap-3 items-center">
       {page > 0 && (
-        <Link className="bg-[white] border border-lightGray p-2 rounded-xl" href={`/feeds/list/${page - 1}`}>
+        <Link
+          className="bg-white dark:bg-lightDark border border-lightGray dark:border-gray p-2 rounded-xl"
+          href={`/feeds/list/${page - 1}`}
+        >
           <FaArrowLeft />
         </Link>
       )}
@@ -16,7 +19,7 @@ const PageNation = ({ totalCount, page, countPerPage }: { totalCount: number; pa
       </span>
       {page < totalPage - 1 && (
         <Link
-          className="bg-[white] border border-lightGray p-2 rounded-xl hover:bg-lightGray duration-200 transition-all"
+          className="bg-white dark:bg-lightDark border border-lightGray dark:border-gray p-2 rounded-xl hover:bg-lightGray duration-200 transition-all"
           href={`/feeds/list/${page + 1}`}
         >
           <FaArrowRight />

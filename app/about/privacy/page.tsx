@@ -3,9 +3,9 @@ import React from 'react'
 
 const Privacy = () => {
   return (
-    <div className=" bg-pink py-10">
+    <div className=" bg-pink dark:bg-lightDark dark:text-white py-10">
       <WrapContainer>
-        <div className="bg-[white] px-3 py-10 md:p-10 md:rounded-3xl md:shadow">
+        <div className="bg-white dark:bg-lightDark dark:border dark:border-gray px-3 py-10 md:p-10 md:rounded-3xl md:shadow">
           <h1 className="text-2xl font-bold mb-6">プライバシーポリシー</h1>
           <p>当サイトは、お客様の個人情報を大切に考え、その保護のための措置を講じております。</p>
 

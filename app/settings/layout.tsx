@@ -8,10 +8,12 @@ export const metadata: Metadata = {
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="min-h-screen min-w-[300px] bg-[white] items-center py-5 max-w-[1000px] mx-auto px-3">
-      <LayoutTitle text="ユーザ設定" />
-      <SettingTab />
-      {children}
+    <main className="bg-white dark:bg-lightDark ">
+      <div className="min-h-screen min-w-[300px] items-center py-5 max-w-[1000px] mx-auto px-3 dark:text-white">
+        <LayoutTitle text="ユーザ設定" />
+        <SettingTab />
+        {children}
+      </div>
     </main>
   )
 }

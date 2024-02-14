@@ -19,7 +19,7 @@ const UserTab = ({ idCreatedByUser }: { idCreatedByUser: string }) => {
             href={item.path}
             key={i}
             className={`rounded-full overflow-hidden px-3 py-1   flex justify-center items-center gap-1 ${
-              pathname === item.path ? 'bg-primary text-[white]' : 'text-gray border border-[#afafaf]'
+              pathname === item.path ? 'bg-primary text-white' : 'text-gray dark:text-white border border-[#afafaf]'
             }`}
           >
             {item.icon}

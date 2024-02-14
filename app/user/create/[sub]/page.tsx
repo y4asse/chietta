@@ -13,12 +13,12 @@ const Page = async ({ params }: { params: { sub: string } }) => {
     return notFound()
   }
   return (
-    <div className="bg-main min-h-screen">
+    <div className="bg-main dark:bg-lightDark dark:text-white min-h-screen">
       <div className="mx-auto max-w-[1000px] flex justify-center items-center pt-20 flex-col px-3">
         <h1 className="text-2xl font-bold text-center">アカウントの作成</h1>
         <h2 className="text-xl font-bold mt-20">{user?.name}</h2>
         <img
-          className="w-[100px] rounded-full border border-lightGray mt-5"
+          className="w-[100px] rounded-full border border-lightGray dark:border-gray mt-5"
           src={user && user.image ? user.image : ''}
           alt="ユーザアイコン"
         />

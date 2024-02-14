@@ -29,11 +29,13 @@ const Layout = async ({ children, params }: { children: React.ReactNode; params:
   const user = await getUser(id)
   if (!user) return notFound()
   return (
-    <div className="pt-5 min-h-screen">
-      <Profile user={user} sessionUser={sessionUser} />
-      <hr className="max-w-[1000px] mx-auto text-lightGray px-5 w-[95%]" />
-      <UserTab idCreatedByUser={user.idCreatedByUser || ''} />
-      {children}
+    <div className="bg-white dark:bg-lightDark dark:text-white">
+      <div className="pt-5 min-h-screen">
+        <Profile user={user} sessionUser={sessionUser} />
+        <hr className="max-w-[1000px] mx-auto text-lightGray dark:text-gray px-5 w-[95%]" />
+        <UserTab idCreatedByUser={user.idCreatedByUser || ''} />
+        {children}
+      </div>
     </div>
   )
 }

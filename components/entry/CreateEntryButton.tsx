@@ -17,7 +17,7 @@ const CreateEntryButton = ({ url, title, image }: { url: string; title: string |
     router.refresh()
   }
   return (
-    <button onClick={handleClick} className="text-[white] bg-primary px-3 py-1 rounded mt-3">
+    <button onClick={handleClick} className="text-white bg-primary px-3 py-1 rounded mt-3">
       登録する
     </button>
   )

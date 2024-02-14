@@ -19,7 +19,7 @@ const Input = () => {
         <input
           required
           type="url"
-          className="border-[#afafaf] border px-3 py-1 rounded w-full outline-primary mt-1"
+          className="border-[#afafaf] border px-3 py-1 rounded w-full outline-primary mt-1 dark:bg-lightDark"
           placeholder="フィードのURLを入力..."
           name="feedUrl"
           id="feedUrl"

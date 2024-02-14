@@ -15,9 +15,11 @@ const Entry = async ({ params }: { params: { url: string } }) => {
   if (!entry) return <CreateEntry url={url} />
 
   return (
-    <div className="mx-auto max-w-[1000px] px-3 mt-5 pb-10 min-h-[calc(100vh-320px)]">
-      <EntryItem entry={entry} />
-      <Comment entry={entry} />
+    <div className="bg-white dark:bg-lightDark dark:text-white">
+      <div className="mx-auto max-w-[1000px] px-3 pt-5 pb-10 min-h-[calc(100vh-320px)]">
+        <EntryItem entry={entry} />
+        <Comment entry={entry} />
+      </div>
     </div>
   )
 }

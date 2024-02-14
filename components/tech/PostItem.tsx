@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import PostLink from './PostLink'
 import { PostItemType } from '@/types/postItem'
 import { useAtom } from 'jotai'
@@ -8,6 +7,7 @@ import { viewHistoryAtom } from '@/jotai/viewHistory'
 import { calcDiffTime } from '@/utils/calcDiffTime'
 import Link from 'next/link'
 import BookmarkButton from './BookmarkButton'
+import { FaRegHeart } from 'react-icons/fa6'
 
 const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boolean }) => {
   const { title, likedCount } = post
@@ -17,7 +17,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
   const diffTime = calcDiffTime(post.createdAt.toString())
   return (
     <article
-      className={`rounded-xl border-2 border-[#e6e6e6] bg-[white]  mx-auto w-[344px] overflow-hidden relative transition-all duration-300 ${
+      className={`rounded-xl border-2 border-[#e6e6e6] dark:border-black bg-white dark:bg-lightDark dark:bg-lightDark  mx-auto w-[344px] overflow-hidden relative transition-all duration-300 ${
         isViewed && 'brightness-[0.9]'
       }`}
     >
@@ -29,21 +29,24 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
           </Link>
         </h1>
         {feed && (
-          <Link href={`/feeds/${post.feed!.id}`} className="text-sm text-gray pt-3 hover:underline">
+          <Link href={`/feeds/${post.feed!.id}`} className="text-sm text-gray dark:text-lightGray pt-3 hover:underline">
             {feed.name}
           </Link>
         )}
         {likedCount != undefined && (
           <div className="flex items-center gap-1 mt-1">
-            <Image src="/heart.svg" alt="ハートの画像" width={17} height={17} className=" opacity-70" />
+            <FaRegHeart width={17} height={17} className="text-gray dark:text-white opacity-70" />
             <span>{likedCount}</span>
           </div>
         )}
-        <div className="absolute bottom-2 left-3  text-gray flex items-center justify-center gap-3">
+        <div className="absolute bottom-2 left-3  text-gray dark:text-lightGray flex items-center justify-center gap-3">
           <BookmarkButton url={post.url} />
         </div>
         {!hiddenDate && (
-          <time dateTime={post.createdAt.toString()} className="absolute bottom-1 right-3 text-gray">
+          <time
+            dateTime={post.createdAt.toString()}
+            className="absolute bottom-1 right-3 text-gray dark:text-lightGray"
+          >
             {diffTime}
           </time>
         )}

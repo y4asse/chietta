@@ -10,7 +10,7 @@ const SubmitButton = ({ text, pendingText }: { text: string; pendingText: string
       role="button"
       type="submit"
       value={pending ? pendingText : text}
-      className={`rounded bg-primary text-[white] px-3 py-1 font-semibold ${pending && 'cursor-not-allowed'}`}
+      className={`rounded bg-primary text-white px-3 py-1 font-semibold ${pending && 'cursor-not-allowed'}`}
     />
   )
 }

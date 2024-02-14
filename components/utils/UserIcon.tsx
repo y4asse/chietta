@@ -6,7 +6,7 @@ const UserIcon = ({ image, idCreatedByUser }: { image: string | null; idCreatedB
       <img
         src={image ? image : '/img/user-icon.png'}
         alt="ユーザアイコン"
-        className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] rounded-full mx-auto border border-lightGray"
+        className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] rounded-full mx-auto border border-lightGray dark:border-gray"
       />
     </Link>
   )

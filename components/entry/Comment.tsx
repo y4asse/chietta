@@ -15,7 +15,7 @@ const Comment = async ({ entry }: { entry: Entry }) => {
   }
   return (
     <div>
-      <div className="border border-lightGray rounded-xl mt-10">
+      <div className="border border-lightGray dark:border-gray rounded-xl mt-10">
         <CommentTitle exist={comments.length > 0} />
         <CommentInput entry={entry} session={session} />
       </div>

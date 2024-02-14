@@ -39,16 +39,16 @@ const CommentInput = ({ entry, session }: { entry: Entry; session: Session | nul
         id="commnet"
         rows={5}
         value={comment}
-        className="w-full rounded-xl outline-none p-2 text-base"
+        className="w-full rounded-xl outline-none p-2 bg-white dark:bg-lightDark text-base mt-2"
         placeholder="コメントを入力..."
         required
       />
-      <hr className="text-lightGray" />
+      <hr className="text-lightGray dark:text-gray" />
       <div className="text-end">
         {session ? (
           <button
             onClick={handleClick}
-            className={`mt-3 bg-primary text-[white] px-3 py-1 rounded ${loading && 'cursor-not-allowed'}`}
+            className={`mt-3 bg-primary text-white px-3 py-1 rounded ${loading && 'cursor-not-allowed'}`}
             disabled={loading}
           >
             {loading ? '追加中' : 'コメントを追加'}
@@ -60,7 +60,7 @@ const CommentInput = ({ entry, session }: { entry: Entry; session: Session | nul
                 `/login?callbackUrl=${process.env.NEXT_PUBLIC_FRONT_URL}/entry/${encodeURIComponent(entry.url)}`
               )
             }
-            className="mt-3 bg-primary text-[white] px-3 py-1 rounded"
+            className="mt-3 bg-primary text-white px-3 py-1 rounded"
           >
             ログイン
           </button>

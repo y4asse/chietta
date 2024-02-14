@@ -24,7 +24,9 @@ const UserPostItem = ({ userPost, defaultLiked }: Props) => {
   }
   const diffTime = calcDiffTime(userPost.createdAt.toString())
   return (
-    <article className={`py-7 bg-[white]  mx-auto w-full overflow-hidden relative transition-all duration-300`}>
+    <article
+      className={`py-7 bg-white dark:bg-lightDark  mx-auto w-full overflow-hidden relative transition-all duration-300`}
+    >
       <div className="flex justify-center gap-3">
         <div>
           <Link href={`/${userPost.user.idCreatedByUser}`} className="min-w-[40px]">
@@ -58,7 +60,7 @@ const UserPostItem = ({ userPost, defaultLiked }: Props) => {
               defaultCount={userPost._count ? userPost._count.like : 0}
             />
             <div className="flex gap-1">
-              {!userPost.isPublic && <span className="bg-gray text-[white] px-1 rounded-lg">非公開</span>}
+              {!userPost.isPublic && <span className="bg-gray text-white px-1 rounded-lg">非公開</span>}
               <time dateTime={userPost.createdAt.toString()}>{diffTime}</time>
             </div>
           </div>

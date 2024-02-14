@@ -31,7 +31,7 @@ const FormInput = ({ user }: { user: User }) => {
       <input
         type="text"
         name="idCreatedByUser"
-        className="border border-[#b6b6b6] px-5 py-3 rounded-full cursor focus:outline-focus mt-5 md:w-1/2 w-full"
+        className="border border-[#b6b6b6] px-5 py-3 rounded-full cursor focus:outline-focus mt-5 md:w-1/2 w-full dark:bg-lightDark"
         placeholder="https://chietta.com/あなたのユーザID"
       />
       {state?.errors?.idCreatedByUser && (

@@ -3,7 +3,7 @@ const SubmitButton = ({ pending }: { pending: boolean }) => {
     <button
       disabled={pending}
       type="submit"
-      className={`rounded bg-primary text-[white] px-3 py-1 font-semibold ${pending && 'cursor-not-allowed'}`}
+      className={`rounded bg-primary text-white px-3 py-1 font-semibold ${pending && 'cursor-not-allowed'}`}
     >
       {pending ? '保存中...' : '保存'}
     </button>

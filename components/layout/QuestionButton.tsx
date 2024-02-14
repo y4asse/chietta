@@ -39,20 +39,28 @@ const QuestionButton = () => {
   })
   return (
     <div className="flex relative" id="modal">
-      <button aria-label="タブを表示・非表示にする" onClick={handleClick} className="text-gray text-2xl my-auto">
+      <button
+        aria-label="タブを表示・非表示にする"
+        onClick={handleClick}
+        className="text-gray text-2xl my-auto dark:text-white"
+      >
         <FaRegQuestionCircle />
       </button>
       {isShow && (
-        <ul className="shadow rounded-xl p-5 flex flex-col gap-3 absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
+        <div className="shadow rounded-xl flex flex-col absolute z-20 bg-white dark:bg-lightDark w-[200px] top-full right-0 text-gray dark:text-white">
           {list.map((item) => (
-            <li className="flex items-center gap-3 text-xl" key={item.name}>
+            <Link
+              aria-label={item.name}
+              className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray dark:hover:bg-gray duration-200 transition-all rounded"
+              key={item.name}
+              href={item.path}
+              onClick={() => setIsShow(false)}
+            >
               {item.icon}
-              <Link key={item.name} href={item.path} onClick={() => setIsShow(false)}>
-                <span className="text-lg">{item.name}</span>
-              </Link>
-            </li>
+              <span className="text-lg">{item.name}</span>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   )

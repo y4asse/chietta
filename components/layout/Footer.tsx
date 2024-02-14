@@ -8,10 +8,10 @@ const Footer = () => {
     { link: 'about/privacy', text: 'プライバシーポリシー' }
   ]
   return (
-    <div className=" bg-[white] p-10">
+    <div className=" bg-white dark:bg-dark dark:text-white p-10">
       <WrapContainer>
         <span className="text-xl">Chietta</span>
-        <ul className="mt-3 text-gray">
+        <ul className="mt-3 text-gray dark:text-lightGray">
           {lists.map((list, index) => (
             <li key={index} className="mt-1">
               <Link href={`/${list.link}`}>{list.text}</Link>
@@ -23,6 +23,7 @@ const Footer = () => {
             </a>
           </li>
         </ul>
+        <p className="text-gray  text-center">Copyright 2024 y4asse</p>
       </WrapContainer>
     </div>
   )

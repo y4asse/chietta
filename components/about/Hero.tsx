@@ -4,7 +4,7 @@ import CatAnimation from './CatAnimation'
 
 const Hero = () => {
   return (
-    <section className="bg-pink pb-10 pt-20 px-3">
+    <section className="bg-pink dark:bg-gray pb-10 pt-20 px-3">
       <WrapContainer>
         <div className="flex flex-wrap items-center">
           <div className="w-full md:w-1/2">
@@ -13,7 +13,7 @@ const Hero = () => {
               <br />
               記事をお届けします。
             </h1>
-            <p className="mt-10 text-gray text-center text-xl">
+            <p className="mt-10 text-gray dark:text-white text-center text-xl">
               Chiettaはちょっとした隙間時間に読むための記事をお届けすることを目的として立ち上げられたサービスです。
             </p>
           </div>

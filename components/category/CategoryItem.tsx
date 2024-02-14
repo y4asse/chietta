@@ -25,7 +25,7 @@ const CategoryItem = ({ category }: { category: PostCategory }) => {
     <button
       onClick={handleClick}
       className={`border rounded p-3 text-lg font-bold w-[130px] h-[80px] text-center duration-200 transition-all border-[#dadada] ${
-        isFollowing && 'bg-primary text-white border-none text-[white]'
+        isFollowing && 'bg-primary text-white border-none text-white'
       }`}
     >
       {category.name}
