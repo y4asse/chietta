@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import PostLink from './PostLink'
 import { PostItemType } from '@/types/postItem'
 import { useAtom } from 'jotai'
