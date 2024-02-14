@@ -7,7 +7,7 @@ const LogoutButton = () => {
   return (
     <>
       <button
-        className="shadow px-3 py-2 rounded-lg flex items-center text-xl mx-auto mt-10 gap-3"
+        className="border border-lightGray dark:border-gray px-3 py-2 rounded-lg flex items-center text-xl mx-auto mt-10 gap-3"
         onClick={() => signOut({ callbackUrl: '/' })}
       >
         <span className="text-lg">ログアウトする</span>
