@@ -8,6 +8,7 @@ import { viewHistoryAtom } from '@/jotai/viewHistory'
 import { calcDiffTime } from '@/utils/calcDiffTime'
 import Link from 'next/link'
 import BookmarkButton from './BookmarkButton'
+import { FaRegHeart } from 'react-icons/fa6'
 
 const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boolean }) => {
   const { title, likedCount } = post
@@ -35,7 +36,7 @@ const PostItem = ({ post, hiddenDate }: { post: PostItemType; hiddenDate?: boole
         )}
         {likedCount != undefined && (
           <div className="flex items-center gap-1 mt-1">
-            <Image src="/heart.svg" alt="ハートの画像" width={17} height={17} className=" opacity-70" />
+            <FaRegHeart width={17} height={17} className="text-gray dark:text-white opacity-70" />
             <span>{likedCount}</span>
           </div>
         )}
