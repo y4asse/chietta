@@ -116,7 +116,7 @@ const Inputs = ({ sessionUser, post }: { sessionUser: User; post: UserPost }) =>
         </label>
       </div>
       {(image || title) && (
-        <div className="mt-5 bg-[white] border border-[#cfcfcf] rounded-xl max-w-[400px] overflow-hidden text-lg text-gray font-bold mx-auto">
+        <div className="mt-5 bg-white dark:bg-lightDark border border-[#cfcfcf] rounded-xl max-w-[400px] overflow-hidden text-lg text-gray font-bold mx-auto">
           {image && <img src={image} className=" aspect-[16/9]" alt="OGP画像" />}
           {title && <div className="p-1">{title}</div>}
         </div>
@@ -147,7 +147,7 @@ const Inputs = ({ sessionUser, post }: { sessionUser: User; post: UserPost }) =>
         </div>
         <input
           type="submit"
-          className="rounded bg-primary text-[white] px-3 py-1 font-semibold hover:cursor-pointer"
+          className="rounded bg-primary text-white px-3 py-1 font-semibold hover:cursor-pointer"
           value={isLoading ? '編集中...' : '編集する'}
         />
       </div>

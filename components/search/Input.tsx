@@ -34,7 +34,7 @@ const Input = ({ q }: { q: string }) => {
         type="text"
         name="q"
         required
-        className="border border-[#b6b6b6] px-5 py-3 text-lg rounded-full w-full cursor focus:outline-focus"
+        className="border border-[#b6b6b6] px-5 py-3 text-lg rounded-full w-full cursor focus:outline-focus dark:bg-lightDark"
         placeholder="検索ワードを入力..."
         value={searchWord}
         onChange={handleChange}

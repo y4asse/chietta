@@ -5,7 +5,7 @@ import BookmarkActivity from './BookmarkActivity'
 
 const ActivityItem = ({ activity }: { activity: NonNullable<UserActivitis>[number] }) => {
   return (
-    <div className="md:border border-lightGray bg-[white] md:rounded-xl flex p-3 md:p-5 md:mt-5">
+    <div className="md:border border-lightGray dark:border-gray bg-white dark:bg-lightDark dark:bg-lightDark dark:border-gray md:rounded-xl flex p-3 md:p-5 md:mt-5">
       {activity.entryComment && activity.entry_comment_id && (
         <CommentActivity entryComment={activity.entryComment} user={activity.user} />
       )}

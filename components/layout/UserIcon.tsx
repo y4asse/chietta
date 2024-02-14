@@ -67,13 +67,13 @@ const UserIcon = ({ session }: { session: Session }) => {
         />
       </button>
       {isShow && (
-        <div className="shadow rounded-xl flex flex-col absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
+        <div className="shadow rounded-xl flex flex-col absolute z-20 bg-white dark:bg-lightDark w-[200px] top-full right-0 text-gray dark:text-white">
           {session.user.idCreatedByUser && (
             <>
               {listForUser.map((item) => (
                 <Link
                   aria-label={item.name}
-                  className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
+                  className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray dark:hover:bg-gray duration-200 transition-all rounded"
                   key={item.name}
                   href={item.path}
                   onClick={() => setIsShow(false)}
@@ -90,7 +90,7 @@ const UserIcon = ({ session }: { session: Session }) => {
           {listForGuest.map((item) => (
             <Link
               aria-label={item.name}
-              className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray duration-200 transition-all rounded"
+              className="flex items-center px-5 py-2 gap-3 text-xl hover:bg-lightGray dark:hover:bg-gray duration-200 transition-all rounded"
               key={item.name}
               href={item.path}
               onClick={() => setIsShow(false)}

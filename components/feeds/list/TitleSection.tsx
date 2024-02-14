@@ -22,8 +22,8 @@ const TitleSection = () => {
             <Link
               key={item.name}
               href={`/feeds${item.path}`}
-              className={`py-1 px-3 rounded-xl border border-[#c7c7c7] bg-[white] ${
-                isActive ? 'bg-primary text-[white] border-none' : ''
+              className={`py-1 px-3 rounded-xl border border-[#c7c7c7] dark:border-gray bg-white dark:bg-lightDark dark:bg-lightDark ${
+                isActive ? 'bg-primary dark:bg-primary text-white border-none' : ''
               }`}
             >
               {item.name}

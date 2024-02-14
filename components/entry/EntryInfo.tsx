@@ -12,7 +12,7 @@ const EntryInfo = async ({ url, title, image }: { image: string | null; url: str
         <h1 className="text-xl font-bold break-all">
           <EntryLink session={session} url={url} title={title} image={image} />
         </h1>
-        <p className="text-sm text-gray pt-1 break-all">{url}</p>
+        <p className="text-sm text-gray dark:text-lightGray pt-1 break-all">{url}</p>
       </div>
       <div className="w-[300px] mx-auto overflow-hidden rounded-xl">
         {image && <PostLink url={url} image={image} />}

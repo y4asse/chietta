@@ -39,11 +39,15 @@ const QuestionButton = () => {
   })
   return (
     <div className="flex relative" id="modal">
-      <button aria-label="タブを表示・非表示にする" onClick={handleClick} className="text-gray text-2xl my-auto">
+      <button
+        aria-label="タブを表示・非表示にする"
+        onClick={handleClick}
+        className="text-gray text-2xl my-auto dark:text-white"
+      >
         <FaRegQuestionCircle />
       </button>
       {isShow && (
-        <ul className="shadow rounded-xl p-5 flex flex-col gap-3 absolute z-20 bg-[white] w-[200px] top-full right-0 text-gray">
+        <ul className="shadow rounded-xl p-5 flex flex-col gap-3 absolute z-20 bg-white dark:bg-lightDark w-[200px] top-full right-0 text-gray ">
           {list.map((item) => (
             <li className="flex items-center gap-3 text-xl" key={item.name}>
               {item.icon}

@@ -78,7 +78,7 @@ const Inputs = () => {
 
   return (
     <>
-      <dialog onClick={closeDialog} ref={dialogRef} className="backdrop:bg-[black] backdrop:opacity-70 rounded-xl">
+      <dialog onClick={closeDialog} ref={dialogRef} className="backdrop:bg-black backdrop:opacity-70 rounded-xl">
         <Modal closeDialog={closeDialog} content={watch('content')} url={watch('url')} />
       </dialog>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +100,7 @@ const Inputs = () => {
           </label>
         </div>
         {(image || title) && (
-          <div className="mt-5 bg-[white] border border-[#cfcfcf] rounded-xl max-w-[400px] overflow-hidden text-gray font-bold mx-auto">
+          <div className="mt-5 bg-white dark:bg-lightDark border border-[#cfcfcf] rounded-xl max-w-[400px] overflow-hidden text-gray font-bold mx-auto">
             {image && <img src={image} className=" aspect-[16/9]" alt="OGP画像" />}
             {title && <div className="p-3">{title}</div>}
           </div>
@@ -132,7 +132,7 @@ const Inputs = () => {
             <input
               disabled={isLoading}
               type="submit"
-              className={`rounded bg-primary text-[white] px-3 py-1 font-semibold ${
+              className={`rounded bg-primary text-white px-3 py-1 font-semibold ${
                 isLoading ? 'cursor-not-allowed' : 'hover:cursor-pointer'
               }`}
               value={isLoading ? '投稿中...' : '投稿する'}

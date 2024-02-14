@@ -19,8 +19,8 @@ const TitleSection = () => {
             <Link
               key={item.name}
               href={`/latest${item.path}`}
-              className={`py-1 px-3 rounded-xl border border-[#c7c7c7] bg-[white] ${
-                isActive ? 'bg-primary text-[white] border-none' : ''
+              className={`py-1 px-3 rounded-xl border border-[#c7c7c7] dark:border-gray dark:bg-lightDark ${
+                isActive ? 'bg-primary dark:bg-primary text-white border-none' : 'bg-white'
               }`}
             >
               {item.name}

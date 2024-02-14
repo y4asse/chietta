@@ -11,10 +11,10 @@ const Page = () => {
       <div className="text-right">
         <FeedListLink />
       </div>
-      <div className="px-5 py-5 shadow bg-[white] rounded-xl mt-5">
+      <div className="px-5 py-5 shadow bg-white dark:bg-lightDark rounded-xl mt-5">
         <Input />
       </div>
-      <div className="bg-[white] mt-20 border-lightGray border rounded p-5">
+      <div className="bg-white dark:bg-lightDark mt-20 border-lightGray dark:border-gray border rounded p-5">
         <h2 className="text-xl font-bold text-center">フィードの登録とは？</h2>
         <p className="mt-5">
           ブログサイトに用意されているフィードのURLを登録することで、Chietta上でそのブログをフォローし、最新の記事を確認することができます。

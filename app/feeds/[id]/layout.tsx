@@ -24,7 +24,7 @@ const Layout = async ({ params, children }: { params: { id: string }; children: 
       </div>
       <h1 className="text-xl font-bold mt-1">{info.name}</h1>
       <div className="mt-1">
-        <a href={info.feedUrl} className="text-gray hover:underline">
+        <a href={info.feedUrl} className="text-gray dark:text-lightGray hover:underline">
           {info.feedUrl}
         </a>
       </div>

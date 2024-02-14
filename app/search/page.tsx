@@ -6,7 +6,7 @@ import Spinner from '@/components/search/Spinner'
 const Search = ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = searchParams
   return (
-    <div className="py-10 border-b border-[#cacaca] min-h-screen bg-main">
+    <div className="py-10 border-b border-[#cacaca] min-h-screen bg-main dark:bg-lightDark dark:text-white">
       <div className="max-w-[1000px] mx-auto">
         <Input q={q} />
         {!q && <h1 className="text-2xl font-bold text-center mt-5">検索してみましょう</h1>}

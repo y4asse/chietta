@@ -4,6 +4,7 @@ import { authOptions } from '@/server/auth'
 import { db } from '@/server/db'
 import { getOgp } from '@/server/getOgp'
 import { getHashedUrl } from '@/utils/getHashedUrl'
+import { Prisma } from '@prisma/client'
 import { getServerSession } from 'next-auth'
 
 export const createBookmarkByUrl = async ({ url }: { url: string }) => {
@@ -92,5 +93,37 @@ export const deleteBookmarkByUrl = async ({ url }: { url: string }) => {
   } catch (error) {
     console.error(error)
     return { error: 'エラーが発生しました' }
+  }
+}
+
+export type Notifications = Prisma.PromiseReturnType<typeof getNotifications>
+
+export const getNotifications = async () => {
+  try {
+    const session = await getServerSession(authOptions)
+    if (!session) throw new Error('権限がありません')
+    const user_id = session.user.id
+    const notifications = await db.activity.findMany({
+      where: {
+        follow: {
+          following_user_id: user_id
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      include: {
+        follow: {
+          include: {
+            user: true
+          }
+        }
+      }
+    })
+    console.log(notifications)
+    return { notifications, error: null }
+  } catch (error) {
+    console.error(error)
+    return { notifications: null, error: 'エラーが発生しました' }
   }
 }

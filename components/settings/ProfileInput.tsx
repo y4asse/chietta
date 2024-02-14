@@ -65,7 +65,7 @@ const ProfileInput = () => {
   return (
     <>
       <Toast content="保存しました" setIsOpen={setIsOpen} isOpen={isOpen} />
-      <form className="bg-[white] py-10" onSubmit={handleSubmit(onSubmit)}>
+      <form className="bg-white dark:bg-lightDark py-10" onSubmit={handleSubmit(onSubmit)}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-between flex-wrap gap-3 ">
           <div className="w-full md:w-auto">
             <ImageInput />
@@ -80,7 +80,7 @@ const ProfileInput = () => {
                 type="text"
                 required
                 id="name"
-                className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded w-full bg-main"
+                className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded w-full bg-main dark:bg-lightDark dark:text-white"
                 defaultValue={user.name}
                 placeholder="名前を入力..."
                 {...register('name', { required: true, maxLength: 20, minLength: 1 })}
@@ -98,7 +98,7 @@ const ProfileInput = () => {
               <textarea
                 id="introduction"
                 rows={5}
-                className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded w-full bg-main"
+                className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded w-full bg-main dark:bg-lightDark dark:text-white"
                 defaultValue={user.introduction ? user.introduction : ''}
                 placeholder="自己紹介を入力..."
                 {...register('introduction')}
@@ -118,7 +118,7 @@ const ProfileInput = () => {
                 <input
                   type="url"
                   id="webSite"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main w-full"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main dark:bg-lightDark dark:text-white w-full"
                   defaultValue={user.webSite ? user.webSite : ''}
                   placeholder="https://example.com"
                   {...register('webSite')}
@@ -137,7 +137,7 @@ const ProfileInput = () => {
                 <input
                   type="text"
                   id="x"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main dark:bg-lightDark dark:text-white"
                   defaultValue={user.x ? user.x : ''}
                   placeholder="ユーザ名を入力..."
                   {...register('x')}
@@ -156,7 +156,7 @@ const ProfileInput = () => {
                 <input
                   type="text"
                   id="github"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main dark:bg-lightDark dark:text-white"
                   defaultValue={user.github ? user.github : ''}
                   placeholder="ユーザ名を入力..."
                   {...register('github')}
@@ -179,7 +179,7 @@ const ProfileInput = () => {
                 <input
                   type="text"
                   id="zenn"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main dark:bg-lightDark dark:text-white"
                   defaultValue={user.zenn ? user.zenn : ''}
                   placeholder="ユーザ名を入力..."
                   {...register('zenn')}
@@ -202,7 +202,7 @@ const ProfileInput = () => {
                 <input
                   type="text"
                   id="qiita"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main dark:bg-lightDark dark:text-white"
                   defaultValue={user.qiita ? user.qiita : ''}
                   placeholder="ユーザ名を入力..."
                   {...register('qiita')}
@@ -221,7 +221,7 @@ const ProfileInput = () => {
                 <input
                   type="text"
                   id="note"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main dark:bg-lightDark dark:text-white"
                   defaultValue={user.note ? user.note : ''}
                   placeholder="ユーザ名を入力..."
                   {...register('note')}
@@ -240,7 +240,7 @@ const ProfileInput = () => {
                 <input
                   type="text"
                   id="hatena"
-                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main"
+                  className="outline-primary mt-2 px-2 py-1 text-lg border border-[#afafaf] rounded bg-main dark:bg-lightDark dark:text-white"
                   defaultValue={user.hatena ? user.hatena : ''}
                   placeholder="ユーザ名を入力..."
                   {...register('hatena')}

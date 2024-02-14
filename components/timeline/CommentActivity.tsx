@@ -27,7 +27,7 @@ const CommentActivity = ({ entryComment, user }: Props) => {
         </div>
         <Link
           href={`/entry/${encodeURIComponent(entryComment.entry.url)}`}
-          className="mt-2 bg-[#f0f0f0] rounded-xl p-3 block hover:opacity-70"
+          className="mt-2 bg-[#f0f0f0] dark:bg-dark rounded-xl p-3 block hover:opacity-70"
         >
           <p>{entryComment.content}</p>
           <div className="text-gray mt-1">{calcDiffTime(entryComment.createdAt.toString())}</div>

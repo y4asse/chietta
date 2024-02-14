@@ -70,15 +70,17 @@ const UserArticles = async ({ id }: { id: string }) => {
   })
   const articlesWithOgp = await addOgp(userArticles)
   return (
-    <div className="max-w-[1000px] mx-auto px-3">
-      {articlesWithOgp.length > 0 ? (
-        <Posts posts={articlesWithOgp} />
-      ) : (
-        <div>
-          <h2 className="text-center text-2xl font-bold mt-20">記事がありません</h2>
-          <Image src={'/img/cat.png'} width={300} height={300} alt="cat" className="mx-auto" />
-        </div>
-      )}
+    <div className="bg-white dark:bg-lightDark">
+      <div className="max-w-[1000px] mx-auto px-3">
+        {articlesWithOgp.length > 0 ? (
+          <Posts posts={articlesWithOgp} />
+        ) : (
+          <div>
+            <h2 className="text-center text-2xl font-bold mt-20">記事がありません</h2>
+            <Image src={'/img/cat.png'} width={300} height={300} alt="cat" className="mx-auto" />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

@@ -27,7 +27,7 @@ const FollowActivity = ({ follow, user }: Props) => {
           </Link>
           さんをフォローしました
         </div>
-        <div className="border border-lightGray bg-[white] rounded-xl flex p-3 my-3">
+        <div className="border border-lightGray dark:border-gray bg-white dark:bg-lightDark  rounded-xl flex p-3 my-3">
           <div className="mr-2">
             {follow.following_user.idCreatedByUser && (
               <UserIcon image={follow.following_user.image} idCreatedByUser={follow.following_user.idCreatedByUser} />

@@ -14,13 +14,13 @@ const FeedItem = ({
   }
 }) => {
   return (
-    <div className="border border-[#afafaf] rounded p-3 bg-[white]">
+    <div className="border border-[#afafaf] rounded p-3 bg-white dark:bg-lightDark">
       <div>
         <Link href={`/feeds/${item.id}`} className="hover:underline text-xl font-semibold">
           {item.name}
         </Link>
       </div>
-      <p className="text-gray break-words">{item.feedUrl}</p>
+      <p className="text-gray dark:text-lightGray break-words">{item.feedUrl}</p>
       <div className="flex items-center gap-1 mt-1">
         <FaUser />
         {item._count.FollowFeed}
