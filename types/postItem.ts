@@ -8,7 +8,7 @@ export type PostItemType = {
   image: string | null
   likedCount?: number
   feed?: Feed
-  user_id?: string
+  user_id?: string | null
 }
 
 interface WithIsViewd<T> {
