@@ -38,7 +38,7 @@ const FollowButton = ({
       className={`rounded  px-3 py-1 font-semibold border transition-all duration-200 text-sm md:text-base ${
         isFollow
           ? 'bg-white dark:bg-dark border-lightGray dark:border-dark hover:bg-lightGray dark:hover:bg-gray'
-          : 'bg-primary text-white dark:border-none'
+          : 'bg-primary text-white dark:border-dark'
       }`}
     >
       {isFollow ? 'フォロー中' : 'フォローする'}
