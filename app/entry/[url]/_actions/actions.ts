@@ -94,22 +94,6 @@ export const deleteBookmark = async ({ entryId }: { entryId: string }) => {
         }
       }
     })
-    if (deleted) {
-      db.activity
-        .delete({
-          where: {
-            user_id_bookmark_id: {
-              user_id: user_id,
-              bookmark_id: deleted.id
-            }
-          }
-        })
-        .catch((err) => {
-          //エラーを無視
-          console.log('Activityの削除に失敗しました')
-          console.log(err)
-        })
-    }
     return { error: null }
   } catch (error) {
     console.log(error)
@@ -169,22 +153,6 @@ export const deleteComment = async ({ commentId }: { commentId: string }) => {
         user_id
       }
     })
-    if (deleted) {
-      db.activity
-        .delete({
-          where: {
-            user_id_entry_comment_id: {
-              user_id: user_id,
-              entry_comment_id: deleted.id
-            }
-          }
-        })
-        .catch((err) => {
-          //エラーを無視
-          console.log('Activityの削除に失敗しました')
-          console.log(err)
-        })
-    }
     return { error: null }
   } catch (error) {
     console.log(error)

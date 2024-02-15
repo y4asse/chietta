@@ -56,23 +56,6 @@ export const unfollowUser = async ({ followingUserId }: { followingUserId: strin
         }
       }
     })
-
-    if (deleted) {
-      db.activity
-        .delete({
-          where: {
-            user_id_follow_id: {
-              follow_id: deleted.id,
-              user_id: session.user.id
-            }
-          }
-        })
-        .catch((err) => {
-          //エラーを無視
-          console.log('Activityの削除に失敗しました')
-          console.log(err)
-        })
-    }
     return { result: 'success', error: null }
   } catch (err) {
     console.log(err)
