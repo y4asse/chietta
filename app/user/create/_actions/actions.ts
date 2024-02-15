@@ -51,7 +51,8 @@ export const createUserWithId = async (prevState: any, formData: FormData) => {
     'settings',
     'user',
     'withdrawal',
-    'entry'
+    'entry',
+    'trends'
   ]
   if (domains.includes(idCreatedByUser)) return { errors: { idCreatedByUser: ['そのIDは使用できません'] } }
 
