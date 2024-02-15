@@ -159,6 +159,8 @@ model User {
     Bookmark        Bookmark[]
     EntryComment    EntryComment[]
     Activity        Activity[]
+
+    @@index([idCreatedByUser])
 }
 
 model Like {
