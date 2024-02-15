@@ -1,18 +1,20 @@
-import { Follow, User } from '@prisma/client'
-import { User as SessionUser } from 'next-auth'
+'use client'
+
 import React from 'react'
 import SnsList from './SnsList'
 import SettingProfileLink from '../LinkButton/SettingProfileLink'
 import FollowButton from './FollowButton'
 import Following from './Following'
 import { UserType } from '@/server/userPage/getUser'
+import { useSession } from 'next-auth/react'
 
 type Props = {
   user: NonNullable<UserType>
-  sessionUser: SessionUser | null
 }
 
-const Profile = ({ user, sessionUser }: Props) => {
+const Profile = ({ user }: Props) => {
+  const { data: session } = useSession()
+  const sessionUser = session ? session.user : null
   const defaultFollow = sessionUser ? user.Followers.some((follower) => follower.user_id === sessionUser.id) : false
   if (!user.idCreatedByUser) return
   return (
@@ -30,7 +32,7 @@ const Profile = ({ user, sessionUser }: Props) => {
           followingCount={user.Follow.length}
           userName={user.idCreatedByUser}
         />
-        {sessionUser && (
+        {sessionUser ? (
           <div className="mt-5">
             {user.id === sessionUser.id ? (
               <SettingProfileLink />
@@ -38,6 +40,8 @@ const Profile = ({ user, sessionUser }: Props) => {
               <FollowButton userId={user.id} sessionUserId={sessionUser.id} defaultFollow={defaultFollow} />
             )}
           </div>
+        ) : (
+          <div className="h-6 py-1 mt-5" />
         )}
         <SnsList user={user} />
       </div>
