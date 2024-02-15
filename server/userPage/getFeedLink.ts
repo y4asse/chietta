@@ -8,7 +8,6 @@ export const getFeedLink = async (url: string): Promise<string | null> => {
     const cacheKey = 'feedLink' + url
     const cachedFeedLink = cache.get(cacheKey) as string | undefined
     if (cachedFeedLink) {
-      console.log('cach hit: ' + cachedFeedLink)
       return cachedFeedLink
     }
     new URL(url)
@@ -23,7 +22,6 @@ export const getFeedLink = async (url: string): Promise<string | null> => {
     if (!feedLinkElement) throw new Error('フィードが見つかりません')
     const feedLink = feedLinkElement.href
     cache.set(cacheKey, feedLink)
-    console.log(feedLink)
     return feedLink
   } catch (e) {
     console.log('Error in getFeedLink')
