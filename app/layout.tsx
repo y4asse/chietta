@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 const title = 'Chietta | 技術記事プラットフォーム'
 const description =
-  'Chiettaはエンジニアのための技術記事プラットフォームです。複数の技術記事サイトや企業ブログなどをまとめた無料のサービスです。様々な媒体の記事を見たり、検索することができます。またアカウント連携することで、Qiita、Zenn、noteなどであなたがこれまで書いた記事をまとめて見ることができます。'
+  'Chiettaはエンジニアのための技術記事プラットフォームです。QiitaやZenn、企業ブログなどをまとめて見たり、検索することができる無料のサービスです。トレンドや新着を見ることができたり、アカウント連携することで、Qiita、Zenn、noteなどであなたがこれまで書いた記事をまとめて管理することができます。'
 const images =
   'https://firebasestorage.googleapis.com/v0/b/cheeta-38f77.appspot.com/o/ogp.png?alt=media&token=872105da-5e76-41bb-b3b4-4cc4b0f96e29'
 const url = 'https://chietta.app'
