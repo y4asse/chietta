@@ -73,22 +73,6 @@ export const deleteBookmarkByUrl = async ({ url }: { url: string }) => {
         }
       }
     })
-    if (deleted) {
-      db.activity
-        .delete({
-          where: {
-            user_id_bookmark_id: {
-              bookmark_id: deleted.id,
-              user_id: user_id
-            }
-          }
-        })
-        .catch((err) => {
-          //エラーを無視
-          console.log('Activityの削除に失敗しました')
-          console.log(err)
-        })
-    }
     return { error: null }
   } catch (error) {
     console.error(error)

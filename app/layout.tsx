@@ -42,9 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon.png"></link>
+        <link rel="manifest" href={`${process.env.NEXT_PUBLIC_FRONT_URL}/manifest.json`} />
+        <link rel="apple-touch-icon" href={`${process.env.NEXT_PUBLIC_FRONT_URL}/icon.png`} />
         <meta name="theme-color" content="#fff" />
+        <link rel="icon" href={`${process.env.NEXT_PUBLIC_FRONT_URL}/favicon.ico`} />
       </head>
       <Gtag />
       <body className={inter.className}>
