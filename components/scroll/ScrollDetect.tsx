@@ -31,9 +31,10 @@ const ScrollDetect = ({
   const offset = posts ? posts.length + initialOffset : initialOffset
   const [isLoading, setIsLoading] = useState(false)
   const [isEnd, setIsEnd] = useState(false)
-  const isScrolledBottom = viewportBottom ? viewportBottom < 1500 : false
   const userId = session ? session.user.id : null
   useEffect(() => {
+    const windowBottom = window.scrollY + window.innerHeight
+    const isScrolledBottom = viewportBottom ? viewportBottom < windowBottom : false
     if (status === 'loading') return
     if (isLoading) return
     if (!isScrolledBottom) return
@@ -56,7 +57,7 @@ const ScrollDetect = ({
         setIsLoading(false)
       }, 2000)
     })
-  }, [isScrolledBottom, isLoading, userId, status])
+  }, [viewportBottom, isLoading, userId, status])
   if (!posts) return <WrapContainer>error</WrapContainer>
   return (
     <div ref={ref}>
