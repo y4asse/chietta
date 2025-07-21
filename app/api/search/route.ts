@@ -12,7 +12,7 @@ export const GET = async (req: NextRequest) => {
   const take = 10
 
   if (!q) return Response.json({ message: '検索ワードを入力してください' })
-  const searchWords = q.replaceAll('　', ' ').split(' ')
+  const searchWords = q.replaceAll('　', ' ').toLowerCase().split(' ')
   const cacheKey = 'search' + searchWords + offset
   const cachedPosts = cache.get(cacheKey)
   if (cachedPosts) {
@@ -26,8 +26,7 @@ export const GET = async (req: NextRequest) => {
     where: {
       AND: searchWords.map(word => ({
         title: {
-          contains: word,
-          mode: 'insensitive'
+          contains: word
         }
       }))
     },
