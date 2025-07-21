@@ -18,20 +18,18 @@ export const GET = async (req: NextRequest) => {
   if (cachedPosts) {
     return Response.json(cachedPosts)
   }
-  const search = searchWords
-    .map((word) => {
-      return '+' + word + '*'
-    })
-    .join(' ')
   const start = new Date()
   const result = await db.post.findMany({
     orderBy: {
       createdAt: 'desc'
     },
     where: {
-      title: {
-        search: search
-      }
+      AND: searchWords.map(word => ({
+        title: {
+          contains: word,
+          mode: 'insensitive'
+        }
+      }))
     },
     skip: offset,
     take
