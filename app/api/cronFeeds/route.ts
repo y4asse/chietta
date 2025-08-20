@@ -38,7 +38,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       console.error(`フィード処理エラー: ${feed.name} (${feed.feedUrl})`)
       console.error(`エラー詳細: ${error instanceof Error ? error.message : String(error)}`)
       console.error(`スタックトレース:`, error)
-      throw error
+      return null
     }
   })
   try {
