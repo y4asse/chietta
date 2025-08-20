@@ -41,6 +41,12 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       throw error
     }
   })
-  await Promise.all(procsess)
+  try {
+    await Promise.all(procsess)
+  } catch (error) {
+    console.error(`フィード処理エラー: ${error instanceof Error ? error.message : String(error)}`)
+    console.error(`スタックトレース:`, error)
+    return Response.json({ message: 'error' }, { status: 500 })
+  }
   return Response.json({ message: 'success' })
 }
