@@ -13,7 +13,12 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const procsess = feeds.map(async (feed) => {
     try {
       const { feedUrl, id } = feed
-      const feedItem = await rssParser.parseURL(feedUrl)
+      const feedItem = await rssParser.parseURL(feedUrl).catch((error) => {
+        console.error(`フィード処理エラー: ${feed.name} (${feed.feedUrl})`)
+        console.error(`エラー詳細: ${error instanceof Error ? error.message : String(error)}`)
+        console.error(`スタックトレース:`, error)
+        return null
+      })
       const { items } = feedItem as { items: { title: string; link: string; pubDate: string; isoDate: string }[] }
       const insertData = items.map((item) => {
         const createdAt = item.pubDate ? new Date(item.pubDate) : item.isoDate ? new Date(item.isoDate) : new Date()
@@ -33,11 +38,9 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       console.error(`フィード処理エラー: ${feed.name} (${feed.feedUrl})`)
       console.error(`エラー詳細: ${error instanceof Error ? error.message : String(error)}`)
       console.error(`スタックトレース:`, error)
+      throw error
     }
   })
-  await Promise.all(procsess).catch((error) => {
-    console.error(`フィード処理エラー: ${error instanceof Error ? error.message : String(error)}`)
-    console.error(`スタックトレース:`, error)
-  })
+  await Promise.all(procsess)
   return Response.json({ message: 'success' })
 }
