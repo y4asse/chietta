@@ -2,8 +2,11 @@
 import like from '@/public/lottie/like.json'
 import { useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
-import { Player } from '@lottiefiles/react-lottie-player'
+import dynamic from 'next/dynamic'
+import type { AnimationItem } from 'lottie-web'
 import { usePathname, useRouter } from 'next/navigation'
+
+const Player = dynamic(() => import('@lottiefiles/react-lottie-player').then((mod) => mod.Player), { ssr: false })
 
 const LikeButton = ({
   userPostId,
@@ -16,7 +19,7 @@ const LikeButton = ({
 }) => {
   const { data: session, status } = useSession()
   const user = session ? session.user : null
-  const playerRef = useRef<Player>(null)
+  const playerRef = useRef<AnimationItem | null>(null)
   const [isLiked, setIsLiked] = useState(false)
   const router = useRouter()
   const [count, setCount] = useState(defaultCount)
@@ -75,7 +78,15 @@ const LikeButton = ({
         className={`w-[30px] md:w-[40px] h-[30px] md:h-[40px] rounded-full flex justify-center items-center`}
         onClick={handleClick}
       >
-        <Player ref={playerRef} speed={1.8} keepLastFrame={true} src={like} autoplay={defaultLiked} />
+        <Player
+          lottieRef={(instance) => {
+            playerRef.current = instance
+          }}
+          speed={1.8}
+          keepLastFrame={true}
+          src={like}
+          autoplay={defaultLiked}
+        />
       </button>
       <span>{count}</span>
     </div>
