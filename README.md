@@ -1,2 +1,14 @@
 https://zenn.dev/yasse/articles/a381284f38abb4
 <img src="https://res.cloudinary.com/zenn/image/upload/s--3LzJ2sur--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E3%2582%25A8%25E3%2583%25B3%25E3%2582%25B8%25E3%2583%258B%25E3%2582%25A2%25E3%2581%25AE%25E3%2581%259F%25E3%2582%2581%25E3%2581%25AE%25E6%258A%2580%25E8%25A1%2593%25E8%25A8%2598%25E4%25BA%258B%25E3%2583%2597%25E3%2583%25A9%25E3%2583%2583%25E3%2583%2588%25E3%2583%2595%25E3%2582%25A9%25E3%2583%25BC%25E3%2583%25A0%25E3%2580%258CChietta%25E3%2580%258D%25E3%2582%2592%25E5%2580%258B%25E4%25BA%25BA%25E9%2596%258B%25E7%2599%25BA%25E3%2581%25A7%25E4%25BD%259C%25E3%2582%258A%25E3%2581%25BE%25E3%2581%2597%25E3%2581%259F%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E3%2582%2584%25E3%2581%259B%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUdObXl4YW04a21WZFlaN2I2UndDaHpHZS1od3MwUVVpYzY3VUlXSWs2WGo9czk2LWM=%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png"/>
+
+## 管理先
+
+| 対象 | 管理先 |
+| --- | --- |
+| ドメイン（chietta.app） | Cloudflare（Vercel に向けている） |
+| ホスティング・デプロイ | Vercel の `chietta` プロジェクト。main への push で本番にデプロイ |
+| 環境変数 | Vercel の `chietta` プロジェクト |
+| 認証（Google ログイン） | GCP `cheeta-400911` の OAuth クライアント |
+| 画像（OGP など） | Firebase `cheeta-38f77` の Storage |
+| DB | MySQL（`DATABASE_URL`） |
+| キャッシュ | Upstash Redis |
